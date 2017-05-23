@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <link rel="stylesheet" href="../../assets/css/pages/main.less?__inline">
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+
+<!--主体内容开始-->
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <link rel="import" href="../base/nav_collect.html?__inline">
+    <!--左侧导航结束-->
+
+    <!--右侧主体开始-->
+    <div id="main-collect">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8" style="padding-right: 0px;">
+                    <div class="block mt10">
+                        <div class="block_title">
+                            <span>最近的10个受试者</span>
+                        </div>
+                        <table id="table"></table>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="block mt10">
+                        <div class="block_title">
+                            <span>项目概况</span>
+                        </div>
+                        <ul class="projectInfo">
+                            <li>项目描述：<span id="ProjectDescription"></span></li>
+                            <li>方案名称：<span id="PlanNum"></span></li>
+                            <li>主要研究者：<span id="Principal"></span></li>
+                            <li>电子签名声明：<span id="SignatureDeclaration"></span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+<!--主体内容结束-->
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../assets/js/pages/collect/main.js"></script>
+<!--验证pin码和密码-->
+<link rel="import" href="modals/checkSignPwdAndPin.html?__inline">
+</body>
+</html>

@@ -1,0 +1,183 @@
+<script src="../../assets/libs/jquery/jquery-2.2.4.js"></script>
+<script src="../../assets/libs/bootstrap/js/bootstrap.js"></script>
+<script src="../../assets/libs/bootstrap-datepicker/js/bootstrap-datetimepicker.js"></script>
+<script src="../../assets/libs/bootstrap-table/bootstrap-table.js"></script>
+<script src="../../assets/libs/bootstrap-table/bootstrap-table-zh-CN.js"></script>
+<script src="../../assets/libs/fixed-columns/bootstrap-table-fixed-columns.js"></script>
+<script src="../../assets/libs/bootstrap-editable/js/bootstrap-editable.js"></script>
+<script src="../../assets/libs/icheck/icheck.js"></script>
+<script src="../../assets/libs/jquery/jquery.serializejson.js"></script>
+<script src="../../assets/libs/select2/js/select2.js"></script>
+<script src="../../assets/libs/tree-column/bootstrap-table-tree-column.js"></script>
+<script src="../../assets/libs/bootstrap-validator/bootstrapValidator.js"></script>
+<script src="../../assets/js/build/template.js"></script>
+<script src="../../assets/js/tms.js"></script>
+<script src="../../assets/js/modules/RCommon/RCommon-0.4.9.js"></script>
+<script src="../../assets/js/modules/RResize/RResize-0.6.6.js"></script>
+<script src="../../assets/js/cache/usercache.js"></script>
+<script src="../../assets/js/cache/browseparam1.js"></script>
+<script src="../../assets/js/cache/browseparam2.js"></script>
+<script>
+    //var uc = UserCacheService.get();
+    //var bp1 = BrowseParamService1.get();
+    //var bp2 = BrowseParamService2.get();
+    var uc = Cookies.getJSON("usercache") || {};
+    var bp1 = tms.getLocalStorage("browseparam1",true) || {};
+    var bp2 = tms.getLocalStorage("browseparam2",true) || {};
+    var msg = tmTools.getUrlParam("msg");
+    $(function () {
+        //导航active
+        var subNav = $('a[href="'+window.location.pathname+'"]').parent();
+        //console.log(window.location.pathname);
+        subNav.addClass("on").siblings().removeClass("on");
+        // 页面加载效果
+        loading();
+        // 初始化select2
+        $('.select2').select2({
+            minimumResultsForSearch: -1,
+            width: "100%"
+        });
+        $("#userName").text(uc.UserName);
+
+        if ($('.nav-name').text() == '数据采集') {
+            $("#companyInput").hide();
+            $("#companyInfo").html(bp1.CurrentProjectName + "(" + bp1.CurrentEnvironmentName + ")").show();
+        }
+
+        // 加载公司并设置事件
+        var inputCompany = $('#input-Company');
+        inputCompany.select2({
+            minimumResultsForSearch: -1
+        });
+        loadCompanys(function (companys) {
+            var options = "";
+            $.each(companys, function (i, item) {
+                options += "<option value='" + item["Id"] + "'>" + item["Name"] + "</option>";
+            });
+            inputCompany.html(options);
+            inputCompany.setValue(bp1.CurrentCompanyId);
+            inputCompany.change(function () {
+                var companyid = $(this).val();
+                tms.services.loginCompany({
+                    requestBody: {
+                        CompanyId: companyid
+                    },
+                    callback: function (res) {
+                        bp1.CurrentCompanyId = companyid;
+                        bp1.SignatureType = res["SignatureType"];
+                        tms.setLocalStorage("browseparam1",bp1,true);
+                        //Cookies.set("browseparam1",JSON.stringify(bp1));
+                        window.location.reload();
+                    }
+                });
+            });
+        });
+        // 加载公司
+        function loadCompanys(callback) {
+
+            var companys = tms.getLocalStorage("companys",true) || [];
+            if (companys && companys.length > 0) {
+                callback(companys);
+            }
+            else if(!msg) {
+                tms.services.getCompanies({
+                    callback: function (res) {
+                        if(!res || !res["Companies"]) callback(companys);
+
+                        $.each(res["Companies"], function(i, item) {
+                            companys.push({
+                                Id: item["Id"],
+                                Name: item["Name"]
+                            });
+                        });
+                        tms.setLocalStorage("companys",companys,true);
+                        //window.localStorage.companys = JSON.stringify(companys);
+                        callback(companys);
+                    }
+                });
+            }
+        }
+
+        $('#wrapper').css('height',function(){
+            return $(window).height() - 52;
+        });
+        $(window).resize(function () {
+            $('#wrapper').css('height',function(){
+                return $(window).height() - 52;
+            });
+        });
+
+        // 表格自适应
+        tableResize();
+
+    });
+
+    // 表格自适应
+    function tableResize(){
+        $('.table').bootstrapTable('resetWidth');
+        $(window).resize(function () {
+            $('.table').bootstrapTable('resetWidth');
+        });
+    }
+
+
+
+    // 退回到首页
+    function onBack() {
+        window.location.href = "/index";
+    }
+
+    // 退出系统
+    function onLogout() {
+        tms.confirm('确定要退出吗？',function(){
+            Cookies.set("usercache","");
+            window.location.href = "/login";
+        });
+    }
+
+    //页面加载效果
+    function loading(){
+        $('.container-fluid').fadeIn();
+        $('.pull-right').fadeIn();
+    }
+
+    // 高亮导航
+    function hotNav(navid) {
+        $("#" + navid).addClass("on");
+    }
+
+    // 验证指定query的表单
+    function checkForm(query, callback_success, callback_fail) {
+        var $form = $(query);
+        if ($form.length > 0) {
+            var bv = $form.data('bootstrapValidator');
+            if (bv) {
+                bv.validate();
+                if (!bv.isValid()) {
+                    //var msg = "表单没有填写完整或存在错误格式的数据";
+                    if (callback_fail) callback_fail(msg);
+                    //else tms.alert(msg);
+                }
+                else {
+                    if (callback_success) callback_success();
+                }
+            }
+            else {
+                if (callback_success) callback_success();
+            }
+        }
+        else {
+            //var msg = "未找到表单";
+            if (callback_fail) callback_fail(msg);
+            //else tms.alert(msg);
+        }
+    }
+
+    //菜单搜索
+    function searchMenu(obj){
+        var _obj=$(obj);
+        var _menu=tms.util.menuObj();
+        _menu.find('li').hide();
+        _menu.find('li:contains('+_obj.val()+')').show();
+    }
+</script>

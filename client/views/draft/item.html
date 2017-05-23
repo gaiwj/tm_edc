@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <link rel="stylesheet" href="../../assets/css/pages/draft.less?__inline">
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+<!--头部结束-->
+<div id="wrapper">
+    <link rel="import" href="../base/nav_draft_temp.html?__inline">
+    <!--右侧主体开始-->
+    <div id="main">
+        <ul class="nav nav-edc">
+            <li role="presentation" class="active"><a href="#">Item定义</a></li>
+            <li role="presentation"><a href="/draft/outerNote">外部提示语</a></li>
+        </ul>
+        <div class="container-fluid">
+            <div style="height: 42px;line-height: 42px;">
+                <div class="pull-left label-icon"><i class="icons8-queclass"></i>Item定义</div>
+            </div>
+            <div class="searchbar mb5">
+                <div class="row">
+                    <div class="col-md-2">
+                        <span>数据类型</span>
+                        <select id="search-dataType" class="form-control select2">
+                            <option value="">全部</option>
+                            {{each dataTypeOptions as item i}}
+                            <option value="{{item.Id}}" value2="{{item.Value}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>标准</span>
+                        <select id="search-standardType" class="form-control select2">
+                            <option value="" value2="">全部</option>
+                            {{each standardTypeOptions as item i}}
+                            <option value="{{item.Id}}" value2="{{item.Value}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>OID</span>
+                        <input class="form-control" type="text" id="search-OID" />
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-search pull-left mt40" onclick="searchItem()">查询</button>
+                        <button type="button" class="btn btn-add pull-left mt40 ml10" data-toggle="modal" data-target="#itemImport">导入</button>
+                    </div>
+                </div>
+            </div>
+            <table id="table"></table>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+<!-- 添加当前模板js -->
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../../assets/js/pages/draft/item.js"></script>
+<link rel="import" href="modals/itemImport.html?__inline">
+<link rel="import" href="modals/itemEdit.html?__inline">
+</body>
+
+</html>

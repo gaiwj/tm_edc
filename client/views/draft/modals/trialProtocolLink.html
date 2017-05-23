@@ -1,0 +1,216 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="trialProtocolLink"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w650">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">新建研究事件</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-6">
+                    <form id="itemFormLink">
+                        <div class="form-group has-require">
+                            <label class="control-label col-md-5" for="input_EventId_tl">研究事件OID</label>
+                            <div class="col-md-7">
+                                <select class="select2" id="input_EventId_tl" name="Event">
+                                    <option value="">...</option>
+                                    {{ each eventOptions as item }}
+                                    <option value="{{item.Id}}">{{item.OId}}</option>
+                                    {{ /each }}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-5" for="input_DisplayName_tl">显示名称</label>
+                            <div class="col-md-7">
+                                <input type="text" name="Version" class="form-control" id="input_DisplayName_tl" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-5" for="input_IsMultirecord_tl">事件类型</label>
+                            <div class="col-md-7">
+                                <select class="select2" id="input_IsMultirecord_tl" disabled>
+                                    <option value="1">多事件</option>
+                                    <option value="0">单事件</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-5" for="input_EventTypeId_tl">事件类别</label>
+                            <div class="col-md-7">
+                                <select class="select2" id="input_EventTypeId_tl" disabled>
+                                    <option value="">...</option>
+                                    {{ each eventTypeOptions as item }}
+                                    <option value="{{item.Id}}">{{item.Name}}</option>
+                                    {{ /each }}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-5"></label>
+                            <div class="col-md-7">
+                                <div class="checkbox col-lg-6">
+                                    <label>
+                                        <input type="checkbox" id="input_IsMustExist_tl">必须存在
+                                    </label>
+                                </div>
+                                <div class="checkbox col-lg-6">
+                                    <label>
+                                        <input type="checkbox" id="input_IsActive_tl">激活
+                                    </label>
+                                </div>
+                                <div class="checkbox col-lg-6">
+                                    <label>
+                                        <input type="checkbox" id="input_IsEventGroup_tl" disabled>事件组
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group eventGroup">
+                            <label class="control-label col-md-5" for="input_EventGroupId_tl">研究事件组</label>
+                            <div class="col-md-7">
+                                <select class="select2" id="input_EventGroupId_tl">
+                                    <option value="">...</option>
+                                    {{ each eventSimpleOptions as item }}
+                                    <option value="{{item.Id}}">{{item.Name}}</option>
+                                    {{ /each }}
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-6">
+                    <form id="itemFormLink2" class="rightForm">
+                        <div class="interview">
+                            <div class="interview-item single">
+                                <span class="bt">访视窗</span>
+                                <input id="input_EventWindow_tl" type="text" class="form-control">
+                            </div>
+                            <div class="interview-item">
+                                <div class="col-lg-6">
+                                    <span class="bt">-</span>
+                                    <input id="input_MinusValue_tl" type="text" class="form-control">
+                                </div>
+                                <div class="col-lg-6">
+                                    <span class="bt">+</span>
+                                    <input id="input_PlusValue_tl" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="interview-item wids">
+                                <div class="col-lg-6">
+                                    <span class="bt">最早</span>
+                                    <input id="input_EarliestValue_tl" type="text" class="form-control">
+                                </div>
+                                <div class="col-lg-6">
+                                    <span class="bt">最迟</span>
+                                    <input id="input_LatestValue_tl" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 15px">事业基线</div>
+                        <div class="form-group">
+                            <select id="input_BaseLineEventId_tl" class="select2">
+                                <option value="">...</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#trialProtocolLink").on("hidden.bs.modal", function() {
+            $('#itemFormLink')[0].reset();
+            $('#itemFormLink2')[0].reset();
+            $('#input_EventId_tl').val('').trigger('change');
+            $('#input_EventTypeId_tl').val('').trigger('change');
+            $('#itemFormLink').data('bootstrapValidator').resetForm();
+            $(this).attr({'data-type':''});
+            $('#trialProtocolLink').find('.modal-title').html('新建研究事件');
+        });
+        $("#trialProtocolLink").on("show.bs.modal", function() {
+            if(!_json.trialProtocolId){
+                tms.alert('请选择一个试验方案');
+                return false;
+            }
+            $(this).removeClass('edit');
+            var tp=$(this).attr('data-type');
+            if(tp=='edit'){
+                $(this).addClass('edit');
+                var id=$(this).attr('data-id');
+                $('#trialProtocolLink').find('.modal-title').html('编辑研究事件');
+                $(this).find('.btn-add').unbind('click').bind('click',function () {
+                    addStudyEventItem(id);
+                });
+                return;
+            }
+            $(this).find('.btn-add').unbind('click').bind('click',function () {
+                addStudyEventItem();
+            });
+            if($('#input_EventGroupId_tl').prop('checked')){
+                $('.eventGroup').hide();
+            }else{
+                $('.eventGroup').show();
+            }
+        });
+        $('#input_EventId_tl').change(function () {
+            var itemid=$(this).val();
+            if(!itemid){
+                return false;
+            }
+            tms.services.getDraftEvent({
+                requestBody:{
+                    IsPaged: false,
+                    EventId: itemid,
+                    CRFVersionId: bp1.CurrentDraftId
+                },
+                callback:function(res){
+                    if (res["EventItems"].length > 0) {
+                        var item = res["EventItems"][0];
+                        $("#input_DisplayName_tl").val(item["DisplayName"]);
+                        $("#input_IsMultirecord_tl").val(item["IsMultirecord"]?"1":"0").trigger('change');
+                        $("#input_EventTypeId_tl").val(item["EventTypeId"]).trigger('change');
+                    }
+                }
+            })
+        })
+    });
+    function addStudyEventItem(id) {
+        var id=id||"";
+        var isMustObjs=$('#itemForm').data('bootstrapValidator').validate();
+        if(!isMustObjs.isValid()) return false;
+        tms.services.createOrUpdateTrialProtocolItems({
+            requestBody:{
+                Id: id,
+                EventId: $("#input_EventId_tl").val(),
+                TrialProtocolId:_json.trialProtocolId,
+                CRFVersionId: bp1.CurrentDraftId,
+                StudyId:bp1.CurrentProjectId,
+                IsBase: false,
+                IsMustExist: $("#input_IsMustExist_tl").prop('checked'),
+                IsActive: $("#input_IsActive_tl").prop('checked'),
+                IsEventGroup: $("#input_IsEventGroup_tl").prop('checked'),
+                EventGroupId: $("#input_EventGroupId_tl").val(),
+                BaseLineEventId: $("#input_BaseLineEventId_tl").val(),
+                EventWindow: $("#input_EventWindow_tl").val(),
+                MinusValue: $("#input_MinusValue_tl").val(),
+                PlusValue: $("#input_PlusValue_tl").val(),
+                EarliestValue: $("#input_EarliestValue_tl").val(),
+                LatestValue: $("#input_LatestValue_tl").val()
+            },
+            callback:function (data) {
+                $tableStudy.bootstrapTable('refresh');
+                tms.alert('保存成功',function () {
+                    $('#trialProtocolLink').modal('hide');
+                })
+            }
+
+        })
+    }
+</script>

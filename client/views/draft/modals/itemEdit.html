@@ -1,0 +1,453 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="itemEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w450">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">编辑Item</h4>
+            </div>
+            <div class="modal-body">
+                <form id="itemForm">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_OID">OID</label>
+                        <div class="col-md-8">
+                            <input type="text" name="OID" class="form-control" id="input_OID" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_Name">名称</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Name" class="form-control" id="input_Name" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_DataType">数据类型</label>
+                        <div class="col-md-8">
+                            <select id="input_DataType" name="DataType"  class="form-control select2" disabled="disabled">
+                                <option value="">...</option>
+                                {{ each dataTypeOptions as item }}
+                                <option value="{{item.Id}}" value2="{{item.Value}}" >{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_Length">长度</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Length" class="form-control" data-type="number" id="input_Length" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_SignificantNumber">有效位数</label>
+                        <div class="col-md-8">
+                            <input type="text" name="SignificantNumber"  class="form-control" data-type="number" id="input_SignificantNumber" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_DictionaryId">编码字典</label>
+                        <div class="col-md-8">
+                            <select id="input_DictionaryId" name="DataType"  class="form-control select2">
+                                <option value="">...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_UnitGroupId">计量单位组</label>
+                        <div class="col-md-8">
+                            <select id="input_UnitGroupId" class="form-control select2">
+                                <option value="">...</option>
+                                {{ each unitGroupOptions as item }}
+                                <option value="{{item.Id}}" >{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_HintId">外部提示语</label>
+                        <div class="col-md-8">
+                            <select id="input_HintId" class="form-control select2">
+                                <option value="">...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_NoteDictionaryId">注释字典</label>
+                        <div class="col-md-8">
+                            <select id="input_NoteDictionaryId" class="form-control select2">
+                                <option value="">...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_DisplayName">显示名称</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="DisplayName" id="input_DisplayName">
+                        </div>
+                    </div>
+                </form>
+                <div class="formItem">
+                    <span class="bt">属性</span>
+                    <form id="itemForm-info">
+                        <div class="form-group has-require">
+                            <label class="control-label col-md-3" for="input_ControlsTypeId">展现方式</label>
+                            <div class="col-md-8">
+                                <select id="input_ControlsTypeId" name="ControlsTypeId" class="form-control select2">
+                                    <option value="">...</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group has-require">
+                            <label class="control-label col-md-3" for="input_DataFormat1">格式</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="input_DataFormat1">
+                                <div id="input_DataFormat2" style="display: none;">
+                                    <select class="form-control select2">
+                                        <option value="">...</option>
+                                        <option value="{yyyy}-{MM}-{dd}">{yyyy}-{MM}-{dd}</option>
+                                        <option value="{dd}-{MMM}-{yyyy}">{dd}-{MMM}-{yyyy}</option>
+                                    </select>
+                                </div>
+                                <div id="input_DataFormat3" style="display: none;">
+                                    <select class="form-control select2">
+                                        <option value="">...</option>
+                                        <option value="{yyyyu}-{MMu}-{ddu}">{yyyyu}-{MMu}-{ddu}</option>
+                                        <option value="{ddu}-{MMMu}-{yyyyu}">{ddu}-{MMMu}-{yyyyu}</option>
+                                    </select>
+                                </div>
+                                <div id="input_DataFormat4" style="display: none;" >
+                                    <select class="form-control select2">
+                                        <option value="">...</option>
+                                        <option value="{HH}:{mm}">{HH}:{mm}</option>
+                                        <option value="{HH}:{mm}:{ss}">{HH}:{mm}:{ss}</option>
+                                    </select>
+                                </div>
+                                <div id="input_DataFormat5" style="display: none;">
+                                    <select class="form-control select2">
+                                        <option value="">...</option>
+                                        <option value="{HHu}:{mmu}">{HHu}:{mmu}</option>
+                                        <option value="{HHu}:{mmu}:{ss}">{HHu}:{mmu}:{ss}</option>
+                                    </select>
+                                </div>
+                                <div id="input_DataFormat6" style="display: none;">
+                                    <select class="form-control select2">
+                                        <option value="">...</option>
+                                        <option value="{yyyy}-{MM}-{dd} {HH}:{mm}">{yyyy}-{MM}-{dd} {HH}:{mm}</option>
+                                        <option value="{dd}-{MMM}-{yyyy} {HH}:{mm}">{dd}-{MMM}-{yyyy} {HH}:{mm}</option>
+                                        <option value="{yyyy}-{MM}-{dd} {HH}:{mm}:{ss}">{yyyy}-{MM}-{dd} {HH}:{mm}:{ss}</option>
+                                        <option value="{dd}-{MMM}-{yyyy} {HH}:{mm}:{ss}">{dd}-{MMM}-{yyyy} {HH}:{mm}:{ss}</option>
+                                    </select>
+                                </div>
+                                <div id="input_DataFormat7" style="display: none;">
+                                    <select class="form-control select2">
+                                        <option value="">...</option>
+                                        <option value="{yyyyu}-{MMu}-{ddu} {HHu}:{mmu}">{yyyyu}-{MMu}-{ddu} {HHu}:{mmu}</option>
+                                        <option value="{ddu}-{MMMu}-{yyyyu} {HHu}:{mmu}">{ddu}-{MMMu}-{yyyyu} {HHu}:{mmu}</option>
+                                        <option value="{yyyyu}-{MMu}-{ddu} {HHu}:{mmu}:{ss}">{yyyyu}-{MMu}-{ddu} {HHu}:{mmu}:{ss}</option>
+                                        <option value="{ddu}-{MMMu}-{yyyyu} {HHu}:{mmu}:{ss}">{ddu}-{MMMu}-{yyyyu} {HHu}:{mmu}:{ss}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_FontSize">字体大小</label>
+                            <div class="col-md-8">
+                                <select id="input_FontSize" class="form-control select2">
+                                    <option value="1">小</option>
+                                    <option value="2">中</option>
+                                    <option value="3">大</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_FontColor">字体颜色</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="input_FontColor">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_IsBold"></label>
+                            <div class="col-md-8">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="input_IsBold">是否加粗
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="formItem">
+                    <span class="bt">范围核查</span>
+                    <div class="range-info">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="input_IsCheckMustInput" >自动核查字段必填
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="input_IsCheckInputError">自动核查录入值数据格式有误
+                            </label>
+                        </div>
+                        <div class="range-list"></div>
+                        <div class="range-mod" style="display: none;">
+                            <select class="range-limit">
+                                <option value="">...</option>
+                                {{ each limitoptions as item }}
+                                <option value="{{item.Id}}" >{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                            <select class="range-operator">
+                                <option value="">...</option>
+                                <option value="1">＜</option>
+                                <option value="2">≤</option>
+                                <option value="3">＞</option>
+                                <option value="4">≥</option>
+                                <option value="5">=</option>
+                                <option value="6">!=</option>
+                                <option value="7">In</option>
+                                <option value="8">Not In</option>
+                            </select>
+                            <input type="text" class="form-control range-value" style="width:120px;display:inline-block;" />
+                            <div class="action-btns">
+                                <span class="glyphicon glyphicon-plus-sign"></span>
+                                <span class="glyphicon glyphicon-remove-sign"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    var currentForamtControlId = "";
+    $(function () {
+        var controlTypes;
+        tms.services.getSysTypes({
+            requestBody:{
+                SystemType: 5,
+                IsNormalDataType: false,
+                GlobalValue: 2,
+                Action: 2
+            },
+            callback:function (res) {
+                controlTypes=res["BaseTypes"];
+            }
+        });
+        $("#input_ControlsTypeId").change(function(){
+            var DataTypeValue = $("#input_DataType").find('option:selected').attr("value2");
+            var ControlTypeValue =$(this).find('option:selected').attr("value2");
+
+            $("#input_DataFormat1,#input_DataFormat2,#input_DataFormat3,#input_DataFormat4,#input_DataFormat5,#input_DataFormat6,#input_DataFormat7").hide();
+            if (DataTypeValue == "6" || DataTypeValue == "7" || DataTypeValue == "8") {
+                switch(ControlTypeValue){
+                    case "12":
+                        currentForamtControlId = "input_DataFormat2";
+                        break;
+                    case "13":
+                        currentForamtControlId = "input_DataFormat4";
+                        break;
+                    case "14":
+                        currentForamtControlId = "input_DataFormat6";
+                        break;
+                    default:
+                        currentForamtControlId = "input_DataFormat1";
+                        break;
+                }
+            }
+            else if (DataTypeValue == "14" || DataTypeValue == "15" || DataTypeValue == "16" || DataTypeValue == "19" || DataTypeValue == "20" || DataTypeValue == "21") {
+                switch(ControlTypeValue){
+                    case "12":
+                        currentForamtControlId = "input_DataFormat3";
+                        break;
+                    case "13":
+                        currentForamtControlId = "input_DataFormat5";
+                        break;
+                    case "14":
+                        currentForamtControlId = "input_DataFormat7";
+                        break;
+                    default:
+                        currentForamtControlId = "input_DataFormat1";
+                        break;
+                }
+            }
+            else {
+                currentForamtControlId = "input_DataFormat1";
+            }
+            $("#" + currentForamtControlId).show().find('select.select2').attr('name','DataFormat');
+            $('#itemForm-info').bootstrapValidator('addField','DataFormat',{
+                validators: {
+                    notEmpty: {
+                        message:'格式不能为空'
+                    }
+                }
+            })
+
+        });
+        $('#input_DataType').change(function(){
+            var DataTypeValue =$(this).find('option:selected').attr("value2");
+            var input_ControlsTypeId = $("#input_ControlsTypeId");
+            input_ControlsTypeId.empty();
+            if (controlTypes) {
+                var options = [];
+                options.push('<option value="">...</option>');
+                for (var i = 0; i < controlTypes.length; i++) {
+                    var item = controlTypes[i];
+                    var show = false;
+                    switch(DataTypeValue) {
+                        case "17":// 持续时间
+                            if (item["Value"] == 18 || item["Value"] == 19) show = true;
+                            break;
+                        case "18":// 间隔时间
+                            if (item["Value"] == 15 || item["Value"] == 16 || item["Value"] == 17) show = true;
+                            break;
+                        case "6":
+                        case "7":
+                        case "8":
+                        case "14":
+                        case "15":
+                        case "16":
+                        case "19":
+                        case "20":
+                        case "21":
+                            if (item["Value"] == 12 || item["Value"] == 13 || item["Value"] == 14) show = true;
+                            break;
+                        default:
+                            show = true;
+                            break;
+                    }
+
+                    if (show) {
+                        var option ='<option value="'+item["Id"]+'" value2="'+item["Value"]+'">'+item["Name"]+'</option>';
+                        options.push(option);
+                    }
+                }
+                input_ControlsTypeId.html(options.join(''));
+                input_ControlsTypeId.val(controlTypeId).change();
+            }
+            loadDictionary();
+        });
+        //加载编码字典
+        function loadDictionary() {
+            var input_DictionaryId = $("#input_DictionaryId");
+            input_DictionaryId.empty();
+
+            var data_value = $("#input_DataType").val();
+            var data = {
+                IsPaged: false,
+                IsLab: false,
+                IsBase: false,
+                CRFVersionId: bp1.CurrentDraftId
+            };
+            var DataTypeId = data_value;
+            if(DataTypeId) data.DataTypeId = DataTypeId;
+            tms.services.getDiction({
+                requestBody:data,
+                callback:function (res) {
+                    if(res && res["DictionaryItems"]) {
+                        var options = [];
+                        options.push('<option value="">...</option>');
+                        var items=res["DictionaryItems"];
+                        for (var i = 0; i < items.length; i++) {
+                            var obj = items[i];
+                            options.push('<option value="'+obj.Id+'">'+obj.Name+'</option>');
+                        }
+                        input_DictionaryId.html(options.join(''));
+                    }
+                }
+            })
+        }
+        $("#itemEdit").on("hidden.bs.modal", function() {
+            $('#itemForm')[0].reset();
+            $('#itemForm').data('bootstrapValidator').resetForm();
+            $(this).attr({'data-type':''});
+            $('#myModalLabel2').html('新建Item');
+        });
+        $("#itemEdit").on("show.bs.modal", function() {
+            var tp=$(this).attr('data-type');
+            $(this).removeClass('edit');
+            if(tp=='edit'){
+                $(this).addClass('edit');
+                var id=$(this).attr('data-id');
+                $('#myModalLabel2').html('编辑Item');
+                $(this).find('.btn-add').unbind('click').bind('click',function () {
+                    onSave(id);
+                })
+                return;
+            }
+        });
+        //增加范围
+        $('.range-list').on('click','.glyphicon-plus-sign',function () {
+            var item_html=$('.range-mod').html();
+            var item=$('<div class="range-item"></div>');
+            item.html(item_html);
+            $('.range-list').append(item);
+            item.find('.range-limit').select2();
+            item.find('.range-operator').select2();
+        });
+        //移除范围
+        $('.range-list').on('click','.glyphicon-remove-sign',function () {
+            $(this).parent().parent('.range-item').remove();
+        });
+        
+    })
+    function onSave(id) {
+        var isMustObjs=$('#itemForm').data('bootstrapValidator').validate();
+        var isMustObjs_info=$('#itemForm-info').data('bootstrapValidator').validate();
+        if(!isMustObjs.isValid()||!isMustObjs_info.isValid()) return false;
+        var checklist = [];
+        $('.range-list').find(".range-item").each(function () {
+            var jdom = $(this);
+            var limit = jdom.find(".range-limit").val();
+            var operator = jdom.find(".range-operator").val();
+            var value = jdom.find(".range-value").val();
+            if (limit) {
+                checklist.push({
+                    ItemId: id,
+                    LimitTypeId: limit,
+                    Operator: operator,
+                    Value: value
+                });
+            }
+        });
+        tms.services.createOrUpdateItems2({
+            requestBody:{
+                IsUpdate:true,
+                Id: id,
+                OId: $("#input_OID").val(),
+                Name:$("#input_Name").val(),
+                DataTypeId: $("#input_DataType").val(),
+                Length:$("#input_Length").val(),
+                SignificantNumber: $("#input_SignificantNumber").val(),
+                DictionaryId: $("#input_DictionaryId").val(),
+                UnitGroupId:$("#input_UnitGroupId").val(),
+                HintId: $("#input_HintId").val(),
+                DisplayName:$("#input_DisplayName").val(),
+                ControlsTypeId:$("#input_ControlsTypeId").val(),
+                DataFormat:$("#" + currentForamtControlId).find('select.select2').val(),
+                FontSize: $("#input_FontSize").val(),
+                FontColor: $("#input_FontColor").val(),
+                IsBold: $("#input_IsBold").prop('checked'),
+                IsCheckMustInput: $("#input_IsCheckMustInput").prop('checked'),
+                IsCheckInputError: $("#input_IsCheckInputError").prop('checked'),
+                NoteDictionaryId: $("#input_NoteDictionaryId").val(),
+                CRFVersionId: bp1.CurrentDraftId,
+                ItemsLimits: checklist,
+                IsBase: false,
+                StudyId:bp1.CurrentProjectId
+            },
+            callback:function(data){
+                $table1.bootstrapTable('refresh');
+                tms.alert('保存成功',function () {
+                    $('#itemEdit').modal('hide')
+                })
+            }
+
+        })
+    }
+</script>

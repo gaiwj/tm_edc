@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <link rel="stylesheet" href="../assets/css/pages/crf.css">
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+
+<!--主体内容开始-->
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <link rel="import" href="../base/nav_exp_temp.html?__inline">
+    <!--左侧导航结束-->
+
+    <!--右侧主体开始-->
+    <div id="main">
+        <div class="container-fluid">
+            <div class="label-content">
+                <div class="pull-left label-icon"><i class="icons8_unit"></i><span id="title">正常值范围</span></div>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-add" onclick="onAdd();">新增</button>
+                    <button id="btn_back" type="button" class="btn btn-back" onclick="onBack();">返回</button>
+                </div>
+            </div>
+            <table id="table1" style="display:none;">
+                <!--<thead>-->
+                <!--<tr>-->
+                    <!--<th data-field="Code" data-width="100">检验项代码</th>-->
+                    <!--<th data-field="LabItemName">检验项</th>-->
+                    <!--<th data-field="FromDate" data-formatter="actionFormatter02" data-width="100">开始日期</th>-->
+                    <!--<th data-field="ToDate" data-formatter="actionFormatter02" data-width="100">结束日期</th>-->
+                    <!--<th data-field="LowValue" data-width="100">下限</th>-->
+                    <!--<th data-field="HighValue" data-width="100">上限</th>-->
+                    <!--<th data-field="UnitName" data-width="100">单位</th>-->
+                    <!--<th data-formatter="actionFormatter01" data-events="operateEvents" data-width="200">操作</th>-->
+                <!--</tr>-->
+                <!--</thead>-->
+            </table>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+<!--主体内容结束-->
+
+<!--弹框1-->
+<div class="modal fade" id="modal1" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">编辑正常值范围</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form1">
+                    <div class="form-group">
+                        <label class="col-md-3">检验项</label>
+                        <div class="col-md-8">
+                            <select id="input_LabItemsId1" name="LabItemsId" class="form-control select2" data-bv-notempty data-bv-notempty-message="检验项不能为空">
+                                {{each LabItemsItems as item i}}
+                                <option value="{{item.Id}}" valueid="{{item.UnitGroupId}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">开始日期</label>
+                        <div class="col-md-8">
+                            <input id="input_FromDate1" name="FromDate" type="text" class="form-control dataTimepick">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">结束日期</label>
+                        <div class="col-md-8">
+                            <input id="input_ToDate1" name="ToDate" type="text" class="form-control dataTimepick">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">下限</label>
+                        <div class="col-md-8">
+                            <input id="input_LowValue1" name="LowValue" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">上限</label>
+                        <div class="col-md-8">
+                            <input id="input_HighValue1" name="HighValue" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">单位</label>
+                        <div class="col-md-8">
+                            <select id="input_UnitId1" name="UnitId" class="form-control select2"></select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" onclick="onSave1(this);">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../assets/js/pages/exp/setrange.js"></script>
+</body>
+</html>

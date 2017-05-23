@@ -1,0 +1,87 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="editCheckConditionMove" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w450">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">排序</h4>
+            </div>
+            <div class="modal-body">
+                <form id="itemFormMove">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_MoveType">位置</label>
+                        <div class="col-md-8">
+                            <div id="input_MoveType">
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="moveRadio" value="3">之前
+                                    </label>
+                                </div>
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="moveRadio"  value="4">之后
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_ToItemId">Item</label>
+                        <div class="col-md-8">
+                            <select id="input_ToItemId" name="DataType"  class="form-control select2"></select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" onclick="onMove()">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#editCheckConditionMove').on('hide.bs.modal',function () {
+            $('#itemFormMove')[0].reset();
+        });
+        $('#editCheckConditionMove').on('show.bs.modal',function () {
+            tms.services.getEditCheckCondition({
+                requestBody:{
+                    EditCheckId:bp1.EditCheckId,
+                    IsPaged: false,
+                    CRFVersionId : bp1.CurrentDraftId,
+                    IsDetailed : false
+                },
+                callback:function (res) {
+                    var options=[];
+                    options.push('<option value="">...</option>');
+                    if (res["EditCheckConditionItems"].length > 0) {
+                        var _data = res["EditCheckConditionItems"];
+                        for (var i = 0; i < _data.length; i++) {
+                            var item = _data[i];
+                            options.push('<option value="'+item.Id+'">'+item.ConditionCon+'</option>');
+                        }
+                    }
+                    $('#input_ToItemId').html(options.join(''))
+                }
+            })
+        })
+    });
+    function onMove() {
+        tms.services.skipMoveEditCheckCondition({
+            requestBody:{
+                EditCheckId:bp1.EditCheckId,
+                FromItemId:$('#editCheckConditionMove').attr('data-id'),
+                ToItemId: $("#input_ToItemId").val(),
+                MoveType: $("#input_MoveType").find('input:checked').val()
+            },
+            callback:function (res) {
+                updateTableBefore();
+                tms.alert('移动成功',function () {
+                    $('#editCheckConditionMove').modal('hide');
+                })
+            }
+        });
+    }
+</script>

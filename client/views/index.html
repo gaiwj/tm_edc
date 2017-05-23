@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link rel="import" href="base/_header_css.html?__inline">
+    <link rel="stylesheet" type="text/css" href="../assets/css/pages/index.less" />
+</head>
+<body>
+    <link rel="import" href="base/header.html?__inline">
+    <div style="width:100%; height:70px;"></div>
+    <div style="margin:0 20px; background:white; border:1px solid #e9e9e9; padding-bottom:10px;">
+        <div style="height:48px; line-height:48px; border-bottom:1px solid #e9e9e9; text-align:right;">
+            <span class="block_titletext"><i class="fa fa-cog fa-fw"></i>模块</span>
+        </div>
+        <div style="overflow:auto;">
+            {{if permission.indexOf(30) > -1}}
+                <div class="module module_nav_crf" nav1id="nav_crf" >
+                    <a  href="/crf"><div class="moduleicon"></div></a>
+                    <div class="moduletext">CRF构建</div>
+                </div>
+            {{/if}}
+
+            {{if permission.indexOf(2) > -1}}
+                <div class="module module_nav_exp" nav1id="nav_exp">
+                    <a  href="/exp"> <div class="moduleicon"></div></a>
+                    <div class="moduletext">实验管理</div>
+                </div>
+            {{/if}}
+
+            {{if permission.indexOf(1) > -1}}
+                <div class="module module_nav_power" nav1id="nav_power">
+                    <a href="/power"><div class="moduleicon"></div></a>
+                    <div class="moduletext">权限配置</div>
+                </div>
+            {{/if}}
+
+            {{if permission.indexOf(3) > -1}}
+                <div class="module module_nav_export" nav1id="nav_export">
+                    <div class="moduleicon"></div>
+                    <div class="moduletext">数据导出</div>
+                </div>
+            {{/if}}
+            {{if permission.indexOf(4) > -1}}
+                <div class="module module_nav_odm" nav1id="nav_odm">
+                    <a href="/odm"><div class="moduleicon"></div></a>
+                    <div class="moduletext">ODM导出</div>
+                </div>
+            {{/if}}
+            {{if permission.indexOf(6) > -1}}
+                <div class="module module_nav_lanuage" nav1id="nav_lanuage">
+                    <div class="moduleicon"></div>
+                    <div class="moduletext">多语言支持</div>
+                </div>
+            {{/if}}
+            {{if permission.indexOf(5) > -1}}
+                <div class="module module_nav_crflib" nav1id="nav_crflib">
+                    <a href="/crflib"><div class="moduleicon"></div></a>
+                    <div class="moduletext">CRF通用库</div>
+                </div>
+            {{/if}}
+
+        </div>
+    </div>
+
+    <div style="position:absolute; top:315px; left:20px; right:20px; bottom:20px; background:white;">
+        <div class="block_title">
+            <span class="block_titletext"><i class="fa fa-cog fa-fw"></i>数据采集</span>
+        </div>
+        <div class="block_42_0">
+            <table id="table1" style="display:none;">
+                <thead>
+                <tr>
+                    <th data-field="StudyName" data-formatter="formatter1" data-events="operateEvents">项目</th>
+                    <th data-field="NoSites" data-formatter="formatter2" data-width="200">研究中心</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <!-- 添加当前模板js -->
+    <link rel="import" href="base/_footer_js.html?__inline">
+    <script src="../assets/js/pages/index.js"></script>
+</body>
+</html>

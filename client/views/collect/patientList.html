@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <link rel="stylesheet" href="../../assets/css/pages/main.less?__inline">
+    <link rel="stylesheet" href="../../assets/css/pages/patient.less?__inline">
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+
+<!--主体内容开始-->
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <link rel="import" href="../base/nav_collect.html?__inline">
+    <!--左侧导航结束-->
+
+    <!--右侧主体开始-->
+    <div id="main-collect">
+        <div class="container-fluid">
+            <div class="tabcon1">
+                <div class="tabone1 tabcon1_first tabcon1_last tabone1_now">
+                    <div class="tabone1textcon">
+                        <i class="fa fa-home fa-fw" style="cursor:pointer;" title="切换研究中心" onclick="onSelectHospital();"></i>
+                        <span class="tabone1text">凤城市中心医院</span>
+                    </div>
+                </div>
+            </div>
+            <div class="label-content" style="border-left: 1px solid #edecec;border-right: 1px solid #edecec;background: #fff;">
+                <div class="pull-left label-icon"><i class="icons8_libform"></i>受试者列表</div>
+                <div class="pull-right"><button id="patientAdd" type="button" class="btn btn-add" style="width:90px;margin-right: 10px;">新增受试者</button></div>
+            </div>
+            <div class="searchbar mb5">
+                <div class="row">
+                    <div class="col-md-3">
+                        <span>受试者编号</span>
+                        <input id="code" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-9">
+                        <button id="search" type="button" class="btn btn-search pull-left mt40">搜索</button>
+                    </div>
+                </div>
+            </div>
+            <table id="table"></table>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+<!--主体内容结束-->
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../assets/js/pages/collect/patientList.js"></script>
+<!--验证pin码和密码-->
+<link rel="import" href="modals/checkSignPwdAndPin.html?__inline">
+</body>
+</html>

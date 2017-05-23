@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <link rel="stylesheet" href="../assets/css/pages/crflib.css">
+    <style type="text/css">
+        .row{ margin:5px 0; }
+        .row .searchtitle{ line-height: 28px; text-align: right; color:#979aa0; }
+    </style>
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+
+<!--主体内容开始-->
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <link rel="import" href="../base/nav_collect.html?__inline">
+    <!--左侧导航结束-->
+
+    <!--右侧主体开始-->
+    <div id="main" style="padding-left:80px;">
+        <div class="container-fluid">
+            <div id="searchbar" class="searchbar mb5">
+                <div class="row">
+                    <div class="col-xs-1 searchtitle">研究中心</div>
+                    <div class="col-xs-3">
+                        <select id="input_SiteId" class="form-control select2">
+                            <option value="">全部</option>
+                            {{each SiteOptions as item i}}
+                            <option value="{{item.Id}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-xs-1 searchtitle">表单</div>
+                    <div class="col-xs-3">
+                        <select id="input_FormId" class="form-control select2">
+                            <option value="">全部</option>
+                            {{each FormOptions as item i}}
+                            <option value="{{item.Id}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-xs-1 searchtitle">疑问分类</div>
+                    <div class="col-xs-3">
+                        <select id="input_QueryClassId" class="form-control select2">
+                            <option value="">全部</option>
+                            {{each QueryClassOptions as item i}}
+                            <option value="{{item.Id}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-1 searchtitle">受试者</div>
+                    <div class="col-xs-3">
+                        <select id="input_SubjectId" class="form-control select2">
+                            <option value="">全部</option>
+                            {{each SubjectOptions as item i}}
+                            <option value="{{item.Id}}">{{item.Code}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-xs-1 searchtitle">ItemGroup</div>
+                    <div class="col-xs-3">
+                        <select id="input_ItemGroupId" class="form-control select2">
+                            <option value="">全部</option>
+                            {{each ItemGroupOptions as item i}}
+                            <option value="{{item.Id}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-xs-1 searchtitle">质疑编号</div>
+                    <div class="col-xs-3">
+                        <input id="input_QueryCode" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-1 searchtitle">研究事件</div>
+                    <div class="col-xs-3">
+                        <select id="input_EventId" class="form-control select2">
+                            <option value="">全部</option>
+                            {{each EventOptions as item i}}
+                            <option value="{{item.Id}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-xs-1 searchtitle">质疑状态</div>
+                    <div class="col-xs-3">
+                        <select id="input_QueryStatus" class="form-control select2">
+                            <option value="">全部</option>
+                            <option value="1">新建</option>
+                            <option value="2">已回复</option>
+                            <option value="3">已关闭</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-4"><button type="button" class="btn btn-search pull-left" onclick="onSearch();">查询</button></div>
+                </div>
+                <div>
+                    <div class="col-xs-2">
+                        <select id="Action_Type" class="select2">
+                            <option value="">...</option>
+                            <option value="1">可回答</option>
+                            <option value="2">可关闭</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-8">
+                        <textarea id="Action_ReplyContent" class="form-control" style="width:100%; height:90px; display: none;"></textarea>
+                    </div>
+                    <div class="col-xs-2">
+                        <button id="Action_Submit" type="button" class="btn btn-add" onclick="onSubmit();" style="float: left; display: none;">提交</button>
+                    </div>
+                </div>
+            </div>
+            <table id="table1" style="display:none;">
+                <thead>
+                <tr>
+                    <th data-checkbox="true"></th>
+                    <th data-field="QueryCode" data-width="150">质疑编号</th>
+                    <th data-field="SiteCode" data-width="100">中心编号</th>
+                    <th data-field="SubjectCode" data-width="100">受试者</th>
+                    <th data-field="EventFormName">研究事件/表单</th>
+                    <th data-field="ItemGroupItemName">ItemGroup/字段</th>
+                    <th data-field="ItemValue" data-width="150">原值</th>
+                    <th data-field="QueryContent" data-width="200">质疑内容</th>
+                    <th data-field="QueryStatusName" data-width="100">质疑状态</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../assets/js/pages/collect/query.js"></script>
+</body>
+</html>

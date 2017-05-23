@@ -1,0 +1,32 @@
+<div class="header">
+    <div class="pull-left">
+        <!--Logo-->
+        <h1 class="logo">eCollect®临床试验电子数据采集管理系统</h1>
+        <!--竖线-->
+        <div class="line"></div>
+        <!--导航名称-->
+        <span class="nav-name">{{navName}}</span>
+        <!--首页-->
+        <span id="homePage" onclick="onBack();"></span>
+    </div>
+    <div class="pull-right">
+        <!--退出-->
+        <div id="btn-logout" onclick="onLogout();"></div>
+        <!--竖线-->
+        <div class="line1" style="float:right;"></div>
+        <!--用户信息-->
+        <div class="user-info">
+            <div class="user-img"></div>
+            <div id="userName" class="user-name"></div>
+
+        </div>
+        <!--选择公司-->
+        <div class="selectCompany" style="position: relative;">
+            <i class="icons8 icons8-company" style="float: left;margin-top: 17px;"></i>
+            <div id="companyInput" style="float: left"><select id="input-Company" class="form-control"></select></div>
+            <div id="companyInfo" style="display: none;float: left"></div>
+        </div>
+    </div>
+    <!--阴影线-->
+    <div class="shadow"></div>
+</div>

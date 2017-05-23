@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        var bp1 = window.localStorage["browseparam1"];
+        if (bp1) {
+            bp1 = JSON.parse(bp1);
+            var CurrentProjectId = bp1.CurrentProjectId;
+            var CurrentEnvironmentId = bp1.CurrentEnvironmentId;
+            window.location.href = '/collect/query?CurrentProjectId=' + CurrentProjectId + "&CurrentEnvironmentId=" + CurrentEnvironmentId;
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

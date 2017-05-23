@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link rel="import" href="base/_header_css.html?__inline">
+    <link rel="stylesheet" type="text/css" href="../assets/css/pages/login.less" />
+</head>
+
+<body>
+    <div id="totalcon">
+        <!--背景图片-->
+        <div style="position:absolute; top:0px; left:0px; width:100%; height:100%; z-index:-2;">
+            <img src="/assets/images/bk.gif" style="width:100%; height:100%;">
+        </div>
+        <!--背景图片遮罩-->
+        <div style="position:absolute; top:0px; left:0px; width:100%; height:100%; background:black; filter:alpha(opacity=1); opacity:0.01; z-index:-1;"></div>
+        <div class="login-wrap">
+            <div class="logo"></div>
+            <div id="maincon">
+                <div style="height:40px; font-size:30px; line-height:40px; font-weight:bold;">Electronic Data Capture System Management</div>
+                <div style="width:100%; height:40px;"></div>
+                <div id="userLogin">
+                    <!--用户名-->                
+                    <div class="inputcon" style="background:url(/assets/images/login_username.gif); margin-bottom:10px;">
+                        <div id="inputhint1" class="inputhint" style="display: none;">Username</div>
+                        <input id="input_username" type="text" class="inputone">
+                    </div>
+                    <!--密码-->
+                    <div class="inputcon" style="background:url(/assets/images/login_password.gif);">
+                        <div id="inputhint2" class="inputhint" style="display: none;">Password</div>
+                        <input id="input_password" type="password" class="inputone">
+                    </div>
+                </div>
+                <!--错误信息-->
+                <div id="errormsg" style="width:100%; height:30px; line-height:30px; color:red;"></div>
+                <!--登陆按钮-->
+                <div id="loginbtn" >Login</div>
+                <!--忘记密码-->
+                <!--<div style="width:284px; height:30px; line-height:30px; text-align:right; margin:auto;">
+                    <a id="forgetpwd" href="#">忘记密码？</a>
+                </div>-->
+            </div>
+
+            <div style="position:absolute; bottom:40px; left:0px; width:100%;">
+                <div style="color:#a4a4a4; font-size:12px;">
+                    已通过ISO27001:2013信息安全认证
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 添加当前模板js -->
+    <link rel="import" href="base/_footer_js.html?__inline">
+    <script src="../assets/js/pages/login.js"></script>
+</body>
+
+</html>

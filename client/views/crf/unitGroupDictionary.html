@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <link rel="stylesheet" href="../assets/css/pages/crf.css">
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+
+<!--主体内容开始-->
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <link rel="import" href="../base/nav_crf_temp.html?__inline">
+    <!--左侧导航结束-->
+
+    <!--右侧主体开始-->
+    <div id="main">
+        <div class="container-fluid" style="padding: 0;">
+            <div class="label-content" style="padding:0 10px;">
+                <div class="pull-left label-icon"><i class="icons8_groupunit"></i>计量单位字典</div>
+            </div>
+            <div class="searchbar export-bar mb10" style="margin-left:8px; margin-right:8px;">
+                <div class="row">
+                    <div class="col-md-2">
+                        <span>名称</span>
+                        <input id="input_Name0" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-2">
+                        <span>OID</span>
+                        <input id="input_OId0" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-search pull-left mt40" onclick="onSearch();">查询</button>
+                    </div>
+                </div>
+
+            </div>
+            <div id="content" style="position:relative; width:100%; height:300px;">
+                <div style="position:absolute; top:0px; left:0px; width:50%; height: 100%;">
+                    <div class="block_padding" style="top:0px; right:4px; bottom:4px;">
+                        <div class="block_title1">
+                            <span class="block_titletext">计量单位组字典</span>
+                            <button type="button" class="btn btn-add" onclick="onAdd1();">新增</button>
+                        </div>
+                        <div class="block_42_0">
+                            <table id="table1" style="display: none;">
+                                <thead>
+                                <tr>
+                                    <th data-radio="true"></th>
+                                    <th data-field="OId" data-width="100">OID</th>
+                                    <th data-field="Name">名称</th>
+                                    <th data-formatter="actionFormatter01" data-events="operateEvents" data-width="100">操作</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div style="position:absolute; top:0px; right:0px; width:50%; height: 100%;">
+                    <div class="block_padding" style="top:0px; left:4px; bottom:4px;">
+                        <div class="block_title1">
+                            <span class="block_titletext">计量单位字典</span>
+                            <button type="button" class="btn btn-add" onclick="onAdd2();">新增</button>
+                        </div>
+                        <div class="block_42_0">
+                            <table id="table2" style="display: none;">
+                                <thead>
+                                <tr>
+                                    <th data-field="OID" data-width="100">OID</th>
+                                    <th data-field="Name">名称</th>
+                                    <th data-formatter="actionFormatter02" data-events="operateEvents" data-width="100">操作</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+<!--主体内容结束-->
+
+<!--弹框1-->
+<div class="modal fade" id="modal1" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">编辑计量单位字典组</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form1">
+                    <div class="form-group">
+                        <label class="col-md-3">OID</label>
+                        <div class="col-md-8">
+                            <input id="input_OID1" name="OID" type="text" class="form-control" data-bv-notempty data-bv-notempty-message="OID不能为空">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">名称</label>
+                        <div class="col-md-8">
+                            <input id="input_Name1" name="Name" type="text" class="form-control" data-bv-notempty data-bv-notempty-message="名称不能为空">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" onclick="onSave1(this);">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--弹框2-->
+<div class="modal fade" id="modal2" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">编辑计量单位字典组项</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form2">
+                    <div class="form-group">
+                        <label class="col-md-3">OID</label>
+                        <div class="col-md-8">
+                            <select id="input_Unit" name="Unit" class="form-control select2" data-bv-notempty data-bv-notempty-message="数据类型不能为空">
+                                {{each UnitOptions as item i}}
+                                <option value="{{item.Id}}">{{item.OId}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" onclick="onSave2(this);">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../assets/js/pages/crf/unitGroupDictionary.js"></script>
+</body>
+</html>

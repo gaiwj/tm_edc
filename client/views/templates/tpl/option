@@ -1,0 +1,3 @@
+{{ each}}
+    <option value="{{$value.Id}}" value2="{{$value.Value}}" >{{$value.Name}}</option>
+{{/each}}

@@ -1,0 +1,57 @@
+<div class="modal fade" id="crfDraftEdit" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">修改CRF版本</h4>
+            </div>
+            <div class="modal-body">
+                <form id="sumForm">
+                    <div class="form-group has-require">
+                        <label class="col-md-3">名称</label>
+                        <div class="col-md-8">
+                            <input id="name01" type="text" class="form-control" name="name01">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="save01" type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var Name = $('#name01');
+    $(function () {
+        $('#crfDraftEdit').on('show.bs.modal',function () {
+            $('#crfDraftEdit').addClass("edit");
+			Name.val(currentRow.name);
+        });
+
+        $('#crfDraftEdit').on('hide.bs.modal',function () {
+        	$('#sumForm').data('bootstrapValidator').resetForm();
+            currentRow = {};
+        });
+        
+        $('#save01').click(function(){
+            if($('#sumForm').data('bootstrapValidator').validate().isValid()){
+                tms.services.updateVersionName({
+                    requestBody:{
+                            Id: currentRow.id,
+                            Name: Name.val(),
+                            StudyId: bp1.CurrentProjectId
+                    },
+                    callback:function(data){
+                        $('.modal').modal('hide');
+                        loadList();
+                        tms.alert('操作成功');
+                    }
+                })
+            }
+        })
+    });
+
+</script>

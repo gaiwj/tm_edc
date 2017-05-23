@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <link rel="stylesheet" href="../../assets/css/pages/power.less">
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+<!--头部结束-->
+<div id="wrapper">
+    <link rel="import" href="../base/nav_power_temp.html?__inline">
+    <!--右侧主体开始-->
+    <div id="main">
+        <div class="container-fluid">
+            <div style="height: 42px;line-height: 42px;">
+                <div class="pull-left label-icon"><i class="icons8-user"></i>用户管理</div>
+            </div>
+            <div  class="container-content">
+                <div class="container-menu">
+                    <div class="menu-search">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Search for..." onkeyup="searchMenu(this)">
+                        </div>
+                    </div>
+                    <div class="menu-list"></div>
+                </div>
+                <div class="container-table">
+                    <div class="settings">
+                        <div class="title">
+                            <span>设置</span>
+                        </div>
+                        <div class="setting-items">
+                            <div class="setting-left">
+                                <ul>
+                                    <li>
+                                        <span class="bt">默认语言</span>
+                                        <select id="input_DefaultLanguage" class="select2">
+                                            <option value="">...</option>
+                                            {{ each DefaultLanguage as item }}
+                                            <option value="{{item.Id}}" >{{item.Name}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </li>
+                                    <li>
+                                        <span class="bt">企业角色</span>
+                                        <select id="input_RoleId" class="select2">
+                                            <option value="">...</option>
+                                            {{ each RoleItems as item }}
+                                            <option value="{{item.Id}}" >{{item.Name}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="setting-right">
+                                <ul>
+                                    <li>
+                                        <span class="bt">默认时区</span>
+                                        <select id="input_TimeZone" class="select2">
+                                            <option value="0">...</option>
+                                            <option value="1">国际日期变更线西(UTC-12:00)</option>
+                                            <option value="2">协调世界时-11(UTC-11:00)</option>
+                                            <option value="3">阿留申群岛(UTC-10:00)</option>
+                                            <option value="4">夏威夷(UTC-10:00)</option>
+                                            <option value="5">马克萨斯群岛(UTC-09:30)</option>
+                                            <option value="6">阿拉斯加(UTC-09:00)</option>
+                                            <option value="7">协调世界时-09(UTC-09:00)</option>
+                                            <option value="8">太平洋时间(美国和加拿大)(UTC-08:00)</option>
+                                            <option value="9">协调世界时-08(UTC-08:00)</option>
+                                            <option value="10">奇瓦瓦、拉巴斯、马萨特兰(UTC-07:00)</option>
+
+                                            <option value="11">山地时间(美国和加拿大)(UTC-07:00)</option>
+                                            <option value="12">亚利桑那(UTC-07:00)</option>
+                                            <option value="13">复活节岛(UTC-06:00)</option>
+                                            <option value="14">瓜达拉哈拉、墨西哥城、蒙特雷(UTC-06:00)</option>
+                                            <option value="15">萨斯喀彻温(UTC-06:00)</option>
+                                            <option value="16">中部时间(美国和加拿大)(UTC-06:00)</option>
+                                            <option value="17">中美洲(UTC-06:00)</option>
+                                            <option value="18">波哥大、利马、基多、里奥布朗库(UTC-05:00)</option>
+                                            <option value="19">东部时间(美国和加拿大)(UTC-05:00)</option>
+                                            <option value="20">哈瓦那(UTC-05:00)</option>
+
+                                            <option value="21">海地(UTC-05:00)</option>
+                                            <option value="22">切图马尔(UTC-05:00)</option>
+                                            <option value="23">印第安纳州（东部）(UTC-05:00)</option>
+                                            <option value="24">大西洋时间（加拿大）(UTC-04:00)</option>
+                                            <option value="25">加拉加斯(UTC-04:00)</option>
+                                            <option value="26">库亚巴(UTC-04:00)</option>
+                                            <option value="27">乔治敦、拉巴斯、马瑙斯、圣胡安(UTC-04:00)</option>
+                                            <option value="28">圣地亚哥(UTC-04:00)</option>
+                                            <option value="29">特克斯和凯科斯群岛(UTC-04:00)</option>
+                                            <option value="30">亚松森(UTC-04:00)</option>
+
+                                            <option value="31">纽芬兰(UTC-03:30)</option>
+                                            <option value="32">阿拉瓜伊纳(UTC-03:00)</option>
+                                            <option value="33">巴西利亚(UTC-03:00)</option>
+                                            <option value="34">布宜诺斯艾利斯(UTC-03:00)</option>
+                                            <option value="35">格陵兰(UTC-03:00)</option>
+                                            <option value="36">卡宴、福塔雷萨(UTC-03:00)</option>
+                                            <option value="37">蒙得维的亚(UTC-03:00)</option>
+                                            <option value="38">萨尔瓦多(UTC-03:00)</option>
+                                            <option value="39">圣皮埃尔和密克隆群岛(UTC-03:00)</option>
+                                            <option value="40">协同世界时-02(UTC-02:00)</option>
+
+                                            <option value="41">佛得角群岛(UTC-01:00)</option>
+                                            <option value="42">亚速尔群岛(UTC-01:00)</option>
+                                            <option value="43">协调世界时</option>
+                                            <option value="44">都柏林、爱丁堡、里斯本、伦敦(UTC+00:00)</option>
+                                            <option value="45">卡萨布兰卡(UTC+00:00)</option>
+                                            <option value="46">蒙罗维亚、雷克雅未克(UTC+00:00)</option>
+                                            <option value="47">阿姆斯特丹、柏林、伯尔尼、罗马、斯德哥尔摩、维也纳(UTC+01:00)</option>
+                                            <option value="48">贝尔格莱德、布拉迪斯拉发、布达佩斯、卢布尔雅那、布拉格(UTC+01:00)</option>
+                                            <option value="49">布鲁塞尔、哥本哈根、马德里、巴黎(UTC+01:00)</option>
+                                            <option value="50">萨拉热窝、斯科普里、华沙、萨格勒布(UTC+01:00)</option>
+
+                                            <option value="51">温得和克(UTC+01:00)</option>
+                                            <option value="52">中非西部(UTC+01:00)</option>
+                                            <option value="53">安曼(UTC+02:00)</option>
+                                            <option value="54">贝鲁特(UTC+02:00)</option>
+                                            <option value="55">大马士革(UTC+02:00)</option>
+                                            <option value="56">的黎波里(UTC+02:00)</option>
+                                            <option value="57">哈拉雷、比勒陀利亚(UTC+02:00)</option>
+                                            <option value="58">赫尔辛基、基辅、里加、索菲亚、塔林、维尔纽斯(UTC+02:00)</option>
+                                            <option value="59">基希纳乌(UTC+02:00)</option>
+                                            <option value="60">加里宁格勒(UTC+02:00)</option>
+
+                                            <option value="61">加沙、希伯伦(UTC+02:00)</option>
+                                            <option value="62">开罗(UTC+02:00)</option>
+                                            <option value="63">雅典、布加勒斯特(UTC+02:00)</option>
+                                            <option value="64">耶路撒冷(UTC+02:00)</option>
+                                            <option value="65">巴格达(UTC+03:00)</option>
+                                            <option value="66">科威特、利雅得(UTC+03:00)</option>
+                                            <option value="67">明斯克(UTC+03:00)</option>
+                                            <option value="68">莫斯科、圣彼得堡、伏尔加格勒(UTC+03:00)</option>
+                                            <option value="69">内罗毕(UTC+03:00)</option>
+                                            <option value="70">伊斯坦布尔(UTC+03:00)</option>
+
+                                            <option value="71">德黑兰(UTC+03:30)</option>
+                                            <option value="72">阿布拉比、马斯喀特(UTC+04:00)</option>
+                                            <option value="73">阿斯特拉罕、乌里扬诺夫斯克(UTC+04:00)</option>
+                                            <option value="74">埃里温(UTC+04:00)</option>
+                                            <option value="75">巴库(UTC+04:00)</option>
+                                            <option value="76">第比利斯(UTC+04:00)</option>
+                                            <option value="77">路易港(UTC+04:00)</option>
+                                            <option value="78">伊热夫斯克、萨马拉(UTC+04:00)</option>
+                                            <option value="79">喀布尔(UTC+04:30)</option>
+                                            <option value="80">阿什哈巴德、塔什干(UTC+05:00)</option>
+
+                                            <option value="81">叶卡捷琳堡(UTC+05:00)</option>
+                                            <option value="82">伊斯兰堡、卡奇拉(UTC+05:00)</option>
+                                            <option value="83">钦奈、加尔各答、孟买、新德里(UTC+05:30)</option>
+                                            <option value="84">斯里加亚渥登普拉(UTC+05:30)</option>
+                                            <option value="85">加德满都(UTC+05:45)</option>
+                                            <option value="86">阿斯塔纳(UTC+06:00)</option>
+                                            <option value="87">达卡(UTC+06:00)</option>
+                                            <option value="88">鄂木斯克(UTC+06:00)</option>
+                                            <option value="89">仰光(UTC+06:30)</option>
+                                            <option value="90">巴尔瑙尔、戈尔诺-阿尔泰斯克(UTC+07:00)</option>
+
+                                            <option value="91">科布尔(UTC+07:00)</option>
+                                            <option value="92">克拉斯诺亚尔斯克(UTC+07:00)</option>
+                                            <option value="93">曼谷、河内、雅加达(UTC+07:00)</option>
+                                            <option value="94">托木斯克(UTC+07:00)</option>
+                                            <option value="95">新西伯利亚(UTC+07:00)</option>
+                                            <option value="96">北京、重庆、香港特别行政区、乌鲁木齐(UTC+08:00)</option>
+                                            <option value="97">吉隆坡、新加坡(UTC+08:00)</option>
+                                            <option value="98">珀斯(UTC+08:00)</option>
+                                            <option value="99">中国台北(UTC+08:00)</option>
+                                            <option value="100">乌兰巴托(UTC+08:00)</option>
+
+                                            <option value="101">伊尔库茨克(UTC+08:00)</option>
+                                            <option value="102">平壤(UTC+08:30)</option>
+                                            <option value="103">尤克拉(UTC+08:45)</option>
+                                            <option value="104">赤塔市(UTC+09:00)</option>
+                                            <option value="105">大阪、札幌、东京(UTC+09:00)</option>
+                                            <option value="106">首尔(UTC+09:00)</option>
+                                            <option value="107">雅库茨克(UTC+09:00)</option>
+                                            <option value="108">阿德莱德(UTC+09:00)</option>
+                                            <option value="109">达尔文(UTC+09:30)</option>
+                                            <option value="110">布里斯旺(UTC+10:00)</option>
+
+                                            <option value="111">符拉迪沃斯托克(UTC+10:00)</option>
+                                            <option value="112">关岛、莫尔兹比港(UTC+10:00)</option>
+                                            <option value="113">霍巴特(UTC+10:00)</option>
+                                            <option value="114">堪培拉、墨尔本、悉尼(UTC+10:00)</option>
+                                            <option value="115">豪勋爵岛(UTC+10:30)</option>
+                                            <option value="116">布干维尔岛(UTC+11:00)</option>
+                                            <option value="117">马加丹(UTC+11:00)</option>
+                                            <option value="118">诺福克岛(UTC+11:00)</option>
+                                            <option value="119">乔库尔达赫(UTC+11:00)</option>
+                                            <option value="120">萨哈林(UTC+11:00)</option>
+
+                                            <option value="121">所罗门群岛、新喀里多尼亚(UTC+11:00)</option>
+                                            <option value="122">阿纳德尔、堪察加彼得罗巴甫洛夫斯克(UTC+12:00)</option>
+                                            <option value="123">奥兰克、惠灵顿(UTC+12:00)</option>
+                                            <option value="124">斐济(UTC+12:00)</option>
+                                            <option value="125">协调世界时+12(UTC+12:00)</option>
+                                            <option value="126">查塔姆群岛(UTC+12:45)</option>
+                                            <option value="127">努库阿洛法(UTC+13:00)</option>
+                                            <option value="128">萨摩亚群岛(UTC+13:00)</option>
+                                            <option value="129">圣诞岛(UTC+14:00)</option>
+                                        </select>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="bottom">
+                            <button type="button" class="btn btn-add" onclick="onSave1()">保存</button>
+                        </div>
+                    </div>
+                    <div class="subject-role">
+                        <div class="title">
+                            <span>项目角色</span>
+                        </div>
+                        <div class="role-list"></div>
+                        <div class="role-item-mod">
+                            <select class="select2s role_study">
+                                <option value="">[研究项目]</option>
+                                {{ each Projects as item }}
+                                <option value="{{item.Id}}" >{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                            <select class="select2s role_environment">
+                                <option value="">[环境]</option>
+                                {{ each EnvironmentItems as item }}
+                                <option value="{{item.Id}}" >{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                            <select class="select2s role_role">
+                                <option value="">[项目角色]</option>
+                                {{ each RoleItems2 as item }}
+                                <option value="{{item.Id}}" >{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                            <div class="action-btns">
+                                <span class="glyphicon glyphicon-plus-sign"></span>
+                                <span class="glyphicon glyphicon-remove-sign"></span>
+                            </div>
+                        </div>
+                        <div class="bottom">
+                            <button type="button" class="btn btn-add" onclick="onSave2()">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+<!-- 添加当前模板js -->
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../../assets/js/pages/power/user.js"></script>
+</body>
+</html>

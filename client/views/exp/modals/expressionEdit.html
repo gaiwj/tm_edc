@@ -1,0 +1,189 @@
+<div class="modal fade" id="expressionEdit" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="sumForm">
+                    <div class="form-group has-require">
+                        <label class="col-md-3">全局变量</label>
+                        <div class="col-md-8">
+                            <select id="variableId" class="form-control select2" name="variableId">
+                                <option value="">...</option>
+                                {{each VariableItems as item i}}
+                                <option value="{{item.Id}}" valueId ="{{item.UnitGroupId}}" >{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="col-md-3">低位标签</label>
+                        <div class="col-md-8">
+                            <input id="lowLable" type="text" class="form-control" name="lowLable">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="col-md-3">低位计算符</label>
+                        <div class="col-md-8">
+                            <select id="lowOperator" class="form-control select2" name="lowOperator">
+                                <option value="">...</option>
+                                <option value="1">=</option>
+                                <option value="2">＞</option>
+                                <option value="3">≥</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">高位标签</label>
+                        <div class="col-md-8">
+                            <input id="highLable" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">高位计算符</label>
+                        <div class="col-md-8">
+                            <select id="highOperator" class="form-control select2">
+                                <option value="">...</option>
+                                <option value="4">＜</option>
+                                <option value="5">≤</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">低位值</label>
+                        <div class="col-md-8">
+                            <input id="lowValue" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">高位值</label>
+                        <div class="col-md-8">
+                            <input id="highValue" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">单位</label>
+                        <div class="col-md-8">
+                            <select id="unitId" class="form-control select2">
+
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="save" type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var variableId = $('#variableId');
+    var lowLable =  $('#lowLable');
+    var lowOperator = $('#lowOperator');
+    var highLable = $('#highLable');
+    var highOperator = $('#highOperator');
+    var lowValue = $('#lowValue');
+    var highValue = $('#highValue');
+    var unitId = $('#unitId');
+
+    $(function () {
+        $('#expressionEdit').on('show.bs.modal',function () {
+            //console.log(currentRow);
+            if(currentRow.id){
+                $('#expressionEdit').addClass("edit");
+                $('#expressionEdit .modal-title').html("编辑范围类型表达式");
+                variableId.val(currentRow.variableId).trigger('change');
+                lowLable.val(currentRow.lowLable);
+                lowOperator.val(currentRow.lowOperator).trigger('change');
+                highLable.val(currentRow.highLable);
+                highOperator.val(currentRow.highOperator).trigger('change');
+                lowValue.val(currentRow.lowValue);
+                highValue.val(currentRow.highValue);
+                unitId.val(currentRow.unitId).trigger('change');
+            }else{
+                $('#expressionEdit').removeClass("edit");
+                $('#expressionEdit .modal-title').html("新建范围类型表达式");
+            }
+        });
+
+        $('#expressionEdit').on('hide.bs.modal',function () {
+            // 重置表单
+            $("#variableId option:first").prop("selected", 'selected').trigger('change');
+            $("#lowOperator option:first").prop("selected", 'selected').trigger('change');
+            $("#highOperator option:first").prop("selected", 'selected').trigger('change');
+            $("#unitId option:first").prop("selected", 'selected').trigger('change');
+
+            $('#sumForm').data('bootstrapValidator').resetForm();
+            $('#sumForm')[0].reset();
+            currentRow = {};
+        });
+        $('#save').click(function(){
+            if($('#sumForm').data('bootstrapValidator').validate().isValid()){
+                var query = {
+                    Id:currentRow.id,
+                    VariableId:variableId.val(),
+                    LowLable:lowLable.val(),
+                    HighLable:highLable.val(),
+                    LowOperator:lowOperator.val(),
+                    HighOperator:highOperator.val(),
+                    LowValue:lowValue.val(),
+                    HighValue:highValue.val(),
+                    UnitId:unitId.val(),
+                    RangeTypeId:tms.util.getUrlParam('id')
+                };
+                niForm(query);
+            }
+        });
+        $('#variableId').change(function(){
+            unitIdF($("#variableId").find(" option:selected").attr("valueId"));
+        }).change()
+    });
+
+    // 新增/修改表单
+    function niForm(query){
+        //console.log(query);
+        tms.services.createOrUpdateRangeTypeItems({
+            requestBody:query,
+            callback:function(data){
+                $('.modal').modal('hide');
+                loadList();
+                tms.alert('操作成功');
+            }
+        })
+    }
+
+    // 单位
+    function unitIdF(UnitGroupId){
+        //console.log(query);
+        $('#unitId').empty();
+        var _data = [];
+        if(UnitGroupId){
+            tms.services.getUnitGroupItems({
+                requestBody:{
+                    IsPaged: false,
+                    UnitGroupId: UnitGroupId
+                },
+                callback:function(data){
+                    //console.log(data);
+                    for(var i = 0; i < data.UnitGroupItemsItems.length; i++){
+                        var item = data.UnitGroupItemsItems[i];
+                        _data.push({
+                            id: item.UnitId,
+                            text: item.Name
+                        })
+                    }
+                    $('#unitId').select2({
+                        width:'100%',
+                        minimumResultsForSearch: -1,
+                        data: _data
+                    });
+                }
+            })
+        }
+    }
+</script>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <link rel="stylesheet" href="../../assets/css/pages/exp.less">
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+<!--头部结束-->
+
+<!--主体内容开始-->
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <link rel="import" href="../base/nav_exp_temp.html?__inline">
+    <!--左侧导航结束-->
+
+    <!--右侧主体开始-->
+    <div id="main">
+        <div class="container-fluid">
+            <div class="label-content">
+                <div class="pull-left label-icon"><i class="icons8 icons8_labitem"></i>单位换算 > 转换过程</div>
+                <div class="pull-right"><button type="button" class="btn btn-back" id="back">返回</button></div>
+            </div>
+            <div class="block-title3">自动计算OID：{{oid}}</div>
+            <div class="h415 mt5">
+                <div class="block_title">
+                    <span>转换公式</span>
+                    <button type="button" class="btn btn-add" data-toggle="modal" id="convertFormula">新增</button>
+                </div>
+                <table id="table1"></table>
+            </div>
+
+            <div class="block mt10">
+                <div class="block_title">
+                    <span>适用点</span>
+                    <button type="button" class="btn btn-add" data-toggle="modal" id="convertItem">新增</button>
+                </div>
+                <table id="table2"></table>
+            </div>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+<!--主体内容结束-->
+
+<!-- 添加当前模板js -->
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../assets/js/pages/exp/convertConfig.js"></script>
+<!--新建/修改计算公式-->
+<link rel="import" href="modals/convertFormulaEdit.html?__inline">
+<!--新建/修改适用Item-->
+<link rel="import" href="modals/convertItemEdit.html?__inline">
+</body>
+</html>

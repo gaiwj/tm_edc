@@ -1,0 +1,54 @@
+<div class="modal fade" id="codingDictionaryImport" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">导入编码字典</h4>
+            </div>
+            <div >
+                <table id="table3"></table>
+            </div>
+            <div class="modal-footer">
+                <button id="save" type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(function(){
+
+        $('#codingDictionaryImport').on('show.bs.modal',function () {
+            loadList3();
+        });
+
+        $('#save').click(function(){
+            var _data = $table3.bootstrapTable('getSelections');
+            if (_data.length <= 0) {
+                tms.alert("请选择要导入的编码字典");
+                return;
+            }
+            var ids= [];
+            for (var i = 0; i < _data.length; i++) {
+                //console.log(ids[i].Id);
+                ids.push(_data[i].Id);
+            }
+
+            tms.services.draftCopyDictionary({
+                requestBody:{
+                    DictionaryIds: ids,
+                    CRFVersionId: bp1.CurrentDraftId,
+                    StudyId: bp1.CurrentProjectId
+                },
+                callback:function(data){
+                    $('.modal').modal('hide');
+                    loadList();
+                    loadList3();
+                    tms.alert('操作成功');
+                }
+            })
+        });
+    })
+</script>

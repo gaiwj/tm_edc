@@ -1,0 +1,389 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="formDesignItemConfig"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w450">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">配置Item</h4>
+            </div>
+            <ul class="nav nav-edc">
+                <li role="presentation" class="active" data-type="0" ><a href="javascript:;" id="item-info">基本信息</a></li>
+                <li role="presentation" data-type="1"><a href="javascript:;" id="item-power">权限控制</a></li>
+            </ul>
+            <div class="modal-body">
+                <form id="itemForm_CFG">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_ItemId_fdic">ItemOID</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_ItemId_fdic" name="ItemOId" disabled>
+                                <option value="">...</option>
+                                {{ each itemsOptions as item }}
+                                <option value="{{item.Id}}">{{item.OId}}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_DisplayName_fdic">显示名称</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Version" class="form-control" id="input_DisplayName_fdic" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_DataType_fdic">数据类型</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_DataType_fdic" disabled>
+                                <option value="">...</option>
+                                {{ each datatypeOptions as item }}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_ControlsTypeId_fdic">展现方式</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_ControlsTypeId_fdic" disabled>
+                                <option value="">...</option>
+                                {{ each controlsTypeOptions as item }}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_DataFormat_fdic">SASFieldName</label>
+                        <div class="col-md-8">
+                            <input id="input_SASFieldName_fdic" type="text" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_DataFormat_fdic">格式</label>
+                        <div class="col-md-8">
+                            <input id="input_DataFormat_fdic" type="text" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_SortIndex_fdic">排序</label>
+                        <div class="col-md-8">
+                            <input id="input_SortIndex_fdic" type="text" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_HintId_fdic">外部提示语</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_HintId_fdic" disabled>
+                                <option value="">...</option>
+                                {{ each hintOptions as item }}
+                                <option value="{{item.Id}}">{{item.DictionaryName}}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_KeySequence_fdic">KeySequence</label>
+                        <div class="col-md-8">
+                            <input id="input_KeySequence_fdic" type="text" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_DefaultValue_fdic">默认值</label>
+                        <div class="col-md-8">
+                            <input id="input_DefaultValue_fdic" type="text" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_UnitGroupId_fdic">单位组</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_UnitGroupId_fdic" disabled>
+                                <option value="">...</option>
+                                {{ each unitgroupOptions as item }}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_DictionaryId_fdic">编码字典</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_DictionaryId_fdic" disabled>
+                                <option value="">...</option>
+                                {{ each dictionaryOptions as item }}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_RoleId_fdic">角色</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_RoleId_fdic" disabled>
+                                <option value="">...</option>
+                                {{ each roleOptions as item }}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_SpecifiedDictionaryId_fdic">特定编码字典</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_SpecifiedDictionaryId_fdic" disabled>
+                                <option value="">...</option>
+                                {{ each dictionaryOptions as item }}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_Name_fdic">名称</label>
+                        <div class="col-md-8">
+                            <input id="input_Name_fdic" type="text" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_Description_fdic">描述</label>
+                        <div class="col-md-8">
+                            <textarea id="input_Description_fdic" class="form-control" disabled></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_FontSize_fdic">字体大小</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_FontSize_fdic" disabled>
+                                <option value="">...</option>
+                                <option value="1">小</option>
+                                <option value="2">中</option>
+                                <option value="3">大</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_FontColor_fdic">字体颜色</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Code" class="form-control" id="input_FontColor_fdic" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsBold_fdic">字体大小</label>
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="input_IsBold_fdic" disabled>是否加粗
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3"></label>
+                        <div class="col-md-9">
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsActive_fdic" disabled>激活
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsRequired_fdic" disabled>必填
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsAllowEdit_fdic" disabled>允许修改
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsAllowUpdate_fdic" disabled>允许保存后修改
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsMustSDV_fdic" disabled>必须SDV
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsMustInputClinicalSignificance_fdic" disabled>必须录入临床意义
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsMustCheck_fdic" disabled>必须审核
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsAsFormDate_fdic" disabled>表单日期
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsAsEventDate_fdic" disabled>访视日期
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsEnrollmentDate_fdic" disabled>入组日期
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsShowBeforeEventDate_fdic" disabled>显示上次访视的值
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsNeedElectronicSignature_fdic" disabled>需要电子签名
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsAsSubjectCode_fdic" disabled>受试者编号
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div id="itemForm_PW" style="display: none;">
+                    <table id="table-Pw"></table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" style="display: none;" onclick="addPower()">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    var $tablePw=null;
+    $(function () {
+        $('.nav').find('li').click(function () {
+            $('.nav').find('li').removeClass('active');
+            $(this).addClass('active');
+            $('#itemForm_PW,#itemForm_CFG').hide();
+            if($(this).attr('data-type')==1){
+                $('#itemForm_PW').show();
+                $('.modal-footer').find('.btn-add').show();
+                $tablePw.bootstrapTable('resetView');
+            }else{
+                $('#itemForm_CFG').show();
+                $('.modal-footer').find('.btn-add').hide();
+            }
+
+        });
+        $("#formDesignItemConfig").on("hidden.bs.modal", function() {
+            $(this).attr({'data-type':''});
+            $('#formDesignItemConfig').find('.modal-title').html('新建外部提示语');
+        });
+        $('#input_ItemId_cf').change(function () {
+            var itemid = $(this).val();
+            tms.services.getItems({
+                requestBody:{
+                    IsPaged: false,
+                    Id: itemid
+                },
+                callback:function (res) {
+                    if (res["ItemsItems"].length > 0) {
+                        var item = res["ItemsItems"][0];
+                        $("#input_ItemId_fdic").val(item["DisplayName"]);
+                        $("#input_ItemId_fdic").val(item["ControlsTypeId"]).trigger('change');
+                    }
+                }
+
+            });
+        });
+        $tablePw=$('#table-Pw').bootstrapTable({
+            height:450,
+            striped:true,
+            columns:[
+                {
+                    field:'Name',
+                    title:'用户组'
+                },
+                {
+                    formatter:"actionFormatterView",
+                    events:"actionsEventsPwView",
+                    title:'禁止访问'
+                },
+                {
+                    formatter:"actionFormatterEdit",
+                    events:"actionsEventsPwEdit",
+                    title:'禁止修改'
+                }
+            ]
+        })
+    });
+    function updataTablePw() {
+        tms.services.getItem({
+            requestBody:{
+                iType:2,
+                itemId: $('#formDesignItemConfig').attr('data-id'),
+                itemGroupId: _json.ItemGroupId
+            },
+            callback:function (res) {
+                var _data=res['ItemItems'];
+                $tablePw.bootstrapTable('load',_data);
+            }
+        })
+    }
+    function actionFormatterView(val,row) {
+        if(row.IsAllowView){
+            return['<input type="checkbox" class="checkView">'].join('');
+        }else{
+            return['<input type="checkbox" class="checkView" checked>'].join('');
+        }
+
+    }
+    function actionFormatterEdit(val,row) {
+        if(row.IsAllowEdit){
+            return['<input type="checkbox" class="checkEdit">'].join('');
+        }else{
+            return['<input type="checkbox" class="checkEdit" checked>'].join('');
+        }
+    }
+    window.actionsEventsPwView= {
+        'click .checkView':function (e, value,row,index) {
+            row.IsAllowView= !$(this).prop('checked');
+        }
+    };
+    window.actionsEventsPwEdit= {
+        'click .checkEdit':function (e, value,row,index) {
+            row.IsAllowEdit= !$(this).prop('checked');
+        }
+    };
+    function addPower(id) {
+        var rows=$tablePw.bootstrapTable('getData');
+        var list=[];
+        for (var i = 0; i < rows.length; i++) {
+            var obj = rows[i];
+            list.push({
+                IsBase: true,
+                CRFVersionId: bp1.CurrentDraftId,
+                itemId: $('#formDesignItemConfig').attr('data-id'),
+                itemGroupId: _json.ItemGroupId,
+                RoleId: obj.RoleId,
+                IsAllowView: obj.IsAllowView,
+                IsAllowEdit: obj.IsAllowEdit
+            })
+
+        }
+        tms.services.createOrUpdateAccessItem({
+            requestBody:{
+                AccessItemItems: list,
+                itemId: $('#formDesignItemConfig').attr('data-id'),
+                itemGroupId: _json.ItemGroupId,
+                CRFVersionId: bp1.CurrentDraftId
+            },
+            callback:function(res){
+                tms.alert('保存成功',function(){
+                    $('#formDesignItemConfig').modal('hide');
+                });
+            }
+
+        })
+
+    }
+</script>

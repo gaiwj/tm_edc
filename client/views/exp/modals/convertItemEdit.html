@@ -1,0 +1,136 @@
+<div class="modal fade" id="convertItemEdit" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="sumForm2">
+                    <div class="form-group">
+                        <label class="col-md-3">类别</label>
+                        <div class="col-md-8">
+                            <select id="derivationApplyTypeId" class="form-control select2">
+	                            {{each dictionTypeOptions as item i}}
+	                                <option value="{{item.Id}}" value2="{{item.Value}}">{{item.Name}}</option>
+	                            {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">检验项</label>
+                        <div class="col-md-8">
+                            <select id="labItemId" class="form-control select2">
+                            	<option>...</option>
+                                {{each labItemsItems as item i}}
+                                <option value="{{item.Id}}" valueid="{{item.UnitGroupId}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">默认单位</label>
+                        <div class="col-md-8">
+                            <select id="defaultUnitId" class="form-control select2">
+                            	
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="save2" type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var derivationApplyTypeId = $('#derivationApplyTypeId');
+    var labItemId = $('#labItemId');
+    var defaultUnitId = $('#defaultUnitId');
+
+    $(function () {
+        $('#convertItemEdit').on('show.bs.modal',function () {
+            //console.log(currentRow);
+            if(currentRow2.id){
+                $('#convertItemEdit .modal-title').html("编辑适用Item");
+                derivationApplyTypeId.val(currentRow2.derivationApplyTypeId).trigger('change');
+                labItemId.val(currentRow2.labItemId).trigger('change');
+                defaultUnitId.val(currentRow2.defaultUnitId).trigger('change');
+            }else{
+                $('#convertItemEdit .modal-title').html("新建适用Item");
+            }
+        });
+
+        $('#convertItemEdit').on('hide.bs.modal',function () {
+            // 重置表单
+            $("#derivationApplyTypeId option:first").prop("selected", 'selected').trigger('change');
+            $("#labItemId option:first").prop("selected", 'selected').trigger('change');
+            $("#defaultUnitId option:first").prop("selected", 'selected').trigger('change');
+            $('#sumForm')[0].reset();
+            currentRow2 = {};
+        });
+        
+        $('#save2').click(function(){
+            var query = {
+                Id: currentRow2.id,
+                StudyId: "",
+                DerivationApplyTypeId: derivationApplyTypeId.val(),
+                LabItemId: labItemId.val(),
+                DefaultUnitId: defaultUnitId.val(),
+                DerivationId: getGid(),
+                CountTypeValue: getCTValue(),
+                IsBase: false
+            };
+            niForm2(query);
+        });
+
+        $('#labItemId').change(function(){
+            // // 加载单位
+            getDropDownGroupUnit($('#labItemId').val());
+        }).change();
+    });
+
+    // 新增/修改表单
+    function niForm2(query){
+        //console.log(query);
+        tms.services.createOrUpdateDerivationApplyItems({
+            requestBody:query,
+            callback:function(data){
+                $('.modal').modal('hide');
+                loadList2();
+                tms.alert('操作成功');
+            }
+        })
+    }
+
+    // 获取单位
+    function getDropDownGroupUnit(labItemId){
+    	console.log(labItemId);
+    	$('#defaultUnitId').empty();
+        var _data = [];
+    	tms.services.getDropDownGroupUnit({
+            requestBody:{
+            	Id: labItemId
+            },
+            callback:function(data){
+				console.log(data);
+                for(var i = 0; i < data.DropDownListItems.length; i++){
+                    var item = data.DropDownListItems[i];
+                    _data.push({
+                        id: item.Id,
+                        text: item.Name
+                    })
+                }
+                $('#defaultUnitId').select2({
+                	placeholder:'...',
+                	minimumResultsForSearch: -1,
+                    width:'100%',
+                    data: _data
+                });
+            }
+        })
+    }
+</script>

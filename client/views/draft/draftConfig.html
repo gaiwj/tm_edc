@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <!-- <link rel="stylesheet" href="../../assets/css/pages/draft.less"> -->
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+<!--头部结束-->
+
+<!--主体内容开始-->
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <link rel="import" href="../base/nav_draft_temp.html?__inline">
+    <!--左侧导航结束-->
+
+    <!--右侧主体开始-->
+    <div id="main">
+        <div class="container-fluid">
+            <div class="label-content">
+                <div class="pull-left label-icon"><i class="icons8 icons8_labitem"></i>草案设置</div>
+            </div>
+            <div class="searchbar mb5 rel">
+                <button id="release" type="button" class="btn btn-add pull-right" style="width:130px;position: absolute;top:10px;right: 10px;z-index: 100;" data-toggle="modal" data-target="#crfDraftRelease">发布eCRF版本</button>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2">研究项目：</label>
+                        <div class="col-md-3">
+                            <select id="projectselect" class="form-control select2">                                
+                                {{ each Projects as item }}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2">项目描述：</label>
+                        <div id="projectDescription" class="col-md-10"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2">方案名称：</label>
+                        <div id="planNum" class="col-md-10"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2">主要研究者：</label>
+                        <div id="principal" class="col-md-10"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2">电子签名声明：</label>
+                        <div id="signatureDeclaration" class="col-md-10"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6 pull-right">
+                        <button id="save" type="button" class="btn btn-add col-md-3 pull-right">保存</button>
+                        <div class="pull-right col-md-9">
+                            <label class="col-md-5">受试者表：</label>
+                            <div class="col-md-7">
+                                <select id="formId" class="form-control select2">
+                                    <option value="">...</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <table id="table1"></table> -->
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="block mt10">
+                        <div class="block_title">
+                            <span>草案概况</span>
+                        </div>
+                        <table id="table1"></table>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="block mt10">
+                        <div class="block_title">
+                            <span>可用版本</span>
+                        </div>
+                        <table id="table2"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+<!--主体内容结束-->
+
+<!-- 添加当前模板js -->
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../assets/js/pages/draft/draftConfig.js"></script>
+<!--修改可用表单-->
+<link rel="import" href="modals/crfDraftEdit.html?__inline">
+<!--发布eCRF版本-->
+<link rel="import" href="modals/crfDraftRelease.html?__inline">
+</body>
+</html>

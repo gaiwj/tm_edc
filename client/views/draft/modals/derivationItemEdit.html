@@ -1,0 +1,235 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="derivationItemEdit"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w450">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">新建适用Item</h4>
+            </div>
+            <div class="modal-body">
+                <form id="itemForm-die-variable">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_EventId_die">研究事件</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_EventId_die">
+                                <option value="">...</option>
+                                {{ each eventOptions as item }}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsApplyAllEvent_die"></label>
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="input_IsApplyAllEvent_die">适用于所有事件
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_FormId_die">表单</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_FormId_die">
+                                <option value="">...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsApplyAllForm_die"></label>
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="input_IsApplyAllForm_die">适用于所有表单
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_ItemGroupId_die">ItemGroup</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_ItemGroupId_die">
+                                <option value="">...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsApplyAllItemGroup_die"></label>
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="input_IsApplyAllItemGroup_die">适用于所有数据集
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_ItemId_die">Item</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_ItemId_die">
+                                <option value="">...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_ItemGroupNo_die">ItemGroupNo</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="input_ItemGroupNo_die">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_FormNo_die">表单No</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="input_FormNo_die">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_EventNo_die">事件No</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="input_EventNo_die">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    var conditionType=1;
+    $(function () {
+        $("#derivationItemEdit").on("hidden.bs.modal", function() {
+            $('#itemForm-dfe-variable')[0].reset();
+            $('#input_EventId_die').val('').trigger('change');
+            $('#input_FormId_die').val('').trigger('change');
+            $('#input_ItemGroupId_die').val('').trigger('change');
+            $('#input_ItemId_die').val('').trigger('change');
+            $(this).attr({'data-type':''});
+            $('#derivationItemEdit').find('.modal-title').html('新建适用Item');
+        });
+        $("#derivationItemEdit").on("show.bs.modal", function() {
+            $(this).removeClass('edit');
+            var tp=$(this).attr('data-type');
+            if(tp=='edit'){
+                $(this).addClass('edit');
+                var id=$(this).attr('data-id');
+                $('#derivationItemEdit').find('.modal-title').html('编辑适用Item');
+                $(this).find('.btn-add').unbind('click').bind('click',function () {
+                    addDerivationItem(id);
+                });
+                return;
+            }
+            $('#input_EventId_die').trigger('change');
+            $(this).find('.btn-add').unbind('click').bind('click',function () {
+                addDerivationItem();
+            })
+        });
+        $("#input_EventId_die").change(function () {
+            var eventId=$(this).val();
+            //if(!eventId) return false;
+            $('#input_FormId_die').empty();
+            tms.services.getDropDownForm({
+                requestBody:{
+                    CRFVersionId: bp1.CurrentDraftId,
+                    EventId: eventId
+                },
+                callback:function(res){
+                    var options=[];
+                    options.push('<option value="">...</option>');
+                    if (res["DropDownEventItems"]) {
+                        var _data=res["DropDownEventItems"];
+                        for (var i = 0; i < _data.length; i++) {
+                            var item = _data[i];
+                            options.push('<option value="'+item.Id+'">'+item.Name+'</option>');
+                        }
+                    }
+                    $('#input_FormId_die').html(options.join(''));
+                    $('#input_FormId_die').val(_json.lastFormId).trigger('change');
+                }
+            })
+        });
+        $("#input_FormId_die").change(function () {
+            var formId=$(this).val();
+            if(!formId) return false;
+            $('#input_ItemGroupId_die').empty();
+            tms.services.getDropDownItemGroup({
+                requestBody:{
+                    CRFVersionId: bp1.CurrentDraftId,
+                    FormId: formId
+                },
+                callback:function(res){
+                    var options=[];
+                    options.push('<option value="">...</option>');
+                    if (res["DropDownEventItems"]) {
+                        var _data=res["DropDownEventItems"];
+                        for (var i = 0; i < _data.length; i++) {
+                            var item = _data[i];
+                            options.push('<option value="'+item.Id+'">'+item.Name+'</option>');
+                        }
+                    }
+                    $('#input_ItemGroupId_die').html(options.join(''));
+                    $('#input_ItemGroupId_die').val(_json.lastItemGroupId).trigger('change');
+                }
+            })
+        });
+        $("#input_ItemGroupId_die").change(function () {
+            var itemGroupId=$(this).val();
+            if(!itemGroupId) return false;
+            $('#input_ItemId_die').empty();
+            tms.services.getDropDownItems({
+                requestBody:{
+                    CRFVersionId: bp1.CurrentDraftId,
+                    ItemGroupId: itemGroupId
+                },
+                callback:function(res){
+                    var options=[];
+                    options.push('<option value="">...</option>');
+                    if (res["DropDownEventItems"]) {
+                        var _data=res["DropDownEventItems"];
+                        for (var i = 0; i < _data.length; i++) {
+                            var item = _data[i];
+                            options.push('<option value="'+item.Id+'">'+item.Name+'</option>');
+                        }
+                    }
+                    $('#input_ItemId_die').html(options.join(''));
+                    $('#input_ItemId_die').val(_json.lastItemId).trigger('change');
+                }
+            })
+        });
+    })
+    function addDerivationItem(id) {
+        var id=id||"";
+        tms.services.createOrUpdateDerivationApplyItems({
+            requestBody:{
+                Id: id,
+                CRFVersionId: bp1.CurrentDraftId,
+                StudyId:bp1.CurrentProjectId,
+                IsBase: false,
+                DerivationId:bp1.DerivationId,
+                ConditionTypeId: bp1.ConditionTypeId,
+                EventId: $("#input_EventId_die").val(),
+                IsApplyAllEvent: $("#input_IsApplyAllEvent_die").prop('checked'),
+                FormId: $("#input_FormId_die").val(),
+                IsApplyAllForm: $("#input_IsApplyAllForm_die").prop('checked'),
+                ItemGroupId: $("#input_ItemGroupId_die").val(),
+                IsApplyAllItemGroup: $("#input_IsApplyAllItemGroup_die").prop('checked'),
+                ItemId: $("#input_ItemId_die").val(),
+                ItemGroupNo: $("#input_ItemGroupNo_die").val(),
+                FormNo: $("#input_FormNo_die").val(),
+                EventNo: $("#input_EventNo_die").val(),
+            },
+            callback:function (data) {
+                updateTableAppleItem();
+                tms.alert('保存成功',function () {
+                    $('#derivationItemEdit').modal('hide');
+                })
+            }
+
+        })
+    }
+</script>

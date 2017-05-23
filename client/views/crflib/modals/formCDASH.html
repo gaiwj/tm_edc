@@ -1,0 +1,92 @@
+<div class="modal fade" id="formCDASH" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="sumForm-02">
+                    <div class="form-group">
+                        <label class="col-md-3">表单OID</label>
+                        <div class="col-md-8">
+                            <input id="OID-04" type="text" class="form-control" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="col-md-3">应用域</label>
+                        <div class="col-md-8"><input id="Domain" name="Domain" type="text" class="form-control"></div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="col-md-3">名称</label>
+                        <div class="col-md-8"><input id="Name-04" name="Name" type="text" class="form-control"></div>
+                    </div>
+                </form>
+
+
+            </div>
+            <div class="modal-footer">
+                <button id="saveCDASH" type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var row = null;
+    $(function () {
+        $('#formCDASH').on('show.bs.modal',function () {
+            row = $table1.bootstrapTable('getSelections')[0];
+            console.log(row);
+            $('#formCDASH .modal-title').html("新建CDASH注释");
+            if(!row||row.length==0){
+                tms.alert('请选择一个表单');
+                return false;
+            }
+            $('#OID-04').val(row.OId);
+            if(currentRow.CDASHId){
+                $('#formCDASH').addClass("edit");
+                $('#formCDASH .modal-title').html("编辑CDASH注释");
+                $('#Domain').val(currentRow.Domain);
+                $('#Name-04').val(currentRow.CDASHName);
+            }else{
+                $('#formCDASH').removeClass("edit");
+                $('#Domain').val('');
+                $('#Name-04').val('');
+            }
+        });
+
+        $('#formCDASH').on('hide.bs.modal',function(){
+            // 重置表单
+            $('#sumForm-02')[0].reset();
+            $('#sumForm-02').data('bootstrapValidator').resetForm();
+            currentRow = {};
+        });
+
+        $('#saveCDASH').click(function(){
+            if($('#sumForm-02').data('bootstrapValidator').validate().isValid()){
+                saveCDASH();
+            }
+        })
+
+    });
+    function saveCDASH() {
+        var Domain=$('#Domain').val();
+        var Name=$('#Name-04').val();
+        tms.services.createOrUpdateCDASHAnnotation({
+            requestBody:{
+                Id: currentRow.CDASHId,
+                Domain: Domain,
+                Name: Name,
+                FormId:row.Id,
+                IsBase:true
+            },
+            callback:function () {
+                loadCDASH(row.Id);
+                $('#formCDASH').modal('hide');
+                tms.alert('操作成功');
+                currentRow = {};
+            }
+        })
+    }
+</script>

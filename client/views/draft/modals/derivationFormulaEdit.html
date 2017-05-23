@@ -1,0 +1,416 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="derivationFormulaEdit"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w450">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">新建计算公式</h4>
+            </div>
+            <div class="modal-body">
+                <form id="itemForm-dfe">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_ConditionTypeId_dfe">类别</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_ConditionTypeId_dfe">
+                                {{ each conditionTypeOptions as item }}
+                                <option value="{{item.Id}}" value2="{{ item.Value }}">{{ item.Name }}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <form id="itemForm-dfe-variable">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_EventId_dfe">研究事件</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_EventId_dfe">
+                                <option value="">...</option>
+                                {{ each eventOptions as item }}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsApplyAllEvent_dfe"></label>
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="input_IsApplyAllEvent_dfe">适用于所有事件
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_FormId_dfe">表单</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_FormId_dfe">
+                                <option value="">...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsApplyAllForm_dfe"></label>
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="input_IsApplyAllForm_dfe">适用于所有表单
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_ItemGroupId_dfe">ItemGroup</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_ItemGroupId_dfe">
+                                <option value="">...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsApplyAllItemGroup_dfe"></label>
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="input_IsApplyAllItemGroup_dfe">适用于所有数据集
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_ItemId_dfe">Item</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_ItemId_dfe">
+                                <option value="">...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_ItemGroupNo_dfe">ItemGroupNo</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="input_ItemGroupNo_dfe">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_FormNo_dfe">表单No</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="input_FormNo_dfe">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_EventNo_dfe">事件No</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="input_EventNo_dfe">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_LogicPosition_dfe">逻辑记录位置</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_LogicPosition_dfe">
+                                <option value="1">当前</option>
+                                <option value="2">最大</option>
+                                <option value="3">最小</option>
+                                <option value="4">首位</option>
+                                <option value="5">末位</option>
+                                <option value="6">上一个</option>
+                                <option value="7">下一个</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3"></label>
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="input_IsAssemble_dfe">聚合运算
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group input_Range_dfe" style="display:none">
+                        <label class="control-label col-md-3" for="input_Range_dfe">在...范围内</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_Range_dfe">
+                                <option value="1">表单</option>
+                                <option value="2">研究事件</option>
+                                <option value="3">受试者</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group input_OrderBy_dfe" style="display:none">
+                        <label class="control-label col-md-3" for="input_OrderBy_dfe">以...排序</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_OrderBy_dfe">
+                                <option value="1">记录时间</option>
+                                <option value="2">表单位置</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_ValueTypeId_dfe">数据取值类型</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_ValueTypeId_dfe">
+                                <option value="">...</option>
+                                {{ each valueTypeItemsOptions as item }}
+                                <option value="{{item.Id}}">{{ item.Name }}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <form id="itemForm-dfe-constant" style="display: none;">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_ConstValue_dfe">值</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="input_ConstValue_dfe">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_DataFormat_dfe">格式</label>
+                        <div class="col-md-8">
+                            <input type="text" name="DataFormat" class="form-control" id="input_DataFormat_dfe">
+                        </div>
+                    </div>
+                </form>
+                <form id="itemForm-dfe-system" style="display: none;">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_FunctionId_dfe">系统函数</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_FunctionId_dfe">
+                                <option value="">...</option>
+                                {{ each functionsOptions as item }}
+                                <option value="{{item.Id}}">{{ item.Name }}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <form id="itemForm-dfe-custom" style="display: none;">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_Custom_dfe">自定义函数</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_Custom_dfe">
+                                <option value="">...</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    var conditionType=1;
+    $(function () {
+        $('#input_ConditionTypeId_dfe').change(function () {
+            var tp=$(this).find('option:checked').attr('value2');
+            switch (tp){
+                case "1":
+                    $("#itemForm-dfe-variable").show();
+                    $("#itemForm-dfe-constant").hide();
+                    $("#itemForm-dfe-system").hide();
+                    $("#itemForm-dfe-custom").hide();
+                    conditionType=1;
+                    break;
+                case "2":
+                    $("#itemForm-dfe-variable").hide();
+                    $("#itemForm-dfe-constant").show();
+                    $("#itemForm-dfe-system").hide();
+                    $("#itemForm-dfe-custom").hide();
+                    conditionType=2;
+                    break;
+                case "3":
+                    $("#itemForm-dfe-variable").hide();
+                    $("#itemForm-dfe-constant").hide();
+                    $("#itemForm-dfe-system").show();
+                    $("#itemForm-dfe-custom").hide();
+                    break;
+                case "4":
+                    $("#itemForm-dfe-variable").hide();
+                    $("#itemForm-dfe-constant").hide();
+                    $("#itemForm-dfe-system").hide();
+                    $("#itemForm-dfe-custom").show();
+                    break;
+                default:
+                    $("#itemForm-dfe-variable").hide();
+                    $("#itemForm-dfe-constant").hide();
+                    $("#itemForm-dfe-system").hide();
+                    $("#itemForm-dfe-custom").hide();
+                    break;
+            }
+        });
+        $('#input_LogicPosition_dfe').change(function () {
+            var value =$(this).val();
+            switch (value) {
+                case "2":
+                case "3":
+                    $(".input_Range_dfe").show();
+                    $(".input_OrderBy_dfe").hide();
+                    break;
+                case "4":
+                case "5":
+                case "6":
+                case "7":
+                    $(".input_Range_dfe").show();
+                    $(".input_OrderBy_dfe").show();
+                    break;
+                default:
+                    $(".input_Range_dfe").hide();
+                    $(".input_OrderBy_dfe").hide();
+                    break;
+            }
+        });
+        $("#derivationFormulaEdit").on("hidden.bs.modal", function() {
+            $('#itemForm-dfe-variable')[0].reset();
+            $('#itemForm-dfe-constant')[0].reset();
+            $('#itemForm-dfe-system')[0].reset();
+            $('#itemForm-dfe-custom')[0].reset();
+            $('#itemForm-dfe-constant').data('bootstrapValidator').resetForm();
+            $('#input_EventId_dfe').val('').trigger('change');
+            $('#input_FormId_dfe').val('').trigger('change');
+            $('#input_ItemGroupId_dfe').val('').trigger('change');
+            $('#input_ItemId_dfe').val('').trigger('change');
+            $('#input_LogicPosition_dfe').val('1').trigger('change');
+            $('#input_Range_dfe').val('').trigger('change');
+            $('#input_OrderBy_dfe').val('').trigger('change');
+            $('#input_ValueTypeId_dfe').val('').trigger('change');
+            $('#input_FunctionId_dfe').val('').trigger('change');
+            $(this).attr({'data-type':''});
+            $('#derivationFormulaEdit').find('.modal-title').html('新建计算公式');
+        });
+        $("#derivationFormulaEdit").on("show.bs.modal", function() {
+            $(this).removeClass('edit');
+            var tp=$(this).attr('data-type');
+            if(tp=='edit'){
+                $(this).addClass('edit');
+                var id=$(this).attr('data-id');
+                $('#derivationFormulaEdit').find('.modal-title').html('编辑计算公式');
+                $(this).find('.btn-add').unbind('click').bind('click',function () {
+                    addEditCheckConditionItem(id);
+                });
+                return;
+            }
+            $(this).find('.btn-add').unbind('click').bind('click',function () {
+                addEditCheckConditionItem();
+            })
+        });
+        $("#input_EventId_dfe").change(function () {
+            var eventId=$(this).val();
+            if(!eventId) return false;
+            $('#input_FormId_dfe').empty();
+            tms.services.getDropDownForm({
+                requestBody:{
+                    CRFVersionId: bp1.CurrentDraftId,
+                    EventId: eventId
+                },
+                callback:function(res){
+                    var options=[];
+                    options.push('<option value="">...</option>');
+                    if (res["DropDownEventItems"]) {
+                        var _data=res["DropDownEventItems"];
+                        for (var i = 0; i < _data.length; i++) {
+                            var item = _data[i];
+                            options.push('<option value="'+item.Id+'">'+item.Name+'</option>');
+                        }
+                    }
+                    $('#input_FormId_dfe').html(options.join(''));
+                    $('#input_FormId_dfe').val(_json.lastFormId).trigger('change');
+                }
+            })
+        });
+        $("#input_FormId_dfe").change(function () {
+            var formId=$(this).val();
+            if(!formId) return false;
+            $('#input_ItemGroupId_dfe').empty();
+            tms.services.getDropDownItemGroup({
+                requestBody:{
+                    CRFVersionId: bp1.CurrentDraftId,
+                    FormId: formId
+                },
+                callback:function(res){
+                    var options=[];
+                    options.push('<option value="">...</option>');
+                    if (res["DropDownEventItems"]) {
+                        var _data=res["DropDownEventItems"];
+                        for (var i = 0; i < _data.length; i++) {
+                            var item = _data[i];
+                            options.push('<option value="'+item.Id+'">'+item.Name+'</option>');
+                        }
+                    }
+                    $('#input_ItemGroupId_dfe').html(options.join(''));
+                    $('#input_ItemGroupId_dfe').val(_json.lastItemGroupId).trigger('change');
+                }
+            })
+        });
+        $("#input_ItemGroupId_dfe").change(function () {
+            var itemGroupId=$(this).val();
+            if(!itemGroupId) return false;
+            $('#input_ItemId_dfe').empty();
+            tms.services.getDropDownItems({
+                requestBody:{
+                    CRFVersionId: bp1.CurrentDraftId,
+                    ItemGroupId: itemGroupId
+                },
+                callback:function(res){
+                    var options=[];
+                    options.push('<option value="">...</option>');
+                    if (res["DropDownEventItems"]) {
+                        var _data=res["DropDownEventItems"];
+                        for (var i = 0; i < _data.length; i++) {
+                            var item = _data[i];
+                            options.push('<option value="'+item.Id+'">'+item.Name+'</option>');
+                        }
+                    }
+                    $('#input_ItemId_dfe').html(options.join(''));
+                    $('#input_ItemId_dfe').val(_json.lastItemId).trigger('change');
+                }
+            })
+        });
+    })
+    function addEditCheckConditionItem(id) {
+        var id=id||"";
+        if(conditionType==2 ){
+            var isMustObjs=$('#itemForm-dfe-constant').data('bootstrapValidator').validate();
+            if(!isMustObjs.isValid()) return false;
+        }
+        tms.services.createOrUpdateDerivationCondition({
+            requestBody:{
+                Id: id,
+                CRFVersionId: bp1.CurrentDraftId,
+                StudyId:bp1.CurrentProjectId,
+                IsBase: false,
+                DerivationId:bp1.DerivationId,
+                ConditionTypeId: $("#input_ConditionTypeId_dfe").val(),
+                EventId: $("#input_EventId_dfe").val(),
+                IsApplyAllEvent: $("#input_IsApplyAllEvent_dfe").prop('checked'),
+                FormId: $("#input_FormId_dfe").val(),
+                IsApplyAllForm: $("#input_IsApplyAllForm_dfe").prop('checked'),
+                ItemGroupId: $("#input_ItemGroupId_dfe").val(),
+                IsApplyAllItemGroup: $("#input_IsApplyAllItemGroup_dfe").prop('checked'),
+                ItemId: $("#input_ItemId_dfe").val(),
+                ItemGroupNo: $("#input_ItemGroupNo_dfe").val(),
+                FormNo: $("#input_FormNo_dfe").val(),
+                EventNo: $("#input_EventNo_dfe").val(),
+                LogicPosition: $("#input_LogicPosition_dfe").val(),
+                IsAssemble: $("#input_IsAssemble_dfe").prop('checked'),
+                ValueTypeId: $("#input_ValueTypeId_dfe").val(),
+                ConstValue: $("#input_ConstValue_dfe").val(),
+                DataFormat: $("#input_DataFormat_dfe").val(),
+                FunctionId: $("#input_FunctionId_dfe").val(),
+                OrderBy: $("#input_OrderBy_dfe").val(),
+                Range: $("#input_Range_dfe").val()
+            },
+            callback:function (data) {
+                updateTableDerivation();
+                tms.alert('保存成功',function () {
+                    $('#derivationFormulaEdit').modal('hide');
+                })
+            }
+
+        })
+    }
+</script>

@@ -1,0 +1,100 @@
+<div class="modal fade" id="adminData" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="sumForm-02">
+                    <div class="form-group">
+                        <label class="col-md-4">ODM元数据文件</label>
+                        <div class="col-md-8">
+                            <select id="refOID-02" class="form-control select2">
+                                {{each getDropDownRefOID as item i}}
+                                <option value="{{item.Id}}">{{item.OID}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">系列文件</label>
+                        <div class="col-md-8">
+                            <select id="toID-02" class="form-control select2">
+                                <option value="">...</option>
+                                {{each getDropDownOID as item i}}
+                                <option value="{{item.Id}}">{{item.OID}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">研究项目</label>
+                        <div class="col-md-8">
+                            <select id="studyId-02" class="form-control select2">
+                                {{each Projects as item i}}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">数据截止时间</label>
+                        <div class="col-md-8">
+                            <div class='input-group'>
+                                <input type='text' id='endTime-02' class="form-control dataTimepick"/>
+                                <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="export-02" type="button" class="btn btn-add">导出</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#adminData').on('hide.bs.modal',function () {
+            // 重置表单
+            $("#refOID-02 option:first").prop("selected", 'selected').trigger('change');
+            $("#toID-02 option:first").prop("selected", 'selected').trigger('change');
+            $("#studyId-02 option:first").prop("selected", 'selected').trigger('change');
+            $('#endTime-02').val('');
+        });
+
+        // 导出
+        $('#export-02').click(function(){
+            var RefOID = $('#refOID-02').val();
+            var EndTime = $('#endTime-02').val();
+            var StudyId = $("#studyId-02").val();
+            var ExportId = currentRow.Id;
+            var TOID = $("#toID-02").val();
+
+            var query = {
+                RefOID: RefOID,
+                EndTime: EndTime,
+                StudyId: StudyId,
+                ExportId: ExportId,
+                TOID: TOID
+            };
+            exportODMLogTask(query);
+        })
+    });
+
+    function exportODMLogTask(query){
+        tms.services.exportODMLogTask({
+            requestBody:query,
+            callback:function(data){
+                $('.modal').modal('hide');
+                tms.alert('导出成功');
+            }
+        })
+    }
+</script>

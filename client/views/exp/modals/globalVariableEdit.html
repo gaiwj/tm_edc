@@ -1,0 +1,120 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal6" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w450">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel6">新建全局变量</h4>
+            </div>
+            <div class="modal-body">
+                <form id="itemForm">
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_OID">OID</label>
+                        <div class="col-md-8">
+                            <input type="text" name="OID" class="form-control" id="input_OID">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_Name">名称</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Name" class="form-control" id="input_Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_DataType">数据类型</label>
+                        <div class="col-md-8">
+                            <select id="input_DataType" name="DataType"  class="form-control select2">
+                                <option value="">...</option>
+                                {{ each DataTypeOptions as item }}
+                                <option value="{{item.Id}}" value2="{{item.Value}}" >{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_Length">长度</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Length" class="form-control" id="input_Length">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_SignificantNumber">有效位数</label>
+                        <div class="col-md-8">
+                            <input type="text" name="SignificantNumber" class="form-control" id="input_SignificantNumber">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_SASFieldName">SASFieldName</label>
+                        <div class="col-md-8">
+                            <input type="text" name="SASFieldName" class="form-control" id="input_SASFieldName">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_DataFormat">数据格式</label>
+                        <div class="col-md-8">
+                            <input type="text" name="DataFormat" class="form-control" id="input_DataFormat">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_DictionaryId">全局字典</label>
+                        <div class="col-md-8">
+                            <select id="input_DictionaryId" name="DataType"  class="form-control select2">
+                                <option value="">...</option>
+                                {{ each DictionaryItemsOptions as item }}
+                                <option value="{{item.Id}}" >{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_Unit">全局单位字典</label>
+                        <div class="col-md-8">
+                            <select id="input_Unit" name="DataType"  class="form-control select2">
+                                <option value="">...</option>
+                                {{ each UnitGroupItemsOptions as item }}
+                                <option value="{{item.Id}}" >{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_Description">描述</label>
+                        <div class="col-md-8">
+                            <textarea id="input_Description" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#myModal6").on("hidden.bs.modal", function() {
+            $('#itemForm')[0].reset();
+            $('#itemForm').data('bootstrapValidator').resetForm();
+            $(this).attr({'data-type':''});
+            $('#myModalLabel6').html('新建全局变量');
+        });
+        $("#myModal6").on("show.bs.modal", function() {
+            var tp=$(this).attr('data-type');
+            $(this).removeClass('edit');
+            if(tp=='edit'){
+                $(this).addClass('edit');
+                var id=$(this).attr('data-id');
+                $('#myModalLabel6').html('编辑全局变量');
+                $(this).find('.btn-add').unbind('click').bind('click',function () {
+                    addItem(id);
+                })
+                return;
+            }
+            $(this).find('.btn-add').unbind('click').bind('click',function () {
+                addItem();
+            })
+        });
+    })
+</script>

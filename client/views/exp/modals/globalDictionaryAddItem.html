@@ -1,0 +1,75 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w450">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel5">添加字典项</h4>
+            </div>
+            <div class="modal-body">
+                <form id="itemForm2">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_OID2">编码字典OID</label>
+                        <div class="col-md-8">
+                            <input type="text" name="OID" class="form-control" id="input_OID2" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_Value2">值</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Name" class="form-control" id="input_Value2">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_Name2">显示值</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Name" class="form-control" id="input_Name2">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_Rank">Rank</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Mark" class="form-control" id="input_Rank">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#myModal5").on("hidden.bs.modal", function() {
+            $('#itemForm2')[0].reset();
+            $('#itemForm2').data('bootstrapValidator').resetForm();
+            $(this).attr({'data-type':''});
+            $('#myModalLabel5').html('添加字典项');
+        });
+        $("#myModal5").on("show.bs.modal", function() {
+            if(!_json.DictionaryId){
+                tms.alert('请选择一个字典！');
+                return false;
+            }
+
+            var tp=$(this).attr('data-type');
+            $(this).removeClass('edit');
+            $('#input_OID2').val(_json.ItemOId);
+            if(tp=='edit'){
+                $(this).addClass('edit');
+                var id=$(this).attr('data-id');
+                $('#myModalLabel5').html('编辑字典项');
+                $(this).find('.btn-add').unbind('click').bind('click',function () {
+                    addItem2(id);
+                })
+                return;
+            }
+            $(this).find('.btn-add').unbind('click').bind('click',function () {
+                addItem2();
+            })
+        });
+    })
+</script>

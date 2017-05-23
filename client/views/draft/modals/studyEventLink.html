@@ -1,0 +1,177 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="studyEventLink"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w450">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">新建表单</h4>
+            </div>
+            <div class="modal-body">
+                <form id="itemForm-form">
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_OID_sl">表单OID</label>
+                        <div class="col-md-8">
+                           <select class="select2" name="Form" id="input_OID_sl">
+                               <option value="">...</option>
+                               {{ each formItemsOptions as item }}
+                               <option value="{{ item.Id }}">{{ item.OId }}</option>
+                               {{ /each }}
+                           </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_DisplayName_sl">显示名称</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Version" class="form-control" id="input_DisplayName_sl" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsMultirecord_sl">表单类型</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_IsMultirecord_sl" disabled>
+                                <option value="1">多表单</option>
+                                <option value="0">单表单</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsActive_sl"></label>
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="input_IsActive_sl" >激活
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsMustExist_sl"></label>
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="input_IsMustExist_sl" >必须存在
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsNeedElectronicSignature_sl"></label>
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="input_IsNeedElectronicSignature_sl" >无需电子签名
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsNeedElectronicSignature_sl">重定向</label>
+                        <div class="col-md-8">
+                            <select class="select2-small" style="width:33%">
+                                <option value="2">Action</option>
+                                <option value="1">下一步</option>
+                                <option value="0">跳转</option>
+                            </select>
+                            <select class="select2-small" style="width:33%">
+                                <option value="">StudyEvent</option>
+                                {{ each eventItems as item }}
+                                <option value="{{ item.Id }}">{{ item.OId }}</option>
+                                {{ /each }}
+                            </select>
+                            <select class="select2-small" style="width:30%">
+                                <option value="">表单</option>
+                                {{ each formItemsOptions as item }}
+                                <option value="{{ item.Id }}">{{ item.OId }}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('.select2-small').select2({
+            minimumResultsForSearch: -1
+        });
+        $('#input_OID_sl').change(function () {
+            var itemid=$(this).val();
+            if(!itemid) return false;
+            tms.services.getForm({
+                requestBody:{
+                    IsPaged: false,
+                    Id: itemid
+                },
+                callback:function (res) {
+                    if (res["FormItems"].length > 0) {
+                        var item = res["FormItems"][0];
+                        $("#input_DisplayName_sl").val(item["DisplayName"]);
+                        $("#input_IsMultirecord_sl").val(item["IsMultirecord"]?"1":"0").trigger('change');
+                    }
+                }
+            })
+        });
+        $("#studyEventLink").on("hidden.bs.modal", function() {
+            $('#itemForm-form')[0].reset();
+            $('#itemForm-form').data('bootstrapValidator').resetForm();
+            $('#input_OID_sl').val('').trigger('change');
+            $('#input_DisplayName_sl').val('');
+            $(this).attr({'data-type':''});
+            $('#studyEventLink').find('.modal-title').html('新建表单');
+        });
+        $("#studyEventLink").on("show.bs.modal", function() {
+            if(!_json.EventId){
+                tms.alert('请选择一个研究事件');
+                return false;
+            }
+            $(this).removeClass('edit');
+            var tp=$(this).attr('data-type');
+            if(tp=='edit'){
+                $(this).addClass('edit');
+                var id=$(this).attr('data-id');
+                $('#studyEventLink').find('.modal-title').html('编辑表单');
+                $(this).find('.btn-add').unbind('click').bind('click',function () {
+                    addFormItem(id);
+                });
+                return;
+            }
+            $(this).find('.btn-add').unbind('click').bind('click',function () {
+                addFormItem();
+            })
+        });
+    })
+    function addFormItem(id) {
+        var id=id||"";
+        var isMustObjs=$('#itemForm-form').data('bootstrapValidator').validate();
+        if(!isMustObjs.isValid()) return false;
+        tms.services.createOrUpdateEventItems({
+            requestBody:{
+                Id: id,
+                FormId: $("#input_OID_sl").val(),
+                EventId: _json.EventId,
+                IsActive: $("#input_IsActive_sl").prop('checked'),
+                IsMustExist: $("#input_IsMustExist_sl").prop('checked'),
+                IsNeedElectronicSignature: $("#input_IsNeedElectronicSignature_sl").prop('checked'),
+                ActionValue: $("#input_ActionValue_sl").val(),
+                ActionEventId: $("#input_ActionEventId_sl").val(),
+                ActionFormId: $("#input_ActionFormId_sl").val(),
+                CRFVersionId: bp1.CurrentDraftId,
+                StudyId: bp1.CurrentProjectId,
+                IsBase: false
+            },
+            callback:function (data) {
+                $tableForm.bootstrapTable('refresh');
+                tms.alert('保存成功',function () {
+                    $('#studyEventLink').modal('hide');
+                })
+            }
+
+        })
+    }
+</script>

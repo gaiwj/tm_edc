@@ -1,0 +1,117 @@
+<div class="modal fade" id="allClinicalData" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="sumForm-03">
+                    <div class="form-group">
+                        <label class="col-md-4">ODM元数据文件</label>
+                        <div class="col-md-8">
+                            <select id="refOID-03" class="form-control select2">
+                                {{each getDropDownRefOID as item i}}
+                                <option value="{{item.Id}}">{{item.OID}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">系列文件</label>
+                        <div class="col-md-8">
+                            <select id="toID-03" class="form-control select2">
+                                <option value="">...</option>
+                                {{each getDropDownOID as item i}}
+                                <option value="{{item.Id}}">{{item.OID}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="col-md-4">eCRF版本</label>
+                        <div class="col-md-8">
+                            <select id="crfVersionId-03" name="crfVersion" class="form-control select2">
+                                <option value="">...</option>
+                                {{each getDropDownCRFVersion as item i}}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">已导出的研究项目</label>
+                        <div class="col-md-8">
+                            <select id="studyId-03" class="form-control select2">
+                                {{each Projects as item i}}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">数据截止时间</label>
+                        <div class="col-md-8">
+                            <div class='input-group'>
+                                <input type='text' id='endTime-03' class="form-control dataTimepick"/>
+                                <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="export-03" type="button" class="btn btn-add">导出</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#allClinicalData').on('hide.bs.modal',function () {
+            // 重置表单
+            $("#refOID-03 option:first").prop("selected", 'selected').trigger('change');
+            $("#toID-03 option:first").prop("selected", 'selected').trigger('change');
+            $("#crfVersionId-03 option:first").prop("selected", 'selected').trigger('change');
+            $("#studyId-03 option:first").prop("selected", 'selected').trigger('change');
+            $('#endTime-03').val('');
+            $('#sumForm-03').data('bootstrapValidator').resetForm();
+        });
+
+        // 导出
+        $('#export-03').click(function(){
+            var RefOID = $('#refOID-03').val();
+            var EndTime = $('#endTime-03').val();
+            var StudyId = $("#studyId-03").val();
+            var ExportId = currentRow.Id;
+            var TOID = $("#toID-03").val();
+            var CRFVersionId = $("#crfVersionId-03").val();
+
+            if($('#sumForm-03').data('bootstrapValidator').validate().isValid()){
+                var query = {
+                    RefOID: RefOID,
+                    EndTime: EndTime,
+                    StudyId: StudyId,
+                    ExportId: ExportId,
+                    TOID: TOID,
+                    CRFVersionId: CRFVersionId
+                };
+                exportODMLogTask(query);
+            }
+        })
+    });
+
+    function exportODMLogTask(query){
+        tms.services.exportODMLogTask({
+            requestBody:query,
+            callback:function(data){
+                $('.modal').modal('hide');
+                tms.alert('导出成功');
+            }
+        })
+    }
+</script>

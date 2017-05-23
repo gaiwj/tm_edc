@@ -1,0 +1,252 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="formDesignItemEdit"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w450">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">关联Item</h4>
+            </div>
+            <div class="modal-body">
+                <form id="itemForm-fdic">
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_ItemId_fdie">ItemOID</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_ItemId_fdie" name="ItemOId">
+                                <option value="">...</option>
+                                {{ each itemsOptions as item }}
+                                <option value="{{item.Id}}">{{item.OId}}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_DisplayName_fdie">显示名称</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Version" class="form-control" id="input_DisplayName_fdie" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_ControlsTypeId_fdie">展现方式</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_ControlsTypeId_fdie" disabled>
+                                <option value="">...</option>
+                                {{ each controlsTypeOptions as item }}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3"></label>
+                        <div class="col-md-9">
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsActive_fdie">激活
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsRequired_fdie">必填
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsAllowEdit_fdie">允许修改
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsAllowUpdate_fdie">允许保存后修改
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsMustSDV_fdie">必须SDV
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsMustInputClinicalSignificance_fdie">必须录入临床意义
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsMustCheck_fdie">必须审核
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsAsFormDate_fdie">表单日期
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsAsEventDate_fdie">访视日期
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsEnrollmentDate_fdie">入组日期
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsShowBeforeEventDate_fdie">显示上次访视的值
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsNeedElectronicSignature_fdie">需要电子签名
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-5">
+                                <label>
+                                    <input type="checkbox" id="input_IsAsSubjectCode_fdie">受试者编号
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_DefaultValue_fdie">默认值</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Code" class="form-control" id="input_DefaultValue_fdie">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_KeySequence_fdie">KeySequence</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Code" class="form-control" id="input_KeySequence_fdie">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_RoleId_fdie">角色</label>
+                        <div class="col-md-8">
+                            <select id="input_RoleId_fdie" class="select2">
+                                <option value="">...</option>
+                                {{ each roleOptions as item }}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group specifiedDictionary" style="display: none;">
+                        <label class="control-label col-md-3" for="input_SpecifiedDictionaryId_fdie">特定编码字典</label>
+                        <div class="col-md-8">
+                            <select id="input_SpecifiedDictionaryId_fdie" class="select2">
+                                <option value="">...</option>
+                                {{ each dictionaryOptions as item }}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    $(function () {
+        //模态框显示与隐藏 执行事件
+        {
+            $("#formDesignItemEdit").on("hidden.bs.modal", function() {
+                $('#itemForm-fdic')[0].reset();
+                $('#itemForm-fdic').data('bootstrapValidator').resetForm();
+                $('#input_ItemId_fdie').val('').trigger('change');
+                $('#input_ControlsTypeId_fdie').val('').trigger('change');
+                $('#input_RoleId_fdie').val('').trigger('change');
+                $('#input_SpecifiedDictionaryId_fdie').val('').trigger('change');
+                $(this).attr({'data-type':''});
+                $('#formDesignItemEdit').find('.modal-title').html('关联Item');
+            });
+            $("#formDesignItemEdit").on("show.bs.modal", function() {
+                if(!_json.ItemGroupId){
+                    tms.alert('请选择一个ItemGroup');
+                    return false;
+                }
+
+                $(this).removeClass('edit');
+                var tp=$(this).attr('data-type');
+                if(tp=='edit'){
+                    $(this).addClass('edit');
+                    var id=$(this).attr('data-id');
+                    $('#formDesignItemEdit').find('.modal-title').html('编辑Item');
+                    $(this).find('.btn-add').unbind('click').bind('click',function () {
+                        addItemGroupItem(id);
+                    });
+                    return;
+                }
+                $(this).find('.btn-add').unbind('click').bind('click',function () {
+                    addItemGroupItem();
+                })
+            });
+        }
+        $('#input_RoleId_fdie').change(function () {
+            if($(this).val()){
+                $('.specifiedDictionary').show();
+            }else{
+                $('.specifiedDictionary').hide();
+            }
+        });
+        $('#input_ItemId_fdie').change(function () {
+            var itemid = $(this).val();
+            tms.services.getItems({
+                requestBody:{
+                    IsPaged: false,
+                    Id: itemid
+                },
+                callback:function (res) {
+                    if (res["ItemsItems"].length > 0) {
+                        var item = res["ItemsItems"][0];
+                        $("#input_DisplayName_fdie").val(item["DisplayName"]);
+                        $("#input_ControlsTypeId_fdie").val(item["ControlsTypeId"]).trigger('change');
+                    }
+                }
+
+            });
+        })
+    });
+    function addItemGroupItem(id) {
+        var itemid=id||"";
+        var isMustObjs=$('#itemForm-fdic').data('bootstrapValidator').validate();
+        if(!isMustObjs.isValid()) return false;
+        tms.services.createOrUpdateItemGroupItems({
+            requestBody:{
+                Id: itemid,
+                CRFVersionId: bp1.CurrentDraftId,
+                StudyId: bp1.CurrentProjectId,
+                IsBase: false,
+                ItemGroupId:_json.ItemGroupId,
+                ItemId: $("#input_ItemId_fdie").val(),
+                IsActive: $("#input_IsActive_fdie").prop('checked'),
+                IsRequired: $("#input_IsRequired_fdie").prop('checked'),
+                IsAllowEdit: $("#input_IsAllowEdit_fdie").prop('checked'),
+                IsAllowUpdate: $("#input_IsAllowUpdate_fdie").prop('checked'),
+                IsMustSDV: $("#input_IsMustSDV_fdie").prop('checked'),
+                IsMustInputClinicalSignificance: $("#input_IsMustInputClinicalSignificance_fdie").prop('checked'),
+                IsMustCheck: $("#input_IsMustCheck_fdie").prop('checked'),
+                IsAsFormDate: $("#input_IsAsFormDate_fdie").prop('checked'),
+                IsAsEventDate: $("#input_IsAsEventDate_fdie").prop('checked'),
+                IsEnrollmentDate: $("#input_IsEnrollmentDate_fdie").prop('checked'),
+                IsShowBeforeEventDate: $("#input_IsShowBeforeEventDate_fdie").prop('checked'),
+                IsNeedElectronicSignature: $("#input_IsNeedElectronicSignature_fdie").prop('checked'),
+                DefaultValue: $("#input_DefaultValue_fdie").val(),
+                KeySequence: $("#input_KeySequence_fdie").val(),
+                RoleId: $("#input_RoleId_fdie").val(),
+                IsAsSubjectCode: $("#input_IsAsSubjectCode_fdie").val(),
+                SpecifiedDictionaryId:$("#input_SpecifiedDictionaryId_fdie").val()
+            },
+            callback:function (data) {
+                $tableItem.bootstrapTable('refresh');
+                tms.alert('保存成功',function () {
+                    $('#formDesignItemEdit').modal('hide');
+                })
+            }
+
+        })
+    }
+</script>

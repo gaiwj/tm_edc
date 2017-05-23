@@ -1,0 +1,119 @@
+<div class="modal fade" id="crfDraftRelease" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">发布CRF版本</h4>
+            </div>
+            <div class="modal-body">
+                <form id="sumForm02">
+                    <div class="form-group has-require">
+                        <label class="col-md-3">版本OID</label>
+                        <div class="col-md-8">
+                            <input id="oid02" type="text" class="form-control" name="oid02">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="col-md-3">名称</label>
+                        <div class="col-md-8">
+                            <input id="name02" type="text" class="form-control" name="name02">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="col-md-3">描述</label>
+                        <div class="col-md-8">
+                        	<textarea id="description02" class="form-control" name="description02" maxlength="255"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">试验方案</label>
+                        <div class="col-md-8">
+                            <select id="trialProtocolId02" class="form-control select2">
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="save02" type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	var oid = $('#oid02')
+    var Name02 = $('#name02');
+    var description = $('#description02');
+    var trialProtocolId = $('#trialProtocolId02');
+
+    $(function () {
+        $('#crfDraftRelease').on('show.bs.modal',function () {
+			Name02.val(currentRow.name);
+			// 加载试验方案
+			loadTrialProtocol();
+        });
+
+        $('#crfDraftRelease').on('hide.bs.modal',function () {
+        	$("#trialProtocolId02 option:first").prop("selected", 'selected').trigger('change');
+        	$('#sumForm02')[0].reset();
+        	$('#sumForm02').data('bootstrapValidator').resetForm();
+            $('.isMessage').remove();
+            currentRow = {};
+        });
+        
+        $('#save02').click(function(){
+            if($('#sumForm02').data('bootstrapValidator').validate().isValid()){
+                var query = {
+	                Id: '',
+	                OID: oid.val(),
+	                Name: Name02.val(),
+	                Description: description.val(),
+	                TrialProtocolId: trialProtocolId.val(),
+	                FromCRFVersionId: bp1.CurrentDraftId,
+	                StudyId: bp1.CurrentProjectId,
+	                IsDraft: true
+                };
+                niForm02(query);
+            }
+        })
+    });
+
+    // 发布CRF版本
+    function niForm02(query){
+        //console.log(query);
+        tms.services.addProcCRFVersion({
+            requestBody:query,
+            callback:function(data){
+                $('.modal').modal('hide');
+                loadList();
+                tms.alert('操作成功');
+            }
+        })
+    }
+
+    // 获取实验方案
+    function loadTrialProtocol(){
+    	var _data = [];
+    	tms.services.getTrialProtocol({
+    		requestBody:{
+    			CRFVersionId:bp1.CurrentDraftId
+    		},
+    		callback:function(data){
+    			for(var i = 0; i < data.TrialProtocolItems.length; i++){
+                    var item = data.TrialProtocolItems[i];
+                     _data.push({
+                        id: item.Id,
+                        text: item.Name
+                    })
+                }
+                $('#trialProtocolId02').select2({
+                    width:'100%',
+                    minimumResultsForSearch: -1,
+                    data: _data
+                });
+    		}
+    	})
+    }
+</script>

@@ -1,0 +1,122 @@
+<div class="modal fade" id="labItemEdit" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="sumForm">
+                    <div class="form-group has-require">
+                        <label class="col-md-3">代码</label>
+                        <div class="col-md-8">
+                            <input id="code-01" type="text" class="form-control" name="code">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="col-md-3">名称</label>
+                        <div class="col-md-8">
+                            <input id="name-01" type="text" class="form-control" name="name">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="col-md-3">单位词典</label>
+                        <div class="col-md-8">
+                            <select id="unit-01" class="form-control select2" name="unit">
+                                <option value="">...</option>
+                                {{each unitGroupItems as item i}}
+                                    <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">启用状态</label>
+                        <div class="col-md-8">
+                            <div id="isEnable-01" class="radioBox">
+                                <label class="radio-inline">
+                                    <input type="radio" name="IsEnable" id="inlineRadio1" value="true" checked="checked"> 启用
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="IsEnable" id="inlineRadio2" value="false"> 停用
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="save" type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var code = $('#code-01');
+    var nameLabItem =  $('#name-01');
+    var unit = $('#unit-01');
+    //var isEnable = $('#isEnable-01');
+
+    $(function () {
+        $('#labItemEdit').on('show.bs.modal',function () {
+            console.log(currentRow);
+            if(currentRow.id){
+                $('#labItemEdit').addClass("edit");
+                $('#labItemEdit .modal-title').html("编辑检验项");
+                code.val(currentRow.code);
+                nameLabItem.val(currentRow.name);
+                unit.val(currentRow.unit).trigger('change');
+                if(currentRow.isEnable){
+                    $("#inlineRadio1").prop('checked',true);
+                    $("#inlineRadio1").parent().addClass('checked');
+                    $("#inlineRadio2").prop('checked',false);
+                    $("#inlineRadio2").parent().removeClass('checked');
+                }else{
+                    $("#inlineRadio2").prop('checked',true);
+                    $("#inlineRadio2").parent().addClass('checked');
+                    $("#inlineRadio1").prop('checked',false);
+                    $("#inlineRadio1").parent().removeClass('checked')
+                }
+            }else{
+                $('#labItemEdit').removeClass("edit");
+                $('#labItemEdit .modal-title').html("新建检验项");
+            }
+        });
+
+        $('#labItemEdit').on('hide.bs.modal',function () {
+            // 重置表单
+            $("#unit-01 option:first").prop("selected", 'selected').trigger('change');
+            $('#sumForm').data('bootstrapValidator').resetForm();
+            $('#sumForm')[0].reset();
+            currentRow = {};
+        });
+
+        $('#save').click(function(){
+            if($('#sumForm').data('bootstrapValidator').validate().isValid()){
+                var query = {
+                    Id:currentRow.id,
+                    Code: code.val(),
+                    Name: nameLabItem.val(),
+                    UnitGroupId: unit.val(),
+                    IsEnable: $("#isEnable-01").find('input:radio:checked').val() == 'true'
+                };
+                niForm(query);
+            }
+        })
+    });
+
+    // 新增/修改表单
+    function niForm(query){
+        //console.log(query);
+        tms.services.createOrUpdateLabItems({
+            requestBody:query,
+            callback:function(data){
+                $('.modal').modal('hide');
+                loadList();
+                tms.alert('操作成功');
+            }
+        })
+    }
+</script>

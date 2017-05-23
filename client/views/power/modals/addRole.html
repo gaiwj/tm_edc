@@ -1,0 +1,71 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w450">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">新增企业角色</h4>
+            </div>
+            <div class="modal-body">
+                <form id="itemForm">
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_Name">角色名称</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Name" class="form-control" id="input_Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsEnable">启用状态</label>
+                        <div class="col-md-8">
+                            <div id="input_IsEnable" class="radioBox" >
+                                <label class="radio-inline">
+                                    <input type="radio" checked name="inlineRadioOptions" id="inlineRadio1" value="1"> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2"> 否
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_Remark">描述</label>
+                        <div class="col-md-8">
+                            <textarea type="text" name="Value" class="form-control" id="input_Remark"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#myModal").on("hidden.bs.modal", function() {
+            $('#itemForm')[0].reset();
+            $('#input_IsReferData').find('.iradio_minimal').removeClass('checked');
+            $('#itemForm').data('bootstrapValidator').resetForm();
+            $(this).attr({'data-type':''});
+            $('#myModalLabel').html('新建企业角色');
+        });
+        $("#myModal").on("show.bs.modal", function() {
+            $(this).removeClass('edit');
+            var tp=$(this).attr('data-type');
+            if(tp=='edit'){
+                $(this).addClass('edit');
+                var id=$(this).attr('data-id');
+                $('#myModalLabel').html('编辑企业角色');
+                $(this).find('.btn-add').unbind('click').bind('click',function () {
+                    addItem(id);
+                });
+                return;
+            }
+            $(this).find('.btn-add').unbind('click').bind('click',function () {
+                addItem();
+            })
+        });
+    })
+</script>

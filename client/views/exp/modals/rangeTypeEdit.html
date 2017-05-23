@@ -1,0 +1,113 @@
+<div class="modal fade" id="rangeTypeEdit" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="sumForm">
+                    <div class="form-group has-require">
+                        <label class="col-md-3">OID</label>
+                        <div class="col-md-8">
+                            <input id="oid-01" type="text" class="form-control" name="oid">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="col-md-3">范围类型</label>
+                        <div class="col-md-8">
+                            <input id="rangType-01" type="text" class="form-control" name="rangType">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">启用状态</label>
+                        <div class="col-md-8">
+                            <div id="isEnable-01" class="radioBox">
+                                <label class="radio-inline">
+                                    <input type="radio" name="IsEnable" id="inlineRadio1" value="true" checked="checked"> 启用
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="IsEnable" id="inlineRadio2" value="false"> 停用
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">描述</label>
+                        <div class="col-md-8"><textarea id="description-01" name="description" class="form-control" rows="3" style="height:auto !important;" maxlength="255"></textarea></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="save" type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var oid = $('#oid-01');
+    var rangType =  $('#rangType-01');
+    var description = $('#description-01');
+
+    $(function () {
+        $('#rangeTypeEdit').on('show.bs.modal',function () {
+            console.log(currentRow);
+            if(currentRow.id){
+                $('#rangeTypeEdit').addClass("edit");
+                $('#rangeTypeEdit .modal-title').html("编辑范围类型");
+                oid.val(currentRow.oid);
+                rangType.val(currentRow.rangType);
+                description.val(currentRow.description);
+                if(currentRow.isEnable){
+                    $("#inlineRadio1").prop('checked',true);
+                    $("#inlineRadio1").parent().addClass('checked');
+                    $("#inlineRadio2").prop('checked',false);
+                    $("#inlineRadio2").parent().removeClass('checked');
+                }else{
+                    $("#inlineRadio2").prop('checked',true);
+                    $("#inlineRadio2").parent().addClass('checked');
+                    $("#inlineRadio1").prop('checked',false);
+                    $("#inlineRadio1").parent().removeClass('checked')
+                }
+            }else{
+                $('#rangeTypeEdit').removeClass("edit");
+                $('#rangeTypeEdit .modal-title').html("新建范围类型");
+            }
+        });
+
+        $('#rangeTypeEdit').on('hide.bs.modal',function () {
+            // 重置表单
+            $('#sumForm').data('bootstrapValidator').resetForm();
+            $('#sumForm')[0].reset();
+            $('.isMessage').remove();
+            currentRow = {};
+        });
+        $('#save').click(function(){
+            if($('#sumForm').data('bootstrapValidator').validate().isValid()){
+                var query = {
+                    Id:currentRow.id,
+                    OId:oid.val(),
+                    Name:rangType.val(),
+                    Description:description.val(),
+                    IsEnable: $("#isEnable-01").find('input:radio:checked').val() == 'true'
+                };
+                niForm(query);
+            }
+        })
+    });
+
+    // 新增/修改表单
+    function niForm(query){
+        //console.log(query);
+        tms.services.createOrUpdateRangeType({
+            requestBody:query,
+            callback:function(data){
+                $('.modal').modal('hide');
+                loadList();
+                tms.alert('操作成功');
+            }
+        })
+    }
+</script>

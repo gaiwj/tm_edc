@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+<!--头部结束-->
+<div id="wrapper">
+    <link rel="import" href="../base/nav_exp_temp.html?__inline">
+    <!--右侧主体开始-->
+    <div id="main">
+        <div class="container-fluid">
+            <div style="height: 42px;line-height: 42px;">
+                <div class="pull-left label-icon"><i class="icons8-unit"></i>全局字典</div>
+                <div class="pull-right"><button type="button" class="btn btn-add" data-toggle="modal" data-target="#myModal4">新增</button></div>
+            </div>
+            <div class="searchbar mb5">
+                <div class="row">
+                    <div class="col-md-2">
+                        <span>数据类型</span>
+                        <select class="form-control select2" id="search_DataType">
+                            <option value="">...</option>
+                            {{ each DataTypeOptions as item }}
+                            <option value="{{item.Id}}" value2="{{item.Value}}" >{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>OID</span>
+                        <input type="text" class="form-control" id="search_OID">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-search pull-left mt40" onclick="searchItem()">查询</button>
+                    </div>
+                </div>
+            </div>
+            <div class="h415">
+                <table id="table"></table>
+            </div>
+            <div class="block mt5">
+                <div class="block_title">
+                    <span>键值对</span>
+                    <button type="button" class="btn btn-add" data-toggle="modal" data-target="#myModal5" >新增</button>
+                </div>
+                <table id="tableTwo"></table>
+            </div>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+<!-- 添加当前模板js -->
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../../assets/js/pages/exp/globalDictionary.js"></script>
+<link rel="import" href="modals/globalDictionaryEdit.html?__inline">
+<link rel="import" href="modals/globalDictionaryAddItem.html?__inline">
+</body>
+
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <link rel="stylesheet" href="../assets/css/pages/crflib.css">
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+
+<!--主体内容开始-->
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <link rel="import" href="../base/nav.html?__inline">
+    <!--左侧导航结束-->
+
+    <!--右侧主体开始-->
+    <div id="main">
+        <div class="container-fluid">
+            <div style="height: 42px;line-height: 42px;">
+                <div class="pull-left label-icon"><i class="icons8-coding"></i>编码字典</div>
+                <div class="pull-right"><button type="button" class="btn btn-add" onclick="onAdd1();">新增</button></div>
+            </div>
+            <div class="searchbar mb5">
+                <div class="row">
+                    <div class="col-md-2">
+                        <span>数据类型</span>
+                        <select id="input_DataType" class="form-control select2">
+                            <option value="">全部</option>
+                            {{each DataTypeOptions as item i}}
+                            <option value="{{item.Id}}" value2="{{item.Value}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>标准</span>
+                        <select id="input_StandardType" class="form-control select2">
+                            <option value="">全部</option>
+                            {{each StandardTypeOptions as item i}}
+                            <option value="{{item.Id}}" value2="{{item.Value}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <span>OID</span>
+                        <input id="input_OId" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-search pull-left mt40" onclick="onSearch();">查询</button>
+                    </div>
+                </div>
+            </div>
+            <table id="table1" style="display:none;">
+                <thead>
+                    <tr>
+                        <th data-radio="true"></th>
+                        <th data-field="OId">OID</th>
+                        <th data-field="Name">名称</th>
+                        <th data-field="DictionaryTypeName">字典类型</th>
+                        <th data-field="DataTypeName">数据类型</th>
+                        <th data-field="SASFormatName">SASFormatName</th>
+                        <th data-field="StandardTypeName">标准</th>
+                        <th data-formatter="actionFormatter01" data-events="operateEvents" data-width="100">操作</th>
+                    </tr>
+                </thead>
+            </table>
+            <div id="block1" class="block mt5" style="display: none;">
+                <div class="block_title">
+                    <span>键值对</span>
+                    <button type="button" class="btn btn-add" onclick="onAdd2();">新增</button>
+                </div>
+                <table id="table2" style="display:none;">
+                    <thead>
+                        <tr>
+                            <th data-field="Value" data-width="200">值</th>
+                            <th data-field="Name">显示值</th>
+                            <th data-field="Rank" data-width="200">Rank</th>
+                            <th data-formatter="actionFormatter02" data-events="operateEvents" data-width="100">操作</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div id="block2" class="block mt5" style="display: none;">
+                <div class="block_title">
+                    <span>枚举</span>
+                    <button type="button" class="btn btn-add" onclick="onAdd3();">新增</button>
+                </div>
+                <table id="table3" style="display:none;">
+                    <thead>
+                        <tr>
+                            <th data-field="Value" data-width="200">值</th>
+                            <th data-field="Rank">Rank</th>
+                            <th data-formatter="actionFormatter03" data-events="operateEvents" data-width="100">操作</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div id="block3" class="block mt5" style="display: none;">
+                <div class="block_title">
+                    <span>外部字典</span>
+                    <button type="button" class="btn btn-add" onclick="onAdd4();">新增</button>
+                </div>
+                <table id="table4" style="display:none;">
+                    <thead>
+                        <tr>
+                            <th data-field="DictionaryName">字典名称</th>
+                            <th data-field="Version" data-width="200">版本</th>
+                            <th data-field="InstanceName" data-width="200">局部实例名</th>
+                            <th data-field="Url" data-width="200">字典引用地址</th>
+                            <th data-formatter="actionFormatter04" data-events="operateEvents" data-width="100">操作</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="block mt5">
+                <div class="block_title">
+                    <span>CDASH注释</span>
+                    <button type="button" class="btn btn-add" onclick="onAdd5();">新增</button>
+                </div>
+                <table id="table5" style="display:none;">
+                    <thead>
+                        <tr>
+                            <th data-field="Domain">应用域</th>
+                            <th data-field="Name">名称</th>
+                            <th data-formatter="actionFormatter05" data-events="operateEvents" data-width="100">操作</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+
+<!--弹框1-->
+<div class="modal fade" id="modal1" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">编辑编码字典</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form1">
+                    <div class="form-group">
+                        <label class="col-md-3">OID</label>
+                        <div class="col-md-8">
+                            <input id="input_OID1" name="OID" type="text" class="form-control" data-bv-notempty data-bv-notempty-message="OID不能为空">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">名称</label>
+                        <div class="col-md-8">
+                            <input id="input_Name1" name="Name" type="text" class="form-control" data-bv-notempty data-bv-notempty-message="名称不能为空">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">数据类型</label>
+                        <div class="col-md-8">
+                            <select id="input_DataType1" name="DataTypeId" class="form-control select2" data-bv-notempty data-bv-notempty-message="数据类型不能为空">
+                                {{each DataTypeOptions as item i}}
+                                <option value="{{item.Id}}" value2="{{item.Value}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">SASFormatName</label>
+                        <div class="col-md-8">
+                            <input id="input_SASFormatName1" name="SASFormatName" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">标准</label>
+                        <div class="col-md-8">
+                            <select id="input_StandardType1" name="StandardTypeId" class="form-control select2">
+                                {{each StandardTypeOptions as item i}}
+                                <option value="{{item.Id}}" value2="{{item.Value}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">字典类型</label>
+                        <div class="col-md-8">
+                            <select id="input_DictionaryType1" name="DictionaryTypeId" class="form-control select2" data-bv-notempty data-bv-notempty-message="字典类型不能为空">
+                                {{each DictionTypeOptions as item i}}
+                                <option value="{{item.Id}}" value2="{{item.Value}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">编码类型</label>
+                        <div class="col-md-8">
+                            <select id="input_CodeTypeId1" name="CodeTypeId" class="form-control select2">
+                                <option value="">...</option>
+                                {{each CodeTypeOptions as item i}}
+                                <option value="{{item.Id}}" value2="{{item.Value}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">描述</label>
+                        <div class="col-md-8">
+                            <textarea id="input_Description1" name="Description" class="form-control" rows="3" style="height:auto !important;"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" onclick="onSave1(this);">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--弹框2-->
+<div class="modal fade" id="modal2" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">编辑键值对</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form2">
+                    <div class="form-group">
+                        <label class="col-md-3">编码字典OID</label>
+                        <div class="col-md-8">
+                            <input id="input_OID2" type="text" class="form-control" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">值</label>
+                        <div class="col-md-8">
+                            <input id="input_Value2" type="text" class="form-control" data-bv-notempty data-bv-notempty-message="值不能为空">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">显示值</label>
+                        <div class="col-md-8">
+                            <input id="input_Name2" type="text" class="form-control" data-bv-notempty data-bv-notempty-message="显示值不能为空">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">Rank</label>
+                        <div class="col-md-8">
+                            <input id="input_Rank2" type="text" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" onclick="onSave2(this);">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--弹框3-->
+<div class="modal fade" id="modal3" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">编辑枚举</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form3">
+                    <div class="form-group">
+                        <label class="col-md-3">编码字典OID</label>
+                        <div class="col-md-8">
+                            <input id="input_OID3" type="text" class="form-control" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">值</label>
+                        <div class="col-md-8">
+                            <input id="input_Value3" type="text" class="form-control" data-bv-notempty data-bv-notempty-message="值不能为空">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">Rank</label>
+                        <div class="col-md-8">
+                            <input id="input_Rank3" type="text" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" onclick="onSave3(this);">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--弹框4-->
+<div class="modal fade" id="modal4" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">编辑外部字典</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form4">
+                    <div class="form-group">
+                        <label class="col-md-3">编码字典OID</label>
+                        <div class="col-md-8">
+                            <input id="input_OID4" type="text" class="form-control" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">字典名称</label>
+                        <div class="col-md-8">
+                            <input id="input_DictionaryName4" type="text" class="form-control" data-bv-notempty data-bv-notempty-message="字典名称不能为空">
+                    </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">版本</label>
+                        <div class="col-md-8">
+                            <input id="input_Version4" type="text" class="form-control" data-bv-notempty data-bv-notempty-message="版本不能为空">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">局部实例</label>
+                        <div class="col-md-8">
+                            <input id="input_InstanceName4" type="text" class="form-control" data-bv-notempty data-bv-notempty-message="局部实例不能为空">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">引用地址</label>
+                        <div class="col-md-8">
+                            <input id="input_Url4" name="Url" type="text" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" onclick="onSave4(this);">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--弹框5-->
+<div class="modal fade" id="modal5" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">编辑CDASH注释</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form5">
+                    <div class="form-group">
+                        <label class="col-md-3">编码字典OID</label>
+                        <div class="col-md-8">
+                            <input id="input_OID5" name="OID" type="text" class="form-control" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">应用域</label>
+                        <div class="col-md-8">
+                            <input id="input_Domain5" name="Domain" type="text" class="form-control" data-bv-notempty data-bv-notempty-message="应用域不能为空">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">名称</label>
+                        <div class="col-md-8">
+                            <input id="input_Name5" name="Name" type="text" class="form-control" data-bv-notempty data-bv-notempty-message="名称不能为空">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" onclick="onSave5(this);">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../assets/js/pages/crflib/codeDictionary.js"></script>
+</body>
+</html>

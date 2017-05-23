@@ -1,0 +1,311 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade edit" id="formDesignItemGroupConfig"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w450">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">配置Item</h4>
+            </div>
+            <ul class="nav nav-edc">
+                <li role="presentation" class="active" data-type="0" ><a href="javascript:;" id="item-info">基本信息</a></li>
+                <li role="presentation" data-type="1"><a href="javascript:;" id="item-power">权限控制</a></li>
+            </ul>
+            <div class="modal-body">
+                <div id="itemForm-fdigc">
+                    <form id="itemForm-fdigcs">
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_ItemGroupId_fdigc">ItemGroupOID</label>
+                            <div class="col-md-8">
+                                <select class="select2" name="OId" id="input_ItemGroupId_fdigc" disabled>
+                                    <option value="">...</option>
+                                    {{ each itemGroupOptions as item }}
+                                    <option value="{{ item.Id }}">{{ item.OId }}</option>
+                                    {{ /each }}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_DisplayName_fdigc">显示名称</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="input_DisplayName_fdigc" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_IsMultirecord_fdigc">数据集类型</label>
+                            <div class="col-md-8">
+                                <select class="select2" id="input_IsMultirecord_fdigc" disabled>
+                                    <option value="1">多记录</option>
+                                    <option value="0">单记录</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_DisplayWay_fdigc">展现方式</label>
+                            <div class="col-md-8">
+                                <select class="select2" id="input_DisplayWay_fdigc" disabled>
+                                    <option value="1">多记录</option>
+                                    <option value="0">单记录</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_SASDatasetName_fdigc">SASDatasetName</label>
+                            <div class="col-md-8">
+                                <input id="input_SASDatasetName_fdigc" type="text" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_MaxCount_fdigc">记录添加上限</label>
+                            <div class="col-md-8">
+                                <input id="input_MaxCount_fdigc" type="text" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group has-require">
+                            <label class="control-label col-md-3" for="input_SortIndex_fdigc">排序</label>
+                            <div class="col-md-8">
+                                <input id="input_SortIndex_fdigc" name="Order" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group has-require">
+                            <label class="control-label col-md-3" for="input_Name_fdigc">名称</label>
+                            <div class="col-md-8">
+                                <input id="input_Name_fdigc" name="Name" class="form-control" type="text" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_Description_fdigc">描述</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" id="input_Description_fdigc"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_FontSize_fdigc">字体大小</label>
+                            <div class="col-md-8">
+                                <select class="select2" name="Form" id="input_FontSize_fdigc">
+                                    <option value="1">小</option>
+                                    <option value="2">中</option>
+                                    <option value="3">大</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group has-require">
+                            <label class="control-label col-md-3" for="input_FontColor_fdigc">字体颜色</label>
+                            <div class="col-md-8">
+                                <input id="input_FontColor_fdigc" name="Color" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3"></label>
+                            <div class="col-md-8">
+                                   <div class="checkbox">
+                                       <label>
+                                           <input type="checkbox" id="input_IsBold_fdigc" >是否加粗
+                                       </label>
+                                   </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3"></label>
+                            <div class="col-md-9">
+                                <div class="checkbox col-lg-5">
+                                    <label>
+                                        <input type="checkbox" id="input_IsActive_fdigc">激活
+                                    </label>
+                                </div>
+                                <div class="checkbox col-lg-5">
+                                    <label>
+                                        <input type="checkbox" id="input_IsMustExist_fdigc">必须存在
+                                    </label>
+                                </div>
+                                <div class="checkbox col-lg-5">
+                                    <label>
+                                        <input type="checkbox" id="input_IsReferData_fdigc">参考数据
+                                    </label>
+                                </div>
+                                <div class="checkbox col-lg-5">
+                                    <label>
+                                        <input type="checkbox" id="input_IsHiddenName_fdigc">隐藏名称
+                                    </label>
+                                </div>
+                                <div class="checkbox col-lg-5">
+                                    <label>
+                                        <input type="checkbox" id="input_IsAllowAdd_fdigc">允许手动添加
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div id="itemForm-table-fdigc" style="display: none;">
+                    <table id="table-fdigc"></table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" style="display: none" onclick="saveItemGroupPower()">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    var $tableFdigc=null;
+    $(function () {
+        $('.nav').find('li').click(function () {
+            $('.nav').find('li').removeClass('active');
+            $(this).addClass('active');
+            $('#itemForm-fdigc,#itemForm-table-fdigc').hide();
+            if($(this).attr('data-type')==0){
+                $('#itemForm-fdigc').show();
+                $tableFdigc.bootstrapTable('resetView');
+                $('#formDesignItemGroupConfig').find('.btn-add').hide();
+//                    .unbind('click').click(function () {
+//                    saveItemGroupConfig();
+//                    });
+            }else{
+                $('#itemForm-table-fdigc').show();
+                $('#formDesignItemGroupConfig').find('.btn-add').show();
+//                    .unbind('click').click(function () {
+//                    saveItemGroupPower();
+//               });
+            }
+
+        });
+        $('#input_ItemGroupId_fdigc').change(function () {
+            var itemid = $(this).val();
+            tms.services.getItemGroup({
+                requestBody:{
+                    IsPaged: false,
+                    Id: itemid
+                },
+                callback:function (res) {
+                    if (res["ItemGroupItems"].length > 0) {
+                        var item = res["ItemGroupItems"][0];
+                        $("#input_DisplayName_fdigc").val(item["DisplayName"]);
+                        $("#input_IsMultirecord_fdigc").val(item["IsMultirecord"]?"1":"0").trigger('change');
+                    }
+                }
+            });
+        });
+        $tableFdigc=$('#table-fdigc').bootstrapTable({
+            height:450,
+            striped:true,
+            columns:[
+                {
+                    field:'Name',
+                    title:'用户组'
+                },
+                {
+                    formatter:"actionFormatterViewS",
+                    events:"actionsEventsSpw",
+                    title:'禁止访问'
+                },
+                {
+                    formatter:"actionFormatterAddS",
+                    events:"actionsEventsSpw",
+                    title:'禁止添加'
+                },
+                {
+                    formatter:"actionFormatterEditS",
+                    events:"actionsEventsSpw",
+                    title:'禁止修改'
+                },
+                {
+                    formatter:"actionFormatterDelS",
+                    events:"actionsEventsSpw",
+                    title:'禁止删除'
+                }
+
+            ]
+        })
+    });
+    function updataTableFdigc(id) {
+        tms.services.getItemGroups({
+            requestBody:{
+                iType:"2",
+                itemGroupId:id
+            },
+            callback:function (res) {
+                var _data=res['ItemGroupItems'];
+                $tableFdigc.bootstrapTable('load',_data);
+            }
+        })
+    }
+    function actionFormatterViewS(val,row) {
+        if(row.IsAllowView){
+            return['<input type="checkbox" class="checkView">'].join('');
+        }else{
+            return['<input type="checkbox" class="checkView" checked>'].join('');
+        }
+
+    }
+    function actionFormatterEditS(val,row) {
+        if(row.IsAllowEdit){
+            return['<input type="checkbox" class="checkEdit">'].join('');
+        }else{
+            return['<input type="checkbox" class="checkEdit" checked>'].join('');
+        }
+    }
+    function actionFormatterAddS(val,row) {
+        if(row.IsAllowAdd){
+            return['<input type="checkbox" class="checkAdd">'].join('');
+        }else{
+            return['<input type="checkbox" class="checkAdd" checked>'].join('');
+        }
+
+    }
+    function actionFormatterDelS(val,row) {
+        if(row.IsAllowDelete){
+            return['<input type="checkbox" class="checkDel">'].join('');
+        }else{
+            return['<input type="checkbox" class="checkDel" checked>'].join('');
+        }
+    }
+    window.actionsEventsSpw= {
+        'click .checkView':function (e, value,row,index) {
+            row.IsAllowView= !$(this).prop('checked');
+        },
+        'click .checkEdit':function (e, value,row,index) {
+            row.IsAllowEdit= !$(this).prop('checked');
+        },
+        'click .checkAdd':function (e, value,row,index) {
+            row.IsAllowAdd= !$(this).prop('checked');
+        },
+        'click .checkDel':function (e, value,row,index) {
+            row.IsAllowDelete= !$(this).prop('checked');
+        }
+
+    };
+    function saveItemGroupConfig() {
+
+    }
+    function saveItemGroupPower() {
+        var rows=$tableFdigc.bootstrapTable('getData');
+        var list=[];
+        for (var i = 0; i < rows.length; i++) {
+            var obj = rows[i];
+            list.push({
+                IsBase: true,
+                CRFVersionId: bp1.CurrentDraftId,
+                RoleId: obj.RoleId,
+                IsAllowView: obj.IsAllowView,
+                IsAllowEdit: obj.IsAllowEdit,
+                ItemGroupId: _json.ItemGroupId,
+                IsAllowAdd: obj.IsAllowAdd,
+                IsAllowDelete: obj.IsAllowDelete
+            })
+
+        }
+        tms.services.createOrUpdateAccessItemGroup({
+            requestBody:{
+                AccessItemGroupItems: list,
+                ItemGroupId: _json.ItemGroupId
+            },
+            callback:function(res){
+                tms.alert('保存成功',function(){
+                    $('#formDesignItemGroupConfig').modal('hide');
+                });
+            }
+
+        })
+    }
+</script>

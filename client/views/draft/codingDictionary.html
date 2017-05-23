@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+<!--头部结束-->
+
+<!--主体内容开始-->
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <link rel="import" href="../base/nav_draft_temp.html?__inline">
+    <!--左侧导航结束-->
+
+    <!--右侧主体开始-->
+    <div id="main">
+        <div class="container-fluid">
+            <div class="label-content">
+                <div class="pull-left label-icon"><i class="icons8_libform"></i>编码字典</div>
+            </div>
+            <div class="searchbar mb5">
+                <div class="row">
+                    <div class="col-md-2">
+                        <span>数据类型</span>
+                        <select id="dataType" class="form-control select2">
+                            <option value="">全部</option>
+                            {{each dataTypeOptions as item i}}
+                                <option value="{{item.Id}}" value2="{{item.Value}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>标准</span>
+                        <select id="standardTypeId" class="form-control select2">
+                            <option value="" value2="">全部</option>
+                            {{each standardTypeOptions as item i}}
+                                <option value="{{item.Id}}" value2="{{item.Value}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <span>OID</span>
+                        <input id="oid" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-3">
+                        <button id="search" type="button" class="btn btn-search pull-left mt40">查询</button>
+                        <button type="button" class="btn btn-add pull-left mt40 ml10" data-toggle="modal" data-target="#codingDictionaryImport">导入</button>
+                    </div>
+                </div>
+            </div>
+            <div class="h300">
+                <table id="table1"></table>
+            </div>
+
+            <div class="block mt10">
+                <div class="block_title">
+                    <span id='changName'>键值对</span>
+                </div>
+                <div class="tab1" style="display: none;">
+                    <table id="table2"></table>
+                </div>
+                <div class="tab2" style="display: none;">
+                    <table id="table4"></table>
+                </div>
+                <div class="tab3" style="display: none;">
+                    <table id="table5"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+<!--主体内容结束-->
+
+<!-- 添加当前模板js -->
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../assets/js/pages/draft/codingDictionary.js"></script>
+<!--导入-->
+<link rel="import" href="modals/codingDictionaryImport.html?__inline">
+<!--编辑键值对-->
+<link rel="import" href="modals/keyValueEdit.html?__inline">
+<!--编辑枚举-->
+<link rel="import" href="modals/enumEdit.html?__inline">
+<!--编辑外部字典-->
+<link rel="import" href="modals/outerDicEdit.html?__inline">
+<!--排序-->
+<link rel="import" href="modals/keyValueMove.html?__inline">
+</body>
+</html>

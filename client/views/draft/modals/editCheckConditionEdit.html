@@ -1,0 +1,422 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="editCheckConditionEdit"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w450">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">新建前置条件</h4>
+            </div>
+            <div class="modal-body">
+                <form id="itemForm-ecfg">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_ConditionTypeId_ecfg">类别</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_ConditionTypeId_ecfg">
+                                {{ each conditionTypeOptions as item }}
+                                <option value="{{item.Id}}" value2="{{ item.Value }}">{{ item.Name }}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <form id="itemForm-ecfg-variable">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_EventId_ecfg">研究事件</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_EventId_ecfg">
+                                <option value="">...</option>
+                                {{ each eventOptions as item }}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsApplyAllEvent_ecfg"></label>
+                        <div class="col-md-8">
+                           <div class="checkbox">
+                               <label>
+                                   <input type="checkbox" id="input_IsApplyAllEvent_ecfg">适用于所有事件
+                               </label>
+                           </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_FormId_ecfg">表单</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_FormId_ecfg">
+                                <option value="">...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsApplyAllForm_ecfg"></label>
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="input_IsApplyAllForm_ecfg">适用于所有表单
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_ItemGroupId_ecfg">ItemGroup</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_ItemGroupId_ecfg">
+                                <option value="">...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsApplyAllItemGroup_ecfg"></label>
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="input_IsApplyAllItemGroup_ecfg">适用于所有数据集
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_ItemId_ecfg">Item</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_ItemId_ecfg">
+                                <option value="">...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_ItemGroupNo_ecfg">ItemGroupNo</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="input_ItemGroupNo_ecfg">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_FormNo_ecfg">表单No</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="input_FormNo_ecfg">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_EventNo_ecfg">事件No</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="input_EventNo_ecfg">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_LogicPosition_ecfg">逻辑记录位置</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_LogicPosition_ecfg">
+                                <option value="1">当前</option>
+                                <option value="2">最大</option>
+                                <option value="3">最小</option>
+                                <option value="4">首位</option>
+                                <option value="5">末位</option>
+                                <option value="6">上一个</option>
+                                <option value="7">下一个</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group input_Range_ecfg" style="display:none">
+                        <label class="control-label col-md-3" for="input_Range_ecfg">在...范围内</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_Range_ecfg">
+                                <option value="1">表单</option>
+                                <option value="2">研究事件</option>
+                                <option value="3">受试者</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group input_OrderBy_ecfg" style="display:none">
+                        <label class="control-label col-md-3" for="input_OrderBy_ecfg">以...排序</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_OrderBy_ecfg">
+                                <option value="1">记录时间</option>
+                                <option value="2">表单位置</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3"></label>
+                        <div class="col-md-8">
+                            <div class="checkbox col-lg-6">
+                                <label>
+                                    <input type="checkbox" id="input_IsNeedCheck_ecfg">参与逻辑核查
+                                </label>
+                            </div>
+                            <div class="checkbox col-lg-6">
+                                <label>
+                                    <input type="checkbox" id="input_IsAssemble_ecfg">聚合运算
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_ValueTypeId_ecfg">数据取值类型</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_ValueTypeId_ecfg">
+                                <option value="">...</option>
+                                {{ each valueTypeItemsOptions as item }}
+                                <option value="{{item.Id}}">{{ item.Name }}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <form id="itemForm-ecfg-constant" style="display: none;">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_ConstValue_ecfg">值</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="input_ConstValue_ecfg">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_DataFormat_ecfg">格式</label>
+                        <div class="col-md-8">
+                            <input type="text" name="DataFormat" class="form-control" id="input_DataFormat_ecfg">
+                        </div>
+                    </div>
+                </form>
+                <form id="itemForm-ecfg-system" style="display: none;">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_FunctionId_ecfg">系统函数</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_FunctionId_ecfg">
+                                <option value="">...</option>
+                                {{ each functionsOptions as item }}
+                                <option value="{{item.Id}}">{{ item.Name }}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <form id="itemForm-ecfg-custom" style="display: none;">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_Custom_ecfg">自定义函数</label>
+                        <div class="col-md-8">
+                            <select class="select2" id="input_Custom_ecfg">
+                                <option value="">...</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    var conditionType=1;
+    $(function () {
+        $('#input_ConditionTypeId_ecfg').change(function () {
+            var tp=$(this).find('option:checked').attr('value2');
+            switch (tp){
+                case "1":
+                    $("#itemForm-ecfg-variable").show();
+                    $("#itemForm-ecfg-constant").hide();
+                    $("#itemForm-ecfg-system").hide();
+                    $("#itemForm-ecfg-custom").hide();
+                    conditionType=1;
+                    break;
+                case "2":
+                    $("#itemForm-ecfg-variable").hide();
+                    $("#itemForm-ecfg-constant").show();
+                    $("#itemForm-ecfg-system").hide();
+                    $("#itemForm-ecfg-custom").hide();
+                    conditionType=2;
+                    break;
+                case "3":
+                    $("#itemForm-ecfg-variable").hide();
+                    $("#itemForm-ecfg-constant").hide();
+                    $("#itemForm-ecfg-system").show();
+                    $("#itemForm-ecfg-custom").hide();
+                    break;
+                case "4":
+                    $("#itemForm-ecfg-variable").hide();
+                    $("#itemForm-ecfg-constant").hide();
+                    $("#itemForm-ecfg-system").hide();
+                    $("#itemForm-ecfg-custom").show();
+                    break;
+                default:
+                    $("#itemForm-ecfg-variable").hide();
+                    $("#itemForm-ecfg-constant").hide();
+                    $("#itemForm-ecfg-system").hide();
+                    $("#itemForm-ecfg-custom").hide();
+                    break;
+            }
+        });
+        $('#input_LogicPosition_ecfg').change(function () {
+            var value =$(this).val();
+            switch (value) {
+                case "2":
+                case "3":
+                    $(".input_Range_ecfg").show();
+                    $(".input_OrderBy_ecfg").hide();
+                    break;
+                case "4":
+                case "5":
+                case "6":
+                case "7":
+                    $(".input_Range_ecfg").show();
+                    $(".input_OrderBy_ecfg").show();
+                    break;
+                default:
+                    $(".input_Range_ecfg").hide();
+                    $(".input_OrderBy_ecfg").hide();
+                    break;
+            }
+        });
+        $("#editCheckConditionEdit").on("hidden.bs.modal", function() {
+            $('#itemForm-ecfg-variable')[0].reset();
+            $('#itemForm-ecfg-constant')[0].reset();
+            $('#itemForm-ecfg-system')[0].reset();
+            $('#itemForm-ecfg-custom')[0].reset();
+            $('#itemForm-ecfg-constant').data('bootstrapValidator').resetForm();
+            $('#input_EventId_ecfg').val('').trigger('change');
+            $('#input_FormId_ecfg').val('').trigger('change');
+            $('#input_ItemGroupId_ecfg').val('').trigger('change');
+            $('#input_ItemId_ecfg').val('').trigger('change');
+            $('#input_LogicPosition_ecfg').val('1').trigger('change');
+            $('#input_Range_ecfg').val('').trigger('change');
+            $('#input_OrderBy_ecfg').val('').trigger('change');
+            $('#input_ValueTypeId_ecfg').val('').trigger('change');
+            $('#input_FunctionId_ecfg').val('').trigger('change');
+            $(this).attr({'data-type':''});
+            $('#editCheckConditionEdit').find('.modal-title').html('新建前置条件');
+        });
+        $("#editCheckConditionEdit").on("show.bs.modal", function() {
+            $(this).removeClass('edit');
+            var tp=$(this).attr('data-type');
+            if(tp=='edit'){
+                $(this).addClass('edit');
+                var id=$(this).attr('data-id');
+                $('#editCheckConditionEdit').find('.modal-title').html('编辑前置条件');
+                $(this).find('.btn-add').unbind('click').bind('click',function () {
+                    addEditCheckConditionItem(id);
+                });
+                return;
+            }
+            $(this).find('.btn-add').unbind('click').bind('click',function () {
+                addEditCheckConditionItem();
+            })
+        });
+        $("#input_EventId_ecfg").change(function () {
+            var eventId=$(this).val();
+            if(!eventId) return false;
+            $('#input_FormId_ecfg').empty();
+            tms.services.getDropDownForm({
+                requestBody:{
+                    CRFVersionId: bp1.CurrentDraftId,
+                    EventId: eventId
+                },
+                callback:function(res){
+                    var options=[];
+                    options.push('<option value="">...</option>');
+                    if (res["DropDownEventItems"]) {
+                        var _data=res["DropDownEventItems"];
+                        for (var i = 0; i < _data.length; i++) {
+                            var item = _data[i];
+                            options.push('<option value="'+item.Id+'">'+item.Name+'</option>');
+                        }
+                    }
+                    $('#input_FormId_ecfg').html(options.join(''));
+                    $('#input_FormId_ecfg').val(_json.lastFormId).trigger('change');
+                }
+            })
+        });
+        $("#input_FormId_ecfg").change(function () {
+            var formId=$(this).val();
+            if(!formId) return false;
+            $('#input_ItemGroupId_ecfg').empty();
+            tms.services.getDropDownItemGroup({
+                requestBody:{
+                    CRFVersionId: bp1.CurrentDraftId,
+                    FormId: formId
+                },
+                callback:function(res){
+                    var options=[];
+                    options.push('<option value="">...</option>');
+                    if (res["DropDownEventItems"]) {
+                        var _data=res["DropDownEventItems"];
+                        for (var i = 0; i < _data.length; i++) {
+                            var item = _data[i];
+                            options.push('<option value="'+item.Id+'">'+item.Name+'</option>');
+                        }
+                    }
+                    $('#input_ItemGroupId_ecfg').html(options.join(''));
+                    $('#input_ItemGroupId_ecfg').val(_json.lastItemGroupId).trigger('change');
+                }
+            })
+        });
+        $("#input_ItemGroupId_ecfg").change(function () {
+            var itemGroupId=$(this).val();
+            if(!itemGroupId) return false;
+            $('#input_ItemId_ecfg').empty();
+            tms.services.getDropDownItems({
+                requestBody:{
+                    CRFVersionId: bp1.CurrentDraftId,
+                    ItemGroupId: itemGroupId
+                },
+                callback:function(res){
+                    var options=[];
+                    options.push('<option value="">...</option>');
+                    if (res["DropDownEventItems"]) {
+                        var _data=res["DropDownEventItems"];
+                        for (var i = 0; i < _data.length; i++) {
+                            var item = _data[i];
+                            options.push('<option value="'+item.Id+'">'+item.Name+'</option>');
+                        }
+                    }
+                    $('#input_ItemId_ecfg').html(options.join(''));
+                    $('#input_ItemId_ecfg').val(_json.lastItemId).trigger('change');
+                }
+            })
+        });
+    })
+    function addEditCheckConditionItem(id) {
+        var id=id||"";
+        if(conditionType==2 ){
+            var isMustObjs=$('#itemForm-ecfg-constant').data('bootstrapValidator').validate();
+            if(!isMustObjs.isValid()) return false;
+        }
+        tms.services.createOrUpdateEditCheckCondition({
+            requestBody:{
+                Id: id,
+                CRFVersionId: bp1.CurrentDraftId,
+                StudyId:bp1.CurrentProjectId,
+                IsBase: false,
+                EditCheckId:bp1.EditCheckId,
+                ConditionTypeId: $("#input_ConditionTypeId_ecfg").val(),
+                EventId: $("#input_EventId_ecfg").val(),
+                IsApplyAllEvent: $("#input_IsApplyAllEvent_ecfg").prop('checked'),
+                FormId: $("#input_FormId_ecfg").val(),
+                IsApplyAllForm: $("#input_IsApplyAllForm_ecfg").prop('checked'),
+                ItemGroupId: $("#input_ItemGroupId_ecfg").val(),
+                IsApplyAllItemGroup: $("#input_IsApplyAllItemGroup_ecfg").prop('checked'),
+                ItemId: $("#input_ItemId_ecfg").val(),
+                ItemGroupNo: $("#input_ItemGroupNo_ecfg").val(),
+                FormNo: $("#input_FormNo_ecfg").val(),
+                EventNo: $("#input_EventNo_ecfg").val(),
+                LogicPosition: $("#input_LogicPosition_ecfg").val(),
+                IsNeedCheck: $("#input_IsNeedCheck_ecfg").prop('checked'),
+                IsAssemble: $("#input_IsAssemble_ecfg").prop('checked'),
+                ValueTypeId: $("#input_ValueTypeId_ecfg").val(),
+                ConstValue: $("#input_ConstValue_ecfg").val(),
+                DataFormat: $("#input_DataFormat_ecfg").val(),
+                FunctionId: $("#input_FunctionId_ecfg").val(),
+                OrderBy: $("#input_OrderBy_ecfg").val(),
+                Range: $("#input_Range_ecfg").val()
+            },
+            callback:function (data) {
+                updateTableBefore();
+                tms.alert('保存成功',function () {
+                    $('#editCheckConditionEdit').modal('hide');
+                })
+            }
+
+        })
+    }
+</script>

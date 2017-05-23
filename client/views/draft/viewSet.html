@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <link rel="stylesheet" href="../../assets/css/pages/draft.less">
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+<!--头部结束-->
+
+<!--主体内容开始-->
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <link rel="import" href="../base/nav_draft_temp.html?__inline">
+    <!--右侧主体开始-->
+    <div id="main">
+        <ul class="nav nav-edc">
+            <li role="presentation"><a href="/draft/formredirect">表单定义</a></li>
+            <li role="presentation"><a href="/draft/PDFSetRidirect">PDF定义</a></li>
+            <li class="cur" role="presentation" class="active"><a href="#">预览定义</a></li>
+        </ul>
+        <div class="container-fluid">
+            <div style="height: 42px;line-height: 42px;">
+                <div class="pull-left label-icon"><i class="icons8-libitemgroup"></i>预览定义</div>
+                <div class="pull-right"><button type="button" class="btn btn-add" onclick="onAdd();">新增</button></div>
+            </div>
+            <div class="searchbar mb5">
+                <div class="row">
+                    <div class="col-md-2">
+                        <span>语言</span>
+                        <select id="input_LanguageId" class="form-control select2">
+                            <option value="">全部</option>
+                            {{each LanguageOptions as item i}}
+                            <option value="{{item.Id}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>OID</span>
+                        <input id="input_OId" class="form-control" type="text" />
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-search pull-left mt40" onclick="onSearch()">查询</button>
+                    </div>
+                </div>
+            </div>
+            <div class="h415">
+                <table id="table1"></table>
+            </div>
+
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+
+<div class="modal fade" id="modal1" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="sumForm1">
+                    <div class="form-group has-require">
+                        <label class="col-md-3">语言</label>
+                        <div class="col-md-8">
+                            <select id="input_LanguageId1" name="LanguageId" class="form-control select2 getSys-types" data-bv-notempty data-bv-notempty-message="语言不能为空">
+                                <option value="">...</option>
+                                {{each LanguageOptions as item i}}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="col-md-3">OID</label>
+                        <div class="col-md-8">
+                            <input id="input_OID1" name="OID" type="text" class="form-control" data-bv-notempty data-bv-notempty-message="OID不能为空">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="col-md-3">内容</label>
+                        <div class="col-md-8">
+                            <input id="input_PreviewContent" name="PreviewContent" type="text" class="form-control" data-bv-notempty data-bv-notempty-message="OID不能为空">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" onclick="onSave(this);">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 添加当前模板js -->
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../../assets/js/pages/draft/viewSet.js"></script>
+</body>
+</html>

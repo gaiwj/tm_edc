@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        var bp1 = window.localStorage["browseparam1"];
+        if (bp1) {
+            bp1 = JSON.parse(bp1);
+            var CurrentDraftId = bp1.CurrentDraftId;
+            window.location.href = '/draft/PDFSet?CurrentDraftId=' + CurrentDraftId;
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <link rel="stylesheet" href="../../assets/css/pages/exp.less">
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+<!--头部结束-->
+
+<!--主体内容开始-->
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <link rel="import" href="../base/nav_exp_temp.html?__inline">
+    <!--左侧导航结束-->
+
+    <!--右侧主体开始-->
+    <div id="main">
+        <div class="container-fluid">
+            <div class="label-content">
+                <div class="pull-left label-icon"><i class="icons8 icons8_labitem"></i>检验项</div>
+                <div class="pull-right"><button type="button" class="btn btn-add" data-toggle="modal" data-target="#labItemEdit">新增</button></div>
+            </div>
+            <div class="searchbar mb5">
+                <div class="row">
+                    <div class="col-md-2">
+                        <span>名称</span>
+                        <input id="name" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-2">
+                        <span>代码</span>
+                        <input id="code" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        <button id="search" type="button" class="btn btn-search pull-left mt40">查询</button>
+                    </div>
+                </div>
+            </div>
+            <table id="table1"></table>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+<!--主体内容结束-->
+
+<!-- 添加当前模板js -->
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../assets/js/pages/exp/labItem.js"></script>
+<!--新建/修改表单-->
+<link rel="import" href="modals/labItemEdit.html?__inline">
+</body>
+</html>

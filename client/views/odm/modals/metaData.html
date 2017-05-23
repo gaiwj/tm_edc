@@ -1,0 +1,105 @@
+<div class="modal fade" id="metaData" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="sumForm">
+                    <div class="form-group">
+                        <label class="col-md-3">研究项目</label>
+                        <div class="col-md-8">
+                            <select id="studyId" class="form-control select2">
+                                {{each Projects as item i}}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">系列文件</label>
+                        <div class="col-md-8">
+                            <select id="toId" class="form-control select2">
+                                <option value="">...</option>
+                                {{each getDropDownOID as item i}}
+                                <option value="{{item.Id}}">{{item.OID}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="col-md-3">eCRF版本</label>
+                        <div class="col-md-8">
+                            <select id="crfVersionId" name="crfVersion" class="form-control select2">
+                                <option value="">...</option>
+                                {{each getDropDownCRFVersion as item i}}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">数据截止时间</label>
+                        <div class="col-md-8">
+                                <div class='input-group'>
+                                    <input type='text' id='endTime' class="form-control dataTimepick"/>
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="export" type="button" class="btn btn-add">导出</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+        $('#metaData').on('hide.bs.modal',function () {
+            // 重置表单
+            $("#studyId option:first").prop("selected", 'selected').trigger('change');
+            $("#toId option:first").prop("selected", 'selected').trigger('change');
+            $("#crfVersionId option:first").prop("selected", 'selected').trigger('change');
+            $('#endTime').val('');
+            $('#sumForm').data('bootstrapValidator').resetForm();
+        });
+
+        // 导出
+        $('#export').click(function(){
+            var EndTime = $('#endTime').val();
+            var StudyId = $("#studyId").val();
+            var ExportId = currentRow.Id;
+            var TOID = $("#toId").val();
+            var CRFVersionId = $("#crfVersionId").val();
+
+            if($('#sumForm').data('bootstrapValidator').validate().isValid()){
+                var query = {
+                    EndTime: EndTime,
+                    StudyId: StudyId,
+                    ExportId: ExportId,
+                    TOID: TOID,
+                    CRFVersionId:CRFVersionId
+                };
+                exportODMLogTask(query);
+            }
+        })
+    });
+
+    function exportODMLogTask(query){
+        tms.services.exportODMLogTask({
+            requestBody:query,
+            callback:function(data){
+                $('.modal').modal('hide');
+                tms.alert('导出成功');
+            }
+        })
+    }
+</script>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <link rel="stylesheet" href="../assets/css/pages/draft.css">
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+<!--头部结束-->
+
+<!--主体内容开始-->
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <link rel="import" href="../base/nav_draft_temp.html?__inline">
+    <!--右侧主体开始-->
+    <div id="main">
+        <ul class="nav nav-edc">
+            <li class="cur" role="presentation" class="active"><a href="#">表单定义</a></li>
+            <li role="presentation"><a href="/draft/PDFSetRidirect">PDF定义</a></li>
+            <li role="presentation"><a href="/draft/viewSet">预览定义</a></li>
+        </ul>
+        <div class="container-fluid">
+            <div style="height: 42px;line-height: 42px;">
+                <div class="pull-left label-icon"><i class="icons8-libitemgroup"></i>表单定义</div>
+            </div>
+            <div class="searchbar mb5">
+                <div class="row">
+                    <div class="col-md-2">
+                        <span>表单类型</span>
+                        <select id="search-IsMultirecord" class="form-control select2">
+                            <option value="">全部</option>
+                            <option value="1">多记录</option>
+                            <option value="0">单记录</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <span>标准</span>
+                        <select id="search-StandardTypeId" class="form-control select2">
+                            <option value="" value2="">全部</option>
+                            {{each standardTypeOptions as item i}}
+                            <option value="{{item.Id}}" value2="{{item.Value}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>OID</span>
+                        <input id="search-OID" class="form-control" type="text" />
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-search pull-left mt40" onclick="onSearch()">查询</button>
+                        <button type="button" class="btn btn-add pull-left mt40 ml10" data-toggle="modal" data-target="#itemGroupImport">导入</button>
+                    </div>
+                </div>
+            </div>
+            <div class="h415">
+                <table id="table1"></table>
+            </div>
+            <div class="block mt5">
+                <div class="block_title">
+                    CRF表PDF &nbsp;
+                    <button type="button" class="btn btn-add" data-toggle="modal" onclick="onAdd2();">新增</button>
+                </div>
+                <table id="table2">
+                    <thead>
+                    <tr>
+                        <th data-field="PDFOId" data-width="150" >PDFOID</th>
+                        <th data-field="PDFUrl" data-width="150" >PDF相对路径</th>
+                        <th data-field="PreviewContent" >预览方式</th>
+                        <th data-formatter="actionFormatter" data-events="actionEvents02" data-width="100" >操作</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+
+<div class="modal fade" id="formEdit" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="sumForm1">
+                    <div class="form-group has-require">
+                        <label class="col-md-3">OID</label>
+                        <div class="col-md-8">
+                            <input id="input_OID1" type="text" class="form-control" name="OID" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="col-md-3">名称</label>
+                        <div class="col-md-8">
+                            <input id="input_Name1" type="text" class="form-control" name="Name" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">表单类型</label>
+                        <div class="col-md-8">
+                            <select id="input_IsMultirecord" class="form-control select2">
+                                <option value="">全部</option>
+                                <option value="0">单表单</option>
+                                <option value="1">多表单</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">记录添加上限</label>
+                        <div class="col-md-8">
+                            <input id="input_MaxCount" type="text" class="form-control" name="MaxCount">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">允许手动添加</label>
+                        <div class="col-md-8">
+                            <label>
+                                <input id="input_IsAllowAdd" type="checkbox" name="IsAllowAdd"/>
+                                允许手动添加
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">显示名称</label>
+                        <div class="col-md-8">
+                            <input id="input_DisplayName" type="text" class="form-control" name="DisplayName">
+                        </div>
+                    </div>
+
+                    <div style="height: 40px; line-height:40px; font-size:15px; color:gray; text-indent:10px; border-bottom: 1px solid #d0d0d0;">属性</div>
+
+                    <div class="form-group">
+                        <label class="col-md-3">字体大小</label>
+                        <div class="col-md-8">
+                            <select id="input_FontSize" class="form-control select2" name="FontSize">
+                                <option value="0">小</option>
+                                <option value="1">中</option>
+                                <option value="2">大</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">字体颜色</label>
+                        <div class="col-md-8">
+                            <input id="input_FontColor" type="text" class="form-control" name="FontColor">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3"></label>
+                        <div class="col-md-8">
+                            <label>
+                                <input id="input_IsBold" type="checkbox" name="IsBold"/>
+                                是否加粗
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" onclick="onSave1(this);">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="form_pdf" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="sumForm2">
+                    <div class="form-group has-require">
+                        <label class="col-md-3">表单OID</label>
+                        <div class="col-md-8">
+                            <input id="input_OID2" name="OID" type="text" class="form-control" disabled="disabled" data-bv-notempty data-bv-notempty-message="OID不能为空">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">Pdf</label>
+                        <div class="col-md-8">
+                            <select id="input_PDFId" class="form-control select2 getSys-types" data-bv-notempty data-bv-notempty-message="Pdf不能为空">
+                                {{each PDFDefineItems as item i}}
+                                <option value="{{item.Id}}">{{item.OId}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" onclick="onSave2(this);">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 添加当前模板js -->
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../../assets/js/pages/draft/form.js"></script>
+<link rel="import" href="modals/formImport.html?__inline">
+</body>
+</html>

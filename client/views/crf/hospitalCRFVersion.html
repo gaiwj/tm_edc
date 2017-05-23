@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <link rel="stylesheet" href="../assets/css/pages/crf.css">
+</head>
+
+<body>
+<!--顶部栏-->
+<link rel="import" href="../base/header.html?__inline">
+
+<!--主体内容开始-->
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <link rel="import" href="../base/nav_crf_temp.html?__inline">
+    <!--左侧导航结束-->
+
+    <!--右侧主体开始-->
+    <div id="main">
+        <div class="container-fluid">
+            <div class="label-content">
+                <div class="pull-left label-icon"><i class="icons8_unit"></i>中心CRF版本</div>
+                <div class="pull-right"><button type="button" class="btn btn-add" onclick="onBack();" style="width:100px;">返回CRF设计</button></div>
+            </div>
+            <div class="searchbar export-bar mb10">
+                <div class="row">
+                    <div class="col-md-2">
+                        <span>环境</span>
+                        <select id="input_Environment0" class="select2">
+                            <option value="">...</option>
+                            {{each EnvironmentOptions as item i}}
+                            <option value="{{item.Id}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>研究中心编号</span>
+                        <input id="input_Code0" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-2">
+                        <span>研究中心名称</span>
+                        <input id="input_Name0" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-2">
+                        <span>CRF版本</span>
+                        <input id="input_CRFVersion0" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-search pull-left mt40" onclick="onSearch();">查询</button>
+                    </div>
+                </div>
+
+            </div>
+            <table id="table1" style="display: none;">
+                <thead>
+                <tr>
+                    <th data-field="SiteCode" data-width="100">中心编号</th>
+                    <th data-field="SiteName" data-width="180">研究中心名称</th>
+                    <th data-field="CRFVersionName">CRF版本</th>
+                    <th data-field="TrialProtocolName" data-width="150">试验方案</th>
+                    <th data-field="EffectiveDate" data-formatter="actionFormatter02" data-width="200">生效日期</th>
+                    <th data-formatter="actionFormatter01" data-events="operateEvents" data-width="100">操作</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+<!--主体内容结束-->
+
+<!--弹框1-->
+<div class="modal fade" id="modal1" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">修改CRF版本</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form1">
+                    <div class="form-group">
+                        <label class="col-md-3">验证环境</label>
+                        <div class="col-md-8">
+                            <span id="input_EnvironmentName1"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">研究中心</label>
+                        <div class="col-md-8">
+                            <span id="input_SiteName1"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">CRF版本</label>
+                        <div class="col-md-8">
+                            <span id="input_CRFVersionName1"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">生效日期</label>
+                        <div class="col-md-8">
+                            <input id="input_EffectiveDate1" name="Value" type="text" class="form-control dataTimepick" data-bv-notempty data-bv-notempty-message="生效日期不能为空">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" onclick="onSave1(this);">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../assets/js/pages/crf/hospitalCRFVersion.js"></script>
+</body>
+</html>

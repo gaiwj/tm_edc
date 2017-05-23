@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <style type="text/css">
+        .versionModal span{
+            line-height: 40px;
+            display: block;
+            color: #979aa0;
+            font-size: 12px;
+        }
+        .w300{
+            width: 300px;
+        }
+        .w340{
+            width: 340px;
+        }
+        #modal1 .page-list{
+            display: none !important;
+        }
+        /*.fixed-table-container .bs-checkbox .th-inner {*/
+             /*padding: 8px 0;*/
+        /*}*/
+    </style>
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+
+<!--主体内容开始-->
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <link rel="import" href="../base/nav_crf_temp.html?__inline">
+    <!--左侧导航结束-->
+
+    <!--右侧主体开始-->
+    <div id="main">
+        <div class="container-fluid">
+            <div class="label-content">
+                <div class="pull-left label-icon"><i class="icons8_unit"></i>数据迁移</div>
+                <div class="pull-right"><button type="button" class="btn btn-add" onclick="onAdd1();">新增</button></div>
+            </div>
+            <div class="searchbar export-bar mb10">
+                <div class="row">
+                    <div class="col-md-8">
+                        <span>项目</span>
+                        <select id="projects-01" class="select2 form-control">
+                            <option value="">全部</option>
+                            {{each Projects as item i}}
+                            <option value="{{item.Id}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <span>从...版本</span>
+                        <select id="environmentFromName" class="select2 form-control">
+                            <option value="">环境</option>
+                            {{each EnvironmentItems as item i}}
+                            <option value="{{item.Id}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>&nbsp;</span>
+                        <select id="crfVersionFromName" class="select2 form-control">
+                            <option value="">版本</option>
+                            {{each CRFVersionItems as item i}}
+                            <option value="{{item.Id}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>到...版本</span>
+                        <select id="environmentToName" class="select2 form-control">
+                            <option value="">环境</option>
+                            {{each EnvironmentItems as item i}}
+                            <option value="{{item.Id}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>&nbsp;</span>
+                        <select id="crfVersionToName" class="select2 form-control">
+                            <option value="">版本</option>
+                            {{each CRFVersionItems as item i}}
+                            <option value="{{item.Id}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>执行结果</span>
+                        <select id="ExcuteType" class="select2 form-control">
+                            <option value="">全部</option>
+                            <option value="0">未执行</option>
+                            <option value="1">部分迁移成功</option>
+                            <option value="2">迁移成功</option>
+                            <option value="3">迁移失败</option>
+                            <option value="3">正在迁移</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-search pull-left mt40" onclick="onSearch();">查询</button>
+                    </div>
+                </div>
+
+            </div>
+            <table id="table1" style="display: none;">
+                <thead>
+                    <tr>
+                        <th data-field="CreateTime" data-formatter="actionFormatter02">迁移时间</th>
+                        <th data-field="StudyName">项目</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+<!--主体内容结束-->
+
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../assets/js/pages/crf/versionTransfer.js"></script>
+
+
+<div class="modal fade" id="modal1" role="dialog">
+    <div class="modal-dialog" style="width: 735px;" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">新建迁移</h4>
+            </div>
+            <div class="modal-body">
+                <div class="pull-left w300 versionModal">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span>项目</span>
+                            <select id="projects-02" class="select2 form-control">
+                                <option value="">全部</option>
+                                {{each Projects as item i}}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt10">
+                        <div class="col-md-5">
+                            <span>从...版本</span>
+                            <select id="environmentFromName-01" class="select2 form-control">
+                                <option value="">环境</option>
+                                {{each EnvironmentItems as item i}}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="col-md-7">
+                            <span>&nbsp;</span>
+                            <select id="crfVersionFromName-01" class="select2 form-control">
+                                <option value="">版本</option>
+                                {{each CRFVersionItems as item i}}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt10">
+                        <div class="col-md-5">
+                            <span>到...版本</span>
+                            <select id="environmentToName-01" class="select2 form-control">
+                                <option value="">环境</option>
+                                {{each EnvironmentItems as item i}}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="col-md-7">
+                            <span>&nbsp;</span>
+                            <select id="crfVersionToName-01" class="select2 form-control">
+                                <option value="">版本</option>
+                                {{each CRFVersionItems as item i}}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="pull-right w340 versionModal" style="height:360px; overflow:hidden;">
+                    <div >
+                        <span class="pull-left">选择受试者</span>
+                        <!--<span class="pull-right"><input type="checkbox" id="inlineCheckbox1" value="option1">全部受试者</span>-->
+                    </div>
+                    <table id="table2" style="display: none;"></table>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" onclick="onSave1(this);">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

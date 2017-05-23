@@ -1,0 +1,102 @@
+<div class="modal fade" id="keyValueMove" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">排序</h4>
+            </div>
+            <div class="modal-body">
+                <form id="moveForm">
+                    <div class="form-group">
+                        <label class="col-md-3">位置</label>
+                        <div class="col-md-8">
+                            <form id="moveType" class="radioBox">
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="3" checked="checked"> 之前
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="4"> 之后
+                                </label>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">字典条目</label>
+                        <div class="col-md-8">
+                            <select id="moveToItem" class="form-control select2">
+                               <option value="">...</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="moveSave" type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#keyValueMove').on('show.bs.modal',function () {
+        	// 加载字典条目
+			getDictionItems(currentRow.gid);
+
+        });
+
+        $('#keyValueMove').on('hide.bs.modal',function () {
+            // 重置表单
+			$('#moveForm')[0].reset();
+        });
+        
+        $('#moveSave').click(function(){
+        	//var xx = $("#moveType").find('input:radio:checked').val() == 'true';
+
+
+        	tms.services.skipMoveDraftDictionary({
+        		requestBody:{
+	                DictionaryId: currentRow.gid,
+	                FromItemId: currentRow.moveId,
+	                ToItemId: $("#moveToItem").val(),
+	                MoveType: $("input[name='inlineRadioOptions']:checked").val(),
+        		},
+        		callback:function(data){
+	                $('.modal').modal('hide');
+	                loadDictionaryItems(currentRow.gid,currentRow.typeName);
+	                tms.alert('操作成功');
+        		}
+        	})
+        });
+    });
+
+    // 获取字典条目
+    function getDictionItems(gid){
+    	//console.log(labItemId);
+    	$('#moveToItem').empty();
+        var _data = [];
+    	tms.services.getDictionItems({
+            requestBody:{
+ 				IsPaged:false, 
+ 				DictionaryId:currentRow.gid
+            },
+            callback:function(data){
+				//console.log(data);
+                for(var i = 0; i < data.DictionaryItemsItems.length; i++){
+                    var item = data.DictionaryItemsItems[i];
+                    _data.push({
+                        id: item.Id,
+                        text: item.Name
+                    })
+                }
+                $('#moveToItem').select2({
+                	placeholder:'...',
+                	minimumResultsForSearch: -1,
+                    width:'100%',
+                    data: _data
+                });
+            }
+        })
+    }
+</script>

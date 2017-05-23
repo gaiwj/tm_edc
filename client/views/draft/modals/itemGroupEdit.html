@@ -1,0 +1,184 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="itemGroupEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w450">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">编辑Item</h4>
+            </div>
+            <div class="modal-body">
+                <form id="itemForm">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_OID">OID</label>
+                        <div class="col-md-8">
+                            <input type="text" name="OID" class="form-control" id="input_OID" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_Name">名称</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Name" class="form-control" id="input_Name" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsMultirecord">数据集类型</label>
+                        <div class="col-md-8">
+                            <select id="input_IsMultirecord" name="DataType"  class="form-control select2">
+                                <option value="1">多记录</option>
+                                <option value="0">单记录</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_MaxCount">记录添加上限</label>
+                        <div class="col-md-8">
+                            <input type="text" name="MaxCount" class="form-control" data-type="number" id="input_MaxCount" value="0">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsAllowAdd">允许手动添加</label>
+                        <div class="col-md-8">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="input_IsAllowAdd">允许手动添加
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsReferData">参考数据</label>
+                        <div class="col-md-8">
+                            <div id="input_IsReferData">
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" value="1" disabled>是
+                                    </label>
+                                </div>
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" value="0" disabled>否
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_DisplayName">显示名称</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="DisplayName" id="input_DisplayName">
+                        </div>
+                    </div>
+                </form>
+                <div class="formItem">
+                    <span class="bt">属性</span>
+                    <form id="itemForm-info">
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_ControlsTypeId">展现方式</label>
+                            <div class="col-md-8">
+                                <select id="input_ControlsTypeId" name="ControlsTypeId" class="form-control select2">
+                                    <option value="1">固定表格</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_FontSize">字体大小</label>
+                            <div class="col-md-8">
+                                <select id="input_FontSize" class="form-control select2">
+                                    <option value="1">小</option>
+                                    <option value="2">中</option>
+                                    <option value="3">大</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_FontColor">字体颜色</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="input_FontColor">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_IsBold"></label>
+                            <div class="col-md-8">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="input_IsBold">是否加粗
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_IsHiddenName"></label>
+                            <div class="col-md-8">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="input_IsHiddenName">隐藏名称
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    $(function () {
+        //加载编码字典
+        $("#itemGroupEdit").on("hidden.bs.modal", function() {
+            $('#itemForm')[0].reset();
+            $('#itemForm').data('bootstrapValidator').resetForm();
+            $(this).attr({'data-type':''});
+        });
+        $("#itemGroupEdit").on("show.bs.modal", function() {
+            var tp=$(this).attr('data-type');
+            $(this).removeClass('edit');
+            if(tp=='edit'){
+                $(this).addClass('edit');
+                var id=$(this).attr('data-id');
+               $(this).find('.modal-title').html('编辑ItemGroup定义');
+                $(this).find('.btn-add').unbind('click').bind('click',function () {
+                    onSave(id);
+                })
+                return;
+            }
+        });
+
+    });
+    function onSave(id) {
+        var isMustObjs=$('#itemForm').data('bootstrapValidator').validate();
+        if(!isMustObjs.isValid()) return false;
+        tms.services.createOrUpdateItemGroup2({
+            requestBody:{
+                IsUpdate:true,
+                Id: id,
+                OId: $("#input_OID").val(),
+                Name:$("#input_Name").val(),
+                IsMultirecord: $("#input_IsMultirecord").val()=='1',
+                IsReferData:$("#input_IsReferData").find('input[value=1]').val()=='1',
+                DisplayName:$("#input_DisplayName").val(),
+                ControlsTypeId:$("#input_ControlsTypeId").val(),
+                FontSize: $("#input_FontSize").val(),
+                FontColor: $("#input_FontColor").val(),
+                IsBold: $("#input_IsBold").prop('checked'),
+                IsAllowAdd: $("#input_IsAllowAdd").prop('checked'),
+                IsHiddenName: $("#input_IsHiddenName").prop('checked'),
+                MaxCount: $("#input_MaxCount").val(),
+                CRFVersionId: bp1.CurrentDraftId,
+                IsBase: false,
+                StudyId:bp1.CurrentProjectId
+            },
+            callback:function(data){
+                $tableItemGroup.bootstrapTable('refresh');
+                tms.alert('保存成功',function () {
+                    $('#itemGroupEdit').modal('hide');
+                })
+            }
+
+        })
+    }
+</script>

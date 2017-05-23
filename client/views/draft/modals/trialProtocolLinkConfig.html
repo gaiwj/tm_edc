@@ -1,0 +1,333 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="trialProtocolLinkConfig"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w650">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">配置Item</h4>
+            </div>
+            <ul class="nav nav-edc">
+                <li role="presentation" class="active" data-type="0" ><a href="javascript:;" id="item-info">基本信息</a></li>
+                <li role="presentation" data-type="1"><a href="javascript:;" id="item-power">权限控制</a></li>
+            </ul>
+            <div class="modal-body">
+                <div id="itemForm-tcgs">
+                    <div class="col-lg-8">
+                        <form id="itemForm-tcg">
+                            <div class="form-group input-EventId-tc">
+                                <label class="control-label col-md-5" for="input_EventId_tc">研究事件OID</label>
+                                <div class="col-md-7">
+                                    <select class="select2" id="input_EventId_tc" name="ItemOId" disabled>
+                                        <option value="">...</option>
+                                        {{ each eventOptions as item }}
+                                        <option value="{{item.Id}}">{{item.OId}}</option>
+                                        {{ /each }}
+                                    </select>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" disabled>事件组
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5" for="input_DisplayName_tc">显示名称</label>
+                                <div class="col-md-7">
+                                    <input type="text" name="Version" class="form-control" id="input_DisplayName_tc" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5" for="input_BlindName_tc">盲态名称</label>
+                                <div class="col-md-7">
+                                    <input id="input_BlindName_tc" class="form-control" type="text" disabled />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5" for="input_IsMultirecord_tc">事件类型</label>
+                                <div class="col-md-7">
+                                    <select class="select2" id="input_IsMultirecord_tc" disabled>
+                                        <option value="1">多事件</option>
+                                        <option value="0">单事件</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5" for="input_EventTypeId_tc">事件类别</label>
+                                <div class="col-md-7">
+                                    <select class="select2" id="input_EventTypeId_tc" disabled>
+                                        <option value="">...</option>
+                                        {{ each eventTypeOptions as item }}
+                                        <option value="{{item.Id}}">{{item.Name}}</option>
+                                        {{ /each }}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5" for="input_InstalmentsTypeId_tc">研究分期</label>
+                                <div class="col-md-7">
+                                    <select class="select2" id="input_InstalmentsTypeId_tc" disabled>
+                                        <option value="">...</option>
+                                        {{ each instalmentsTypeOptions as item }}
+                                        <option value="{{item.Id}}">{{item.Name}}</option>
+                                        {{ /each }}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5" for="input_MaxCount_tc">事件发生上限</label>
+                                <div class="col-md-7">
+                                    <input id="input_MaxCount_tc" type="text" class="form-control" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5" for="input_SortIndex_tc">排序</label>
+                                <div class="col-md-7">
+                                    <input id="input_SortIndex_tc" type="text" class="form-control" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5" for="input_Name_tc">名称</label>
+                                <div class="col-md-7">
+                                    <input id="input_Name_tc" type="text" class="form-control" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5" for="input_Description_tc">描述</label>
+                                <div class="col-md-7">
+                                    <textarea class="form-control" id="input_Description_tc" disabled></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5" for="input_FontSize_tc">字体大小</label>
+                                <div class="col-md-7">
+                                    <select class="select2" id="input_FontSize_tc" disabled>
+                                        <option value="1">小</option>
+                                        <option value="2">中</option>
+                                        <option value="3">大</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5" for="input_FontColor_tc">字体颜色</label>
+                                <div class="col-md-7">
+                                    <input id="input_FontColor_tc" class="form-control" type="text" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5" for="input_IsBold_tc"></label>
+                                <div class="col-md-7">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input id="input_IsBold_tc" type="checkbox" disabled>是否加粗
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-4">
+                        <form id="itemForm-tcg2" class="rightForm">
+                            <div class="form-group">
+                                <div>
+                                    <div class="checkbox col-lg-6">
+                                        <label>
+                                            <input type="checkbox" id="input_IsMustExist_tc" disabled>必须存在
+                                        </label>
+                                    </div>
+                                    <div class="checkbox col-lg-6">
+                                        <label>
+                                            <input type="checkbox" id="input_IsActive_tc" disabled>激活
+                                        </label>
+                                    </div>
+                                    <div class="checkbox col-lg-6">
+                                        <label>
+                                            <input type="checkbox" id="input_IsEventGroup_tc" disabled>事件组
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="interview">
+                                <div class="interview-item single">
+                                    <span class="bt">访视窗</span>
+                                    <input id="input_EventWindow_tl" type="text" class="form-control" disabled>
+                                </div>
+                                <div class="interview-item">
+                                    <div class="col-lg-6">
+                                        <span class="bt">-</span>
+                                        <input id="input_MinusValue_tl" type="text" class="form-control" disabled>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <span class="bt">+</span>
+                                        <input id="input_PlusValue_tl" type="text" class="form-control" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div id="itemForm-tpw" style="display: none;">
+                    <table id="table-tpw"></table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" style="display: none;" onclick="addPower()">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    var $tablePw=null;
+    $(function () {
+        $('.nav').find('li').click(function () {
+            $('.nav').find('li').removeClass('active');
+            $(this).addClass('active');
+            $('#itemForm-tcgs,#itemForm-tpw').hide();
+            if($(this).attr('data-type')==0){
+                $('#itemForm-tcgs').show();
+                $tablePw.bootstrapTable('resetView');
+                $('.modal-footer').find('.btn-add').hide();
+            }else{
+                $('.modal-footer').find('.btn-add').show();
+                $('#itemForm-tpw').show();
+            }
+
+        });
+        $('#input_ItemId_cf').change(function () {
+            var itemid = $(this).val();
+            tms.services.getItems({
+                requestBody:{
+                    IsPaged: false,
+                    Id: itemid
+                },
+                callback:function (res) {
+                    if (res["ItemsItems"].length > 0) {
+                        var item = res["ItemsItems"][0];
+                        $("#input_ItemId_cf").val(item["DisplayName"]);
+                        $("#input_ItemId_cf").val(item["ControlsTypeId"]).trigger('change');
+                    }
+                }
+
+            });
+        });
+        $tablePw=$('#table-tpw').bootstrapTable({
+            height:450,
+            striped:true,
+            columns:[
+                {
+                    field:'Name',
+                    title:'用户组'
+                },
+                {
+                    formatter:"actionFormatterView",
+                    events:"actionsEventsTpw",
+                    title:'禁止访问'
+                },
+                {
+                    formatter:"actionFormatterAdd",
+                    events:"actionsEventsTpw",
+                    title:'禁止添加'
+                },
+                {
+                    formatter:"actionFormatterEdit",
+                    events:"actionsEventsTpw",
+                    title:'禁止修改'
+                },
+                {
+                    formatter:"actionFormatterDel",
+                    events:"actionsEventsTpw",
+                    title:'禁止删除'
+                }
+
+            ]
+        })
+    });
+    function updataTablePw(id) {
+        tms.services.getEvents({
+            requestBody:{
+                iType:2,
+                eventId:id
+            },
+            callback:function (res) {
+                var _data=res['EventAccessItems'];
+                $tablePw.bootstrapTable('load',_data);
+            }
+        })
+    }
+    function actionFormatterView(val,row) {
+        if(row.IsAllowView){
+            return['<input type="checkbox" class="checkView">'].join('');
+        }else{
+            return['<input type="checkbox" class="checkView" checked>'].join('');
+        }
+
+    }
+    function actionFormatterEdit(val,row) {
+        if(row.IsAllowEdit){
+            return['<input type="checkbox" class="checkEdit">'].join('');
+        }else{
+            return['<input type="checkbox" class="checkEdit" checked>'].join('');
+        }
+    }
+    function actionFormatterAdd(val,row) {
+        if(row.IsAllowAdd){
+            return['<input type="checkbox" class="checkAdd">'].join('');
+        }else{
+            return['<input type="checkbox" class="checkAdd" checked>'].join('');
+        }
+
+    }
+    function actionFormatterDel(val,row) {
+        if(row.IsAllowDelete){
+            return['<input type="checkbox" class="checkDel">'].join('');
+        }else{
+            return['<input type="checkbox" class="checkDel" checked>'].join('');
+        }
+    }
+    window.actionsEventsTpw= {
+        'click .checkView':function (e, value,row,index) {
+            row.IsAllowView= !$(this).prop('checked');
+        },
+        'click .checkEdit':function (e, value,row,index) {
+            row.IsAllowEdit= !$(this).prop('checked');
+        },
+        'click .checkAdd':function (e, value,row,index) {
+            row.IsAllowAdd= !$(this).prop('checked');
+        },
+        'click .checkDel':function (e, value,row,index) {
+            row.IsAllowDelete= !$(this).prop('checked');
+        }
+
+    };
+    function addPower(id) {
+        var rows=$tablePw.bootstrapTable('getData');
+        var list=[];
+        for (var i = 0; i < rows.length; i++) {
+            var obj = rows[i];
+            list.push({
+                IsBase: true,
+                CRFVersionId: bp1.CurrentDraftId,
+                RoleId: obj.RoleId,
+                IsAllowView: obj.IsAllowView,
+                IsAllowEdit: obj.IsAllowEdit,
+                EventId:_json.EventId,
+                IsAllowAdd: obj.IsAllowAdd,
+                IsAllowDelete: obj.IsAllowDelete
+            })
+
+        }
+        tms.services.createOrUpdateAccessEvent({
+            requestBody:{
+                AccessEventItems: list,
+                EventId: _json.EventId
+            },
+            callback:function(res){
+                tms.alert('保存成功',function(){
+                    $('#trialProtocolLinkConfig').modal('hide');
+                });
+            }
+
+        })
+
+    }
+</script>

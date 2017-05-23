@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <link rel="stylesheet" href="../assets/css/pages/crf.css">
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+
+<!--主体内容开始-->
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <link rel="import" href="../base/nav_exp_temp.html?__inline">
+    <!--左侧导航结束-->
+
+    <!--右侧主体开始-->
+    <div id="main">
+        <div class="container-fluid">
+            <div class="label-content">
+                <div class="pull-left label-icon"><i class="icons8_unit"></i>指定研究中心</div>
+            </div>
+            <div class="searchbar export-bar mb10">
+                <div class="row">
+                    <div class="col-md-2">
+                        <span>研究项目</span>
+                        <select id="input_StudyId0" class="select2 form-control">
+                            {{each StudyOptions as item i}}
+                            <option value="{{item.Id}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>研究中心</span>
+                        <input id="input_SiteName0" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-search pull-left mt40" onclick="onSearch();">查询</button>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-search pull-left mt40" onclick="onSave();">保存</button>
+                    </div>
+                </div>
+
+            </div>
+            <table id="table1" style="display:none;">
+                <thead>
+                <tr>
+                    <th data-checkbox="true"></th>
+                    <th data-field="StudyOID" data-width="200">研究项目Code</th>
+                    <th data-field="StudyName">研究项目</th>
+                    <th data-field="SiteName">研究中心</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+<!--主体内容结束-->
+
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../assets/js/pages/exp/pointHospital.js"></script>
+</body>
+</html>

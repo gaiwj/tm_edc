@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <link rel="stylesheet" href="../../assets/css/pages/odm.less">
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+<!--头部结束-->
+
+<!--主体内容开始-->
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <link rel="import" href="../base/nav_odm_temp.html?__inline">
+    <!--左侧导航结束-->
+
+    <!--右侧主体开始-->
+    <div id="main">
+        <div class="container-fluid">
+            <div class="label-content">
+                <div class="pull-left label-icon"><i class="icons8_exportlog"></i>ODM导出</div>
+            </div>
+            <div class="searchbar export-bar mb10">
+                <div class="row">
+                    <div class="col-md-2">
+                        <span>名称</span>
+                        <input id="name" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-2">
+                        <span>描述</span>
+                        <input id="description" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-2">
+                        <span>数据范围</span>
+                        <select id="dataRange" class="select2 form-control">
+                            <option value="" value2="">...</option>
+                            {{each getDropDownDataRange as item i}}
+                            <option value="{{item.Id}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>符合21CFR11</span>
+                        <select id="isAccord" class="select2 form-control">
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <span>文件类型</span>
+                        <select id="fileType" class="select2 form-control">
+                            <option value="">全部</option>
+                            <option value="1">快照</option>
+                            <option value="2">事务</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <span>ODM版本</span>
+                        <select id="version" class="select2 form-control">
+                            <option value="1.3.2">1.3.2</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <button id="search" type="button" class="btn btn-search pull-left mt40">查询</button>
+                    </div>
+                </div>
+
+            </div>
+            <table id="table1"></table>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+<!--主体内容结束-->
+
+<!-- 添加当前模板js -->
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../assets/js/pages/odm/exports.js"></script>
+<link rel="import" href="modals/metaData.html?__inline">
+<link rel="import" href="modals/referenceData.html?__inline">
+<link rel="import" href="modals/adminData.html?__inline">
+<link rel="import" href="modals/allClinicalData.html?__inline">
+<link rel="import" href="modals/singleSiteData.html?__inline">
+<link rel="import" href="modals/singleSubjectData.html?__inline">
+</body>
+</html>

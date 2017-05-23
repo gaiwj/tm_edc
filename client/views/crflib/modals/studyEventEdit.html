@@ -1,0 +1,146 @@
+<div class="modal fade" id="studyEventEdit" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="sumForm">
+                    <div class="form-group has-require">
+                        <label class="col-md-3">OID</label>
+                        <div class="col-md-8">
+                            <input id="OID-02" name="OID" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="col-md-3">名称</label>
+                        <div class="col-md-8">
+                            <input id="Name-02" name="Name" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">事件类型</label>
+                        <div class="col-md-8">
+                            <select id="IsMultirecord-02" class="form-control">
+                                <option value="0">单事件</option>
+                                <option value="1">多事件</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">事件类别</label>
+                        <div class="col-md-8">
+                            <select id="EventTypeId-02" class="form-control">
+                                {{each DataTypeOptions as item i}}
+                                <option value="{{item.Id}}" value1="{{item.Value}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">标准</label>
+                        <div class="col-md-8">
+                            <select id="StandardTypeName-02" class="form-control getSys-types">
+                                {{each StandardTypeOptions as item i}}
+                                <option value="{{item.Id}}" value2="{{item.Value}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="col-md-3">描述</label>
+                        <div class="col-md-8"><textarea id="Description-02" name="description" class="form-control" rows="3" style="height:auto !important;" maxlength="255"></textarea></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="save" type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var OID02 =  $('#OID-02');
+    var Name02 = $('#Name-02');
+    var IsMultirecord02 = $('#IsMultirecord-02');
+    var EventTypeId02 = $('#EventTypeId-02');
+    var StandardTypeName02 = $('#StandardTypeName-02');
+    var Description02 = $('#Description-02');
+
+    $(function () {
+        // 初始化select2
+        IsMultirecord02.select2({
+            minimumResultsForSearch: -1,
+            width: "100%"
+        });
+        EventTypeId02.select2({
+            minimumResultsForSearch: -1,
+            width: "100%"
+        });
+        StandardTypeName02.select2({
+            minimumResultsForSearch: -1,
+            width: "100%"
+        });
+
+        $('#studyEventEdit').on('show.bs.modal',function () {
+            //console.log(currentRow.Id);
+            if(currentRow.Id){
+                $('#studyEventEdit').addClass("edit");
+                $('#studyEventEdit .modal-title').html("编辑研究事件");
+                OID02.val(currentRow.OId);
+                Name02.val(currentRow.Name);
+                Description02.val(currentRow.Description);
+                IsMultirecord02.select2('val',currentRow.IsMultirecord);
+                StandardTypeName02.val(currentRow.StandardTypeId).trigger('change');
+                EventTypeId02.val(currentRow.EventTypeId).trigger('change');
+            }else{
+                $('#studyEventEdit').removeClass("edit");
+                $('#studyEventEdit .modal-title').html("新建研究事件");
+            }
+        });
+
+        $('#studyEventEdit').on('hide.bs.modal',function () {
+            // 重置表单
+            $('#sumForm')[0].reset();
+            $('#sumForm').data('bootstrapValidator').resetForm();
+            $("#IsMultirecord-02 option:first").prop("selected", 'selected').trigger('change');
+            $("#StandardTypeName-02 option:first").prop("selected", 'selected').trigger('change');
+            $('.isMessage').remove();
+            currentRow = {};
+        });
+
+        $('#save').click(function(){
+            if($('#sumForm').data('bootstrapValidator').validate().isValid()){
+                var query = {
+                    Id:currentRow.Id,
+                    OId:OID02.val(),
+                    Name:Name02.val(),
+                    IsMultirecord:IsMultirecord02.val() == 1 ? true : false,
+                    StandardTypeId:StandardTypeName02.val(),
+                    Description:Description02.val(),
+                    EventTypeId:EventTypeId02.val(),
+                    IsBase:true
+                };
+                niEvent(query);
+            }
+        })
+    });
+
+
+    // 新增/修改
+    function niEvent(query){
+        //console.log(query);
+        tms.services.createOrUpdateEvent1({
+            requestBody:query,
+            callback:function(data){
+                loadList();
+                $('#studyEventEdit').modal('hide');
+                tms.alert('操作成功');
+            }
+        })
+    }
+</script>

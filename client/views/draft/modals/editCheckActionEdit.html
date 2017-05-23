@@ -1,0 +1,643 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="editCheckActionEdit"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w1000">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">新建逻辑动作</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-7">
+                    <form id="itemForm-eac">
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_EventId_eac">研究事件</label>
+                            <div class="col-md-5">
+                                <select class="select2" id="input_EventId_eac">
+                                    <option value="">...</option>
+                                    {{ each dropDownFormOptions as item }}
+                                    <option value="{{item.Id}}" value2="{{ item.Value }}">{{ item.Name }}</option>
+                                    {{ /each }}
+                                </select>
+                            </div>
+                            <div class="checkbox col-md-4">
+                                <label>
+                                    <input type="checkbox" id="input_IsApplyAllEvent_eac">适用于所有事件
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_FormId_eac">表单</label>
+                            <div class="col-md-5">
+                                <select class="select2" id="input_FormId_eac">
+                                    <option value="">...</option>
+                                </select>
+                            </div>
+                            <div class="checkbox col-md-4">
+                                <label>
+                                    <input type="checkbox" id="input_IsApplyAllForm_eac">适用于所有表单
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_ItemGroupId_eac">ItemGroup</label>
+                            <div class="col-md-5">
+                                <select class="select2" id="input_ItemGroupId_eac">
+                                    <option value="">...</option>
+                                </select>
+                            </div>
+                            <div class="checkbox col-md-4">
+                                <label>
+                                    <input type="checkbox" id="input_IsApplyAllItemGroup_eac">适用于所有数据集
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group has-require">
+                            <label class="control-label col-md-3" for="input_ItemId_eac">Item</label>
+                            <div class="col-md-5">
+                                <select class="select2" name="Item" id="input_ItemId_eac">
+                                    <option value="">...</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_ItemGroupNo_eac">ItemGroupNo</label>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" id="input_ItemGroupNo_eac">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_FormNo_eac">表单No</label>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" id="input_FormNo_eac">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_EventNo_eac">事件No</label>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" id="input_EventNo_eac">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_LogicPosition_eac">逻辑记录位置</label>
+                            <div class="col-md-5">
+                                <select class="select2" id="input_LogicPosition_eac">
+                                    <option value="1">当前</option>
+                                    <option value="2">最大</option>
+                                    <option value="3">最小</option>
+                                    <option value="4">首位</option>
+                                    <option value="5">末位</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" id="form-range" style="display: none">
+                            <label class="control-label col-md-3" for="input_Range_eac">范围</label>
+                            <div class="col-md-5">
+                                <select class="select2" id="input_Range_eac">
+                                    <option value="1">表单</option>
+                                    <option value="2">研究事件</option>
+                                    <option value="3">受试者</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" id="form-order" style="display: none">
+                            <label class="control-label col-md-3" for="input_OrderBy_eac">排序</label>
+                            <div class="col-md-5">
+                                <select class="select2" id="input_OrderBy_eac">
+                                    <option value="1">记录时间</option>
+                                    <option value="2">表单位置</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-5">
+                    <form id="itemForm-eac-right">
+                        <div class="form-group has-require">
+                            <label class="control-label col-md-3" for="input_FunctionId_eac">动作</label>
+                            <div class="col-md-8">
+                                <select class="select2" name="Action" id="input_FunctionId_eac">
+                                    <option value="">...</option>
+                                    {{ each functionOptions as item }}
+                                    <option value="{{item.Id}}" value2="{{ item.Value }}">{{ item.Name }}</option>
+                                    {{ /each }}
+                                </select>
+                            </div>
+                        </div>
+                        <div id="form-abnormal" style="display: none;" class="form-group">
+                            <label class="control-label col-md-3" for="input_ConstValue_eac">异常消息</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="input_ConstValue_eac">
+                            </div>
+                        </div>
+                        <div id="form-close" style="display: none;" class="form-group">
+                            <label class="control-label col-md-3" for="input_IsMustUserClose_eac"></label>
+                            <div class="col-md-8">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="input_IsMustUserClose_eac">必须人工关闭
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="form-query" style="display: none;" class="form-group">
+                            <label class="control-label col-md-3" for="input_QueryClassId_eac"></label>
+                            <div class="col-md-8">
+                                <select class="select2" id="input_QueryClassId_eac">
+                                    <option value="">...</option>
+                                    {{ each queryClassOptions as item }}
+                                    <option value="{{item.Id}}">{{ item.Name }}</option>
+                                    {{ /each }}
+                                </select>
+                            </div>
+                        </div>
+                        <div id="form-event" style="display: none;" class="form-group">
+                            <label class="control-label col-md-3" for="input_EventId3_eac">研究事件</label>
+                            <div class="col-md-8">
+                                <select class="select2" id="input_EventId3_eac">
+                                    <option value="">...</option>
+                                    {{ each dropDownFormOptions as item }}
+                                    <option value="{{item.Id}}" value2="{{ item.Value }}">{{ item.Name }}</option>
+                                    {{ /each }}
+                                </select>
+                            </div>
+                        </div>
+                        <div id="form-form" style="display: none;" class="form-group">
+                            <label class="control-label col-md-3" for="input_FormId3_eac">表单</label>
+                            <div class="col-md-8">
+                                <select class="select2" id="input_FormId3_eac">
+                                    <option value="">...</option>
+                                    {{ each formOptions as item }}
+                                    <option value="{{item.Id}}" value2="{{ item.Value }}">{{ item.Name }}</option>
+                                    {{ /each }}
+                                </select>
+                            </div>
+                        </div>
+                        <div id="form-status" style="display: none;" class="form-group">
+                            <label class="control-label col-md-3" for="input_SubjectStatusId_eac">受试者状态</label>
+                            <div class="col-md-8">
+                                <select class="select2" id="input_SubjectStatusId_eac">
+                                    <option value="">...</option>
+                                    {{ each subjectStatusOptions as item }}
+                                    <option value="{{item.Id}}" value2="{{ item.Value }}">{{ item.Name }}</option>
+                                    {{ /each }}
+                                </select>
+                            </div>
+                        </div>
+                        <div id="form-way" style="display: none;" class="itemForm-eac-type">
+                            <div class="form-group">
+                                <label class="control-label col-md-3" for="VoluationType_eac">赋值方式</label>
+                                <div class="col-md-8">
+                                    <select class="select2" id="VoluationType_eac">
+                                        <option value="">...</option>
+                                        <option value="2">常量</option>
+                                        <option value="1">变量</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="itemForm-eac-value" style="display:none;">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" for="input_ConstValue2_eac">值</label>
+                                    <div class="col-md-8">
+                                       <input type="text" class="form-control" id="input_ConstValue2_eac">
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="itemForm-eac-variable" style="display: none;">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" for="input_EventId2_eac">研究事件</label>
+                                    <div class="col-md-8">
+                                        <select class="select2" id="input_EventId2_eac">
+                                            {{ each dropDownFormOptions as item }}
+                                            <option value="{{item.Id}}" value2="{{ item.Value }}">{{ item.Name }}</option>
+                                            {{ /each }}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" for="input_FormId2_eac">表单</label>
+                                    <div class="col-md-8">
+                                        <select class="select2" id="input_FormId2_eac">
+                                            <option value="">...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" for="input_ItemGroupId2_eac">ItemGroup</label>
+                                    <div class="col-md-8">
+                                        <select class="select2" id="input_ItemGroupId2_eac">
+                                            <option value="">...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" for="input_ItemId2_eac">Item</label>
+                                    <div class="col-md-8">
+                                        <select class="select2" id="input_ItemId2_eac">
+                                            <option value="">...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" for="input_ItemGroupNo2_eac">ItemGroupNo</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" id="input_ItemGroupNo2_eac">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" for="input_FormNo2_eac">表单No</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" id="input_FormNo2_eac">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" for="input_EventNo2_eac">事件No</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" id="input_EventNo2_eac">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" for="input_LogicPosition2_eac">逻辑记录位置</label>
+                                    <div class="col-md-8">
+                                        <select class="select2" id="input_LogicPosition2_eac">
+                                            <option value="1">None</option>
+                                            <option value="2">Max</option>
+                                            <option value="3">Min</option>
+                                            <option value="4">First</option>
+                                            <option value="5">Last</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="form-range2" style="display: none">
+                                    <label class="control-label col-md-3" for="input_Range2_eac">范围</label>
+                                    <div class="col-md-8">
+                                        <select class="select2" id="input_Range2_eac">
+                                            <option value="1">表单</option>
+                                            <option value="2">研究事件</option>
+                                            <option value="3">受试者</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="form-order2" style="display: none">
+                                    <label class="control-label col-md-3" for="input_OrderBy2_eac">排序</label>
+                                    <div class="col-md-8">
+                                        <select class="select2" id="input_OrderBy2_eac">
+                                            <option value="1">记录时间</option>
+                                            <option value="2">表单位置</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    var conditionType=1;
+    $(function () {
+
+        //下拉框联动显示
+        {
+            $('#input_LogicPosition_eac').change(function () {
+                var tp=$(this).val();
+                switch (tp){
+                    case "1":
+                        $("#form-range").hide();
+                        $("#form-order").hide();
+                        break;
+                    case "2":
+                    case "3":
+                        $("#form-range").show();
+                        $("#form-order").hide();
+                        break;
+                    case "4":
+                    case "5":
+                    case "6":
+                    case "7":
+                        $("#form-range").show();
+                        $("#form-order").show();
+                        break;
+                }
+            });
+            $('#input_LogicPosition2_eac').change(function () {
+                var tp=$(this).val();
+                switch (tp){
+                    case "1":
+                        $("#form-range2").hide();
+                        $("#form-order2").hide();
+                        break;
+                    case "2":
+                    case "3":
+                        $("#form-range2").show();
+                        $("#form-order2").hide();
+                        break;
+                    case "4":
+                    case "5":
+                    case "6":
+                    case "7":
+                        $("#form-range2").show();
+                        $("#form-order2").show();
+                        break;
+                }
+            });
+            $('#input_FunctionId_eac').change(function () {
+                $("#form-abnormal").hide();
+                $("#form-close").hide();
+                $("#form-query").hide();
+                $("#form-event").hide();
+                $("#form-form").hide();
+                $("#form-status").hide();
+                $("#form-way").hide();
+                var value =$(this).find('option:checked').attr("value2");
+                switch (value) {
+                    case "201":
+                        $("#form-abnormal").show();
+                        $("#form-close").show();
+                        $("#form-query").show();
+                        break;
+                    case "202":
+                        break;
+                    case "203":
+                        break;
+                    case "204":
+                        break;
+                    case "205":
+                        break;
+                    case "206":
+                        $("#form-event").show();
+                        break;
+                    case "207":
+                        $("#form-form").show();
+                        break;
+                    case "208":
+                        $("#form-status").show();
+                        break;
+                    case "209":
+                        break;
+                    case "210":
+                        $("#form-way").show();
+                        break;
+                }
+            });
+            $("#VoluationType_eac").change(function () {
+                $("#itemForm-eac-value").hide();
+                $("#itemForm-eac-variable").hide();
+                var value = $(this).val();
+                switch (value) {
+                    case "2":
+                        $("#itemForm-eac-value").show();
+                        break;
+                    case "1":
+                        $("#itemForm-eac-variable").show();
+                        break;
+                }
+            });
+
+        }
+        //下拉框联动加载
+        {
+            $("#input_EventId_eac").change(function () {
+                var eventId=$(this).val();
+                if(!eventId) return false;
+                $('#input_FormId_eac').empty();
+                tms.services.getDropDownForm({
+                    requestBody:{
+                        CRFVersionId: bp1.CurrentDraftId,
+                        EventId: eventId
+                    },
+                    callback:function(res){
+                        var options=[];
+                        options.push('<option value="">...</option>');
+                        if (res["DropDownEventItems"]) {
+                            var _data=res["DropDownEventItems"];
+                            for (var i = 0; i < _data.length; i++) {
+                                var item = _data[i];
+                                options.push('<option value="'+item.Id+'">'+item.Name+'</option>');
+                            }
+                        }
+                        $('#input_FormId_eac').html(options.join(''));
+                        $('#input_FormId_eac').val(_json.lastFormId).trigger('change');
+                    }
+                })
+            });
+            $("#input_FormId_eac").change(function () {
+                var formId=$(this).val();
+                if(!formId) return false;
+                $('#input_ItemGroupId_eac').empty();
+                tms.services.getDropDownItemGroup({
+                    requestBody:{
+                        CRFVersionId: bp1.CurrentDraftId,
+                        FormId: formId
+                    },
+                    callback:function(res){
+                        var options=[];
+                        options.push('<option value="">...</option>');
+                        if (res["DropDownEventItems"]) {
+                            var _data=res["DropDownEventItems"];
+                            for (var i = 0; i < _data.length; i++) {
+                                var item = _data[i];
+                                options.push('<option value="'+item.Id+'">'+item.Name+'</option>');
+                            }
+                        }
+                        $('#input_ItemGroupId_eac').html(options.join(''));
+                        $('#input_ItemGroupId_eac').val(_json.lastItemGroupId).trigger('change');
+                    }
+                })
+            });
+            $("#input_ItemGroupId_eac").change(function () {
+                var itemGroupId=$(this).val();
+                if(!itemGroupId) return false;
+                $('#input_ItemId_eac').empty();
+                tms.services.getDropDownItems({
+                    requestBody:{
+                        CRFVersionId: bp1.CurrentDraftId,
+                        ItemGroupId: itemGroupId
+                    },
+                    callback:function(res){
+                        var options=[];
+                        options.push('<option value="">...</option>');
+                        if (res["DropDownEventItems"]) {
+                            var _data=res["DropDownEventItems"];
+                            for (var i = 0; i < _data.length; i++) {
+                                var item = _data[i];
+                                options.push('<option value="'+item.Id+'">'+item.Name+'</option>');
+                            }
+                        }
+                        $('#input_ItemId_eac').html(options.join(''));
+                        $('#input_ItemId_eac').val(_json.lastItemId).trigger('change');
+                    }
+                })
+            });
+            $("#input_EventId2_eac").change(function () {
+                var eventId=$(this).val();
+                if(!eventId) return false;
+                $('#input_FormId2_eac').empty();
+                tms.services.getDropDownForm({
+                    requestBody:{
+                        CRFVersionId: bp1.CurrentDraftId,
+                        EventId: eventId
+                    },
+                    callback:function(res){
+                        var options=[];
+                        options.push('<option value="">...</option>');
+                        if (res["DropDownEventItems"]) {
+                            var _data=res["DropDownEventItems"];
+                            for (var i = 0; i < _data.length; i++) {
+                                var item = _data[i];
+                                options.push('<option value="'+item.Id+'">'+item.Name+'</option>');
+                            }
+                        }
+                        $('#input_FormId2_eac').html(options.join(''));
+                        $('#input_FormId2_eac').val(_json.lastItemGroupId).trigger('change');
+                    }
+                })
+            });
+            $("#input_FormId2_eac").change(function () {
+                var formId=$(this).val();
+                if(!formId) return false;
+                $('#input_ItemGroupId2_eac').empty();
+                tms.services.getDropDownItemGroup({
+                    requestBody:{
+                        CRFVersionId: bp1.CurrentDraftId,
+                        FormId: formId
+                    },
+                    callback:function(res){
+                        var options=[];
+                        options.push('<option value="">...</option>');
+                        if (res["DropDownEventItems"]) {
+                            var _data=res["DropDownEventItems"];
+                            for (var i = 0; i < _data.length; i++) {
+                                var item = _data[i];
+                                options.push('<option value="'+item.Id+'">'+item.Name+'</option>');
+                            }
+                        }
+                        $('#input_ItemGroupId2_eac').html(options.join(''));
+                        $('#input_ItemGroupId2_eac').val(_json.lastItemGroupId).trigger('change');
+                    }
+                })
+            });
+            $("#input_ItemGroupId2_eac").change(function () {
+                var itemGroupId=$(this).val();
+                if(!itemGroupId) return false;
+                $('#input_ItemId2_eac').empty();
+                tms.services.getDropDownItems({
+                    requestBody:{
+                        CRFVersionId: bp1.CurrentDraftId,
+                        ItemGroupId: itemGroupId
+                    },
+                    callback:function(res){
+                        var options=[];
+                        options.push('<option value="">...</option>');
+                        if (res["DropDownEventItems"]) {
+                            var _data=res["DropDownEventItems"];
+                            for (var i = 0; i < _data.length; i++) {
+                                var item = _data[i];
+                                options.push('<option value="'+item.Id+'">'+item.Name+'</option>');
+                            }
+                        }
+                        $('#input_ItemId2_eac').html(options.join(''));
+                        $('#input_ItemId2_eac').val(_json.lastItemId).trigger('change');
+                    }
+                })
+            });
+        }
+        $("#editCheckActionEdit").on("hidden.bs.modal", function() {
+            $('#itemForm-eac')[0].reset();
+            $('#itemForm-eac-right')[0].reset();
+            $('#itemForm-eac').data('bootstrapValidator').resetForm();
+            $('#itemForm-eac-right').data('bootstrapValidator').resetForm();
+
+            $('#input_EventId_eac').val('').trigger('change');
+            $('#input_FormId_eac').val('').trigger('change');
+            $('#input_ItemGroupId_eac').val('').trigger('change');
+            $('#input_ItemId_eac').val('').trigger('change');
+            $('#input_LogicPosition_eac').val('1').trigger('change');
+            $('#input_Range_eac').val('').trigger('change');
+            $('#input_OrderBy_eac').val('').trigger('change');
+            $('#input_ValueTypeId_eac').val('').trigger('change');
+            $('#input_FunctionId_eac').val('').trigger('change');
+
+
+
+            $(this).attr({'data-type':''});
+            $('#editCheckActionEdit').find('.modal-title').html('新建逻辑动作');
+        });
+        $("#editCheckActionEdit").on("show.bs.modal", function() {
+            $(this).removeClass('edit');
+            var tp=$(this).attr('data-type');
+            if(tp=='edit'){
+                $(this).addClass('edit');
+                var id=$(this).attr('data-id');
+                $('#editCheckActionEdit').find('.modal-title').html('编辑逻辑动作');
+                $(this).find('.btn-add').unbind('click').bind('click',function () {
+                    addEditCheckActionItem(id);
+                });
+                return;
+            }
+            $(this).find('.btn-add').unbind('click').bind('click',function () {
+                addEditCheckActionItem();
+            })
+        });
+    })
+    function addEditCheckActionItem(id) {
+        var id=id||"";
+        var FunctionId = $("#input_FunctionId_eac").find('option:checked').attr('value2');
+        var ids = [];
+        ids.push({
+            CRFVersionId: bp1.CurrentDraftId,
+            IsApplyAllEvent: $("#input_IsApplyAllEvent_eac").prop('checked'),
+            IsApplyAllForm: $("#input_IsApplyAllForm_eac").prop('checked'),
+            IsApplyAllItemGroup: $("#input_IsApplyAllItemGroup_eac").prop('checked'),
+            EventId: FunctionId == "206" ? $("#input_EventId3_eac").val() : $("#input_EventId2_eac").val(),
+            FormId: FunctionId == "207" ? $("#input_FormId3_eac").val() : $("#input_FormId2_eac").val(),
+            ItemGroupId: $("#input_ItemGroupId2_eac").val(),
+            ItemId: $("#input_ItemId2_eac").val(),
+            ItemGroupNo: $("#input_ItemGroupNo2_eac").val(),
+            FormNo: $("#input_FormNo2_eac").val(),
+            EventNo: $("#input_EventNo2_eac").val(),
+            LogicPosition: $("#input_LogicPosition2_eac").val(),
+            OrderBy: $("#input_OrderBy_eac").val(),
+            Range: $("#input_Range_eac").val(),
+            ConstValue: FunctionId == "201" ? $("#input_ConstValue_eac").val() : $("#input_ConstValue2_eac").val(),
+            SubjectStatusId: $("#input_SubjectStatusId_eac").val(),
+            ConditionTypeValue: $("#VoluationType_eac").val(),
+            QueryClassId: $("#input_QueryClassId_eac").val()
+        });
+        tms.services.createOrUpdateEditCheckAction({
+            requestBody:{
+                Id: id,
+                CRFVersionId: bp1.CurrentDraftId,
+                StudyId: bp1.CurrentProjectId,
+                IsBase: false,
+                EditCheckId: bp1.EditCheckId,
+                FunctionId: $("#input_FunctionId_eac").val(),
+                IsMustUserClose: $("#input_IsMustUserClose_eac").prop('checked'),
+                EventId: $("#input_EventId_eac").val(),
+                FormId: $("#input_FormId_eac").val(),
+                ItemGroupId: $("#input_ItemGroupId_eac").val(),
+                ItemId: $("#input_ItemId_eac").val(),
+                ItemGroupNo: $("#input_ItemGroupNo_eac").val(),
+                FormNo: $("#input_FormNo_eac").val(),
+                EventNo: $("#input_EventNo_eac").val(),
+                LogicPosition: $("#input_LogicPosition_eac").val(),
+                Range: $("#input_Range2_eac").val(),
+                OrderBy: $("#input_OrderBy2_eac").val(),
+
+                EditCheckActionParams: ids
+            },
+            callback:function (data) {
+                updateTableLogic();
+                tms.alert('保存成功',function () {
+                    $('#editCheckActionEdit').modal('hide');
+                })
+            }
+
+        })
+    }
+</script>

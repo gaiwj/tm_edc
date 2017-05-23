@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <link rel="stylesheet" href="../../assets/css/pages/draft.less">
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+<!--头部结束-->
+<div id="wrapper">
+    <link rel="import" href="../base/nav_draft_temp.html?__inline">
+    <!--右侧主体开始-->
+    <div id="main">
+        <div class="container-fluid">
+            <div style="height: 42px;line-height: 42px;">
+                <div class="pull-left label-icon"><i class="icons8-subrole"></i>表单设计</div>
+            </div>
+            <div  class="container-content trial-protocol" style="height: 100%">
+                <div class="container-menu">
+                    <div class="menu-search" style="height:40px;line-height:30px">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Search for..." onkeyup="searchMenu(this)">
+                        </div>
+                    </div>
+                    <div class="menu-list"></div>
+                </div>
+                <div class="container-table">
+                    <div class="block topBlock" style="height: 50%">
+                        <div class="block_title">
+                            <span>ItemGroup</span>
+                            <button type="button" id="add-study" class="btn btn-add" data-toggle="modal" data-target="#formDesignItemGroupEdit" >关联</button>
+                        </div>
+                        <table id="tableItemGroup"></table>
+                    </div>
+                    <div class="block" style="height: 50%">
+                        <div class="block_title">
+                            <span>Item</span>
+                            <button type="button" id="add-form" class="btn btn-add" data-toggle="modal" data-target="#formDesignItemEdit" >关联</button>
+                        </div>
+                        <table id="tableItem"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+<!-- 添加当前模板js -->
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../../assets/js/pages/draft/formDesign.js"></script>
+<link rel="import" href="modals/formDesignItemGroupEdit.html?__inline">
+<link rel="import" href="modals/formDesignItemGroupConfig.html?__inline">
+<link rel="import" href="modals/formDesignItemEdit.html?__inline">
+<link rel="import" href="modals/formDesignItemConfig.html?__inline">
+<link rel="import" href="modals/itemGroupItemMove.html?__inline">
+</body>
+
+</html>

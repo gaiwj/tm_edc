@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <link rel="stylesheet" href="../assets/css/pages/crflib.css">
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+<!--头部结束-->
+
+<!--主体内容开始-->
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <link rel="import" href="../base/nav.html?__inline">
+    <!--左侧导航结束-->
+
+    <!--右侧主体开始-->
+    <div id="main">
+        <div class="container-fluid">
+            <div class="label-content">
+                <div class="pull-left label-icon"><i class="icons8_libevent"></i>研究事件定义</div>
+                <div class="pull-right"><button type="button" class="btn btn-add" data-toggle="modal" data-target="#studyEventEdit">新增</button></div>
+            </div>
+            <div class="searchbar mb5">
+                <div class="row">
+                    <div class="col-md-2">
+                        <span>事件类型</span>
+                        <select id="IsMultirecord-01" class="form-control">
+                            <option value="">全部</option>
+                            <option value="0">单事件</option>
+                            <option value="1">多事件</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>事件类别</span>
+                        <select id="EventTypeId-01" class="form-control">
+                            <option value="" value2="">...</option>
+                            {{each DataTypeOptions as item i}}
+                                <option value="{{item.Id}}" value1="{{item.Value}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>标准</span>
+                        <select id="StandardTypeId-01" class="form-control getSys-types">
+                            <option value="">全部</option>
+                            {{each StandardTypeOptions as item i}}
+                                <option value="{{item.Id}}" value2="{{item.Value}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <span>OID</span>
+                        <input id="OID-01" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        <button id="search" type="button" class="btn btn-search pull-left mt40">查询</button>
+                    </div>
+                </div>
+            </div>
+            <div class="h415">
+                <table id="table1"></table>
+            </div>
+            <div class="block mt10">
+                <div class="block_title">
+                    <span>CDASH注释</span>
+                    <button type="button" class="btn btn-add" data-toggle="modal" data-target="#formCDASH">新增</button>
+                </div>
+                <table id="table2"></table>
+            </div>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+<!--主体内容结束-->
+
+<!-- 添加当前模板js -->
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../assets/js/pages/crflib/studyEvent.js"></script>
+<!--新建/修改研究事件-->
+<link rel="import" href="modals/studyEventEdit.html?__inline">
+<!--新建CDASH注释-->
+<link rel="import" href="modals/formCDASH.html?__inline">
+</body>
+
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <link rel="stylesheet" href="../assets/css/pages/crf.css">
+
+    <style type="text/css">
+        #table0 td{ line-height:30px; font-size:12px; vertical-align:top; padding:5px 0; }
+        .td1{ width:150px; text-align:right; color:#979aa0; }
+        .td2{ width:auto; text-align:left; color:#1a273d; }
+    </style>
+</head>
+
+<body>
+<!--顶部栏-->
+<link rel="import" href="../base/header.html?__inline">
+
+<!--左侧导航-->
+<link rel="import" href="../base/nav_crf_temp.html?__inline">
+
+<!--顶部栏占位-->
+<div style="width: 100%; height: 52px;"></div>
+
+<div class="content" style="margin-left:201px;">
+    <div class="div_title">
+        <!--<span class="div_titletext"><i class="icons8_crf"></i>eCRF设计</span>-->
+        <div class="pull-left label-icon"><i class="icons8_crf"></i>eCRF设计</div>
+    </div>
+    <div style="padding:10px 0;">
+        <div style="position:relative; margin:0 8px; background:white; border:1px solid #edecec; padding:0 10px;">
+            <table id="table0">
+                <tr>
+                    <td class="td1">研究项目：</td>
+                    <td class="td2">
+                        <div style="width:300px;">
+                            <select id="projectselect" class="select2">
+                                {{each ProjectOptions as item i}}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">项目描述：</td>
+                    <td class="td2">
+                        <span id="ProjectDescription"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">方案名称：</td>
+                    <td class="td2">
+                        <span id="PlanNum"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">主要研究者：</td>
+                    <td class="td2">
+                        <span id="Principal"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td1">电子签名声明：</td>
+                    <td class="td2">
+                        <span id="SignatureDeclaration"></span>
+                    </td>
+                </tr>
+            </table>
+            <div style="position:absolute; top:0px; right:10px; height:40px; line-height:40px;">&nbsp;
+                <button type="button" class="btn btn-add" onclick="onAdd();">新增</button>
+                <button type="button" class="btn btn-add" onclick="onGoHospital();" style="width:100px;">中心CRF版本</button>
+            </div>
+        </div>
+    </div>
+    <div class="content" style="position:relative; width:100%; height:300px;">
+        <div style="position:absolute; top:0px; left:0px; width:35%; height: 100%;">
+            <div class="block_padding" style="top:0px; right:4px; bottom:4px;">
+                <div class="block_title1">
+                    <span class="block_titletext">草案</span>
+                </div>
+                <div class="block_42_0">
+                    <table id="table1" style="display: none;">
+                        <thead>
+                        <tr>
+                            <th data-field="Name" data-formatter="nameFormatter" data-events="nameEvents">名称</th>
+                            <th data-formatter="actionFormatter01" data-events="operateEvents" data-width="100">操作</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div style="position:absolute; top:0px; right:0px; width:65%; height: 100%;">
+            <div class="block_padding" style="top:0px; left:4px; bottom:4px;">
+                <div class="block_title1">
+                    <span class="block_titletext">版本</span>
+                </div>
+                <div class="block_42_0">
+                    <table id="table2" style="display: none;">
+                        <thead>
+                        <tr>
+                            <th data-formatter="actionFormatter02" data-events="operateEvents" data-width="100">操作</th>
+                            <th data-field="OId" data-width="100">版本OID</th>
+                            <th data-field="Name">名称</th>
+                            <th data-field="Description" data-width="150">描述</th>
+                            <th data-field="TrialProtocolName" data-width="150">试验方案</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--弹框1-->
+<div class="modal fade" id="modal1" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">编辑CRF草案</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form1">
+                    <div class="form-group">
+                        <label class="col-md-3">名称</label>
+                        <div class="col-md-8">
+                            <input id="input_Name1" name="Name" type="text" class="form-control" data-bv-notempty data-bv-notempty-message="名称不能为空">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" onclick="onSave1(this);">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--弹框2-->
+<div class="modal fade" id="modal2" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">发布CRF版本</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form2">
+                    <div class="form-group">
+                        <label class="col-md-3">版本OID</label>
+                        <div class="col-md-8">
+                            <input id="input_OID2" name="OID" type="text" class="form-control" data-bv-notempty data-bv-notempty-message="OID不能为空">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">名称</label>
+                        <div class="col-md-8">
+                            <input id="input_Name2" name="Name" type="text" class="form-control" data-bv-notempty data-bv-notempty-message="名称不能为空">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">描述</label>
+                        <div class="col-md-8">
+                            <textarea id="input_Description2" name="Description" class="form-control" data-bv-notempty data-bv-notempty-message="描述不能为空"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">试验方案</label>
+                        <div class="col-md-8">
+                            <select id="input_TrialProtocol2" name="TrialProtocolId" class="form-control select2" data-bv-notempty data-bv-notempty-message="试验方案不能为空"></select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" onclick="onSave2(this);">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--弹框3-->
+<div class="modal fade" id="modal3" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">发布CRF版本</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form3">
+                    <div class="form-group">
+                        <label class="col-md-3">验证环境</label>
+                        <div class="col-md-8">
+                            <select id="input_EnvironmentId3" name="EnvironmentId" class="form-control select2" data-bv-notempty data-bv-notempty-message="验证环境不能为空">
+                                {{each EnvironmentOptions as item i}}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">生效日期</label>
+                        <div class="col-md-8">
+                            <input id="input_EffectiveDate3" name="EffectiveDate" type="text" class="form-control dataTimepick" data-bv-notempty data-bv-notempty-message="生效日期不能为空">
+                        </div>
+                    </div>
+                    <table id="table3" style="display: none;">
+                        <thead>
+                        <tr>
+                            <th data-checkbox="true"></th>
+                            <th data-field="Code" data-width="100">中心编码</th>
+                            <th data-field="Name">研究中心名称</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" onclick="onSave3(this);">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--弹框4-->
+<div class="modal fade" id="modal4" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">发布CRF版本</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form4">
+                    <div id="input_EnvironmentId4" style="display: none;">{{ProcEnvironmentId}}</div>
+                    <div class="form-group">
+                        <label class="col-md-3">生效日期</label>
+                        <div class="col-md-8">
+                            <input id="input_EffectiveDate4" name="EffectiveDate" type="text" class="form-control dataTimepick" data-bv-notempty data-bv-notempty-message="生效日期不能为空">
+                        </div>
+                    </div>
+                    <table id="table4" style="display: none;">
+                        <thead>
+                        <tr>
+                            <th data-checkbox="true"></th>
+                            <th data-field="Code" data-width="100">中心编码</th>
+                            <th data-field="Name">研究中心名称</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" onclick="onSave4(this);">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../assets/js/pages/crf/crfDraft.js"></script>
+</body>
+</html>

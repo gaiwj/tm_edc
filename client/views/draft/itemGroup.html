@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <link rel="stylesheet" href="../../assets/css/pages/draft.less">
+</head>
+<body>
+<!--头部开始--><!--头部结束-->
+
+<link rel="import" href="../base/header.html?__inline">
+<div id="wrapper">
+    <link rel="import" href="../base/nav_draft_temp.html?__inline">
+    <!--右侧主体开始-->
+    <div id="main">
+        <div class="container-fluid">
+            <div style="height: 42px;line-height: 42px;">
+                <div class="pull-left label-icon"><i class="icons8-libitemgroup"></i>ItemGroup定义</div>
+            </div>
+            <div class="searchbar mb5">
+                <div class="row">
+                    <div class="col-md-2">
+                        <span>数据集类型</span>
+                        <select id="search-IsMultirecord" class="form-control select2">
+                            <option value="">全部</option>
+                            <option value="1">多记录</option>
+                            <option value="0">单记录</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>参考数据</span>
+                        <select id="search-IsReferData" class="form-control select2">
+                            <option value="">全部</option>
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>标准</span>
+                        <select id="search-StandardTypeId" class="form-control select2">
+                            <option value="" value2="">全部</option>
+                            {{each standardTypeOptions as item i}}
+                            <option value="{{item.Id}}" value2="{{item.Value}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>OID</span>
+                        <input class="form-control" type="text" id="search-OID" />
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-search pull-left mt40" onclick="searchItem()">查询</button>
+                        <button type="button" class="btn btn-add pull-left mt40 ml10" data-toggle="modal" data-target="#itemGroupImport">导入</button>
+                    </div>
+                </div>
+            </div>
+            <div class="h415">
+                <table id="table"></table>
+            </div>
+            <div class="block mt5">
+                <div class="block_title">
+                    <button type="button" class="btn btn-add" data-toggle="modal" data-target="#itemGroupItemEdit" >关联</button>
+                </div>
+                <table id="tableTwo"></table>
+            </div>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+<!-- 添加当前模板js -->
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../../assets/js/pages/draft/itemGroup.js"></script>
+<link rel="import" href="modals/itemGroupImport.html?__inline">
+<link rel="import" href="modals/itemGroupEdit.html?__inline">
+<link rel="import" href="modals/itemGroupItemEdit.html?__inline">
+<link rel="import" href="modals/itemGroupItemConfig.html?__inline">
+<link rel="import" href="modals/itemGroupItemMove.html?__inline">
+</body>
+</html>

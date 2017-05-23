@@ -1,0 +1,295 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="studyEventLinkConfig"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w450">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">配置Item</h4>
+            </div>
+            <ul class="nav nav-edc">
+                <li role="presentation" class="active" data-type="0" ><a href="javascript:;" id="item-info">基本信息</a></li>
+                <li role="presentation" data-type="1"><a href="javascript:;" id="item-power">权限控制</a></li>
+            </ul>
+            <div class="modal-body">
+                <div id="itemForm-scgs">
+                    <form id="itemForm-scg">
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_OID_sc">表单OID</label>
+                            <div class="col-md-8">
+                                <select class="select2" name="Form" id="input_OID_sc" disabled>
+                                    <option value="">...</option>
+                                    {{ each formItemsOptions as item }}
+                                    <option value="{{ item.Id }}">{{ item.OId }}</option>
+                                    {{ /each }}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_DisplayName_sc">显示名称</label>
+                            <div class="col-md-8">
+                                <input type="text" name="Version" class="form-control" id="input_DisplayName_sc" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_IsMultirecord_sc">表单类型</label>
+                            <div class="col-md-8">
+                                <select class="select2" id="input_IsMultirecord_sc" disabled>
+                                    <option value="1">多表单</option>
+                                    <option value="0">单表单</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">重定向</label>
+                            <div class="col-md-8">
+                                <select class="select2-small" style="width:33%" disabled>
+                                    <option value="2">Action</option>
+                                    <option value="1">下一步</option>
+                                    <option value="0">跳转</option>
+                                </select>
+                                <select class="select2-small" style="width:33%" disabled>
+                                    <option value="">StudyEvent</option>
+                                    {{ each eventItems as item }}
+                                    <option value="{{ item.Id }}">{{ item.OId }}</option>
+                                    {{ /each }}
+                                </select>
+                                <select class="select2-small" style="width:30%" disabled>
+                                    <option value="">表单</option>
+                                    {{ each formItemsOptions as item }}
+                                    <option value="{{ item.Id }}">{{ item.OId }}</option>
+                                    {{ /each }}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                                <label class="control-label col-md-3" for="input_SortIndex_sc">排序</label>
+                                <div class="col-md-8">
+                                    <input id="input_SortIndex_sc" type="text" class="form-control" disabled>
+                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_Name_sc">名称</label>
+                            <div class="col-md-8">
+                                <input id="input_Name_sc" type="text" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                                <label class="control-label col-md-3" for="input_Description_sc">描述</label>
+                                <div class="col-md-8">
+                                    <textarea class="form-control" id="input_Description_sc" disabled></textarea>
+                                </div>
+                            </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_FontSize_sc">字体大小</label>
+                            <div class="col-md-8">
+                                <select class="select2" id="input_FontSize_sc" disabled>
+                                    <option value="1">小</option>
+                                    <option value="2">中</option>
+                                    <option value="3">大</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_FontColor_sc">字体颜色</label>
+                            <div class="col-md-8">
+                                <input id="input_FontColor_sc" class="form-control" type="text" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_IsBold_sc"></label>
+                            <div class="col-md-8">
+                                <div class="checkbox">
+                                    <label>
+                                        <input id="input_IsBold_sc" type="checkbox" disabled>是否加粗
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" for="input_IsBold_sc"></label>
+                            <div class="col-md-8">
+                                <div class="checkbox col-lg-6">
+                                    <label>
+                                        <input type="checkbox" id="input_IsMustExist_sc" disabled>必须存在
+                                    </label>
+                                </div>
+                                <div class="checkbox col-lg-6">
+                                    <label>
+                                        <input type="checkbox" id="input_IsActive_sc" disabled>激活
+                                    </label>
+                                </div>
+                                <div class="checkbox col-lg-6">
+                                    <label>
+                                        <input type="checkbox" id="input_IsEventGroup_sc" disabled>事件组
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                </div>
+                <div id="itemForm-spw" style="display: none;">
+                    <table id="table-spw"></table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" style="display: none;" onclick="addPowerS()">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    var $tableSPw=null;
+    $(function () {
+        $('.nav').find('li').click(function () {
+            $('.nav').find('li').removeClass('active');
+            $(this).addClass('active');
+            $('#itemForm-scgs,#itemForm-spw').hide();
+            if($(this).attr('data-type')==0){
+                $('#itemForm-scgs').show();
+                $tableSPw.bootstrapTable('resetView');
+                $('.modal-footer').find('.btn-add').hide();
+            }else{
+                $('.modal-footer').find('.btn-add').show();
+                $('#itemForm-spw').show();
+            }
+
+        });
+        $('#input_OID_sc').change(function () {
+            var itemid = $(this).val();
+            tms.services.getForm({
+                requestBody:{
+                    IsPaged: false,
+                    Id: itemid
+                },
+                callback:function (res) {
+                    if (res["FormItems"].length > 0) {
+                        var item = res["FormItems"][0];
+                        $("#input_DisplayName_sc").val(item["DisplayName"]);
+                        $("#input_IsMultirecord_sc").val(item["IsMultirecord"]?"1":"0").trigger('change');
+                    }
+                }
+
+            });
+        });
+        $tableSPw=$('#table-spw').bootstrapTable({
+            height:450,
+            striped:true,
+            columns:[
+                {
+                    field:'Name',
+                    title:'用户组'
+                },
+                {
+                    formatter:"actionFormatterViewS",
+                    events:"actionsEventsSpw",
+                    title:'禁止访问'
+                },
+                {
+                    formatter:"actionFormatterAddS",
+                    events:"actionsEventsSpw",
+                    title:'禁止添加'
+                },
+                {
+                    formatter:"actionFormatterEditS",
+                    events:"actionsEventsSpw",
+                    title:'禁止修改'
+                },
+                {
+                    formatter:"actionFormatterDelS",
+                    events:"actionsEventsSpw",
+                    title:'禁止删除'
+                }
+
+            ]
+        })
+    });
+    function updataTableSPw(id) {
+        tms.services.getForms({
+            requestBody:{
+                iType:"2",
+                formId:id
+            },
+            callback:function (res) {
+                var _data=res['FormAccessItems'];
+                $tableSPw.bootstrapTable('load',_data);
+            }
+        })
+    }
+    function actionFormatterViewS(val,row) {
+        if(row.IsAllowView){
+            return['<input type="checkbox" class="checkView">'].join('');
+        }else{
+            return['<input type="checkbox" class="checkView" checked>'].join('');
+        }
+
+    }
+    function actionFormatterEditS(val,row) {
+        if(row.IsAllowEdit){
+            return['<input type="checkbox" class="checkEdit">'].join('');
+        }else{
+            return['<input type="checkbox" class="checkEdit" checked>'].join('');
+        }
+    }
+    function actionFormatterAddS(val,row) {
+        if(row.IsAllowAdd){
+            return['<input type="checkbox" class="checkAdd">'].join('');
+        }else{
+            return['<input type="checkbox" class="checkAdd" checked>'].join('');
+        }
+
+    }
+    function actionFormatterDelS(val,row) {
+        if(row.IsAllowDelete){
+            return['<input type="checkbox" class="checkDel">'].join('');
+        }else{
+            return['<input type="checkbox" class="checkDel" checked>'].join('');
+        }
+    }
+    window.actionsEventsSpw= {
+        'click .checkView':function (e, value,row,index) {
+            row.IsAllowView= !$(this).prop('checked');
+        },
+        'click .checkEdit':function (e, value,row,index) {
+            row.IsAllowEdit= !$(this).prop('checked');
+        },
+        'click .checkAdd':function (e, value,row,index) {
+            row.IsAllowAdd= !$(this).prop('checked');
+        },
+        'click .checkDel':function (e, value,row,index) {
+            row.IsAllowDelete= !$(this).prop('checked');
+        }
+
+    };
+    function addPowerS() {
+        var rows=$tableSPw.bootstrapTable('getData');
+        var list=[];
+        for (var i = 0; i < rows.length; i++) {
+            var obj = rows[i];
+            list.push({
+                IsBase: true,
+                CRFVersionId: bp1.CurrentDraftId,
+                RoleId: obj.RoleId,
+                IsAllowView: obj.IsAllowView,
+                IsAllowEdit: obj.IsAllowEdit,
+                FormId: _json.FormId,
+                IsAllowAdd: obj.IsAllowAdd,
+                IsAllowDelete: obj.IsAllowDelete
+            })
+
+        }
+        tms.services.createOrUpdateAccessForm({
+            requestBody:{
+                AccessFormItems: list,
+                FormId: _json.FormId
+            },
+            callback:function(res){
+                tms.alert('保存成功',function(){
+                    $('#studyEventLinkConfig').modal('hide');
+                });
+            }
+
+        })
+
+    }
+</script>

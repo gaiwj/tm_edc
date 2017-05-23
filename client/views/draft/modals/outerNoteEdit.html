@@ -1,0 +1,88 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="outerNoteEdit"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w450">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">新建外部提示语</h4>
+            </div>
+            <div class="modal-body">
+                <form id="itemForm">
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_DictionaryName">外部提示语</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Name" class="form-control" id="input_DictionaryName">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_Version">版本</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Version" class="form-control" id="input_Version">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_Code">代码</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Code" class="form-control" id="input_Code">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#outerNoteEdit").on("hidden.bs.modal", function() {
+            $('#itemForm')[0].reset();
+            $('#itemForm').data('bootstrapValidator').resetForm();
+            $('#itemForm').find('.form-group').removeClass('has-success');
+            $(this).attr({'data-type':''});
+            $('#outerNoteEdit').find('.modal-title').html('新建外部提示语');
+        });
+        $("#outerNoteEdit").on("show.bs.modal", function() {
+            $(this).removeClass('edit');
+            var tp=$(this).attr('data-type');
+            if(tp=='edit'){
+                $(this).addClass('edit');
+                var id=$(this).attr('data-id');
+                $('#outerNoteEdit').find('.modal-title').html('编辑外部提示语');
+                $(this).find('.btn-add').unbind('click').bind('click',function () {
+                    addItem(id);
+                });
+                return;
+            }
+            $(this).find('.btn-add').unbind('click').bind('click',function () {
+                addItem();
+            })
+        });
+    })
+    function addItem(id) {
+        var id=id||"";
+        var isMustObjs=$('#itemForm').data('bootstrapValidator').validate();
+        if(!isMustObjs.isValid()) return false;
+        tms.services.createOrUpdateHint({
+            requestBody:{
+                Id:id,
+                DictionaryName:$('#input_Version').val(),
+                Version: $('#input_DictionaryName').val(),
+                Code:$('#input_Code').val(),
+                IsBase: false,
+                CRFVersionId: bp1.CurrentDraftId,
+                StudyId: bp1.CurrentProjectId
+                
+            },
+            callback:function (data) {
+                $table1.bootstrapTable('refresh');
+                tms.alert('保存成功',function () {
+                    $('#outerNoteEdit').modal('hide');
+                })
+            }
+            
+        })
+    }
+</script>

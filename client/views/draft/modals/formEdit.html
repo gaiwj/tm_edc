@@ -1,0 +1,97 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="formEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w450">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">引用PDF</h4>
+            </div>
+            <div class="modal-body">
+                <form id="itemForm">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_OID">表单OID</label>
+                        <div class="col-md-8">
+                            <input type="text" name="OID" class="form-control" id="input_OID" disabled="disabled">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsMultirecord">PDF</label>
+                        <div class="col-md-8">
+                            <select id="input_IsMultirecord" name="DataType"  class="form-control select2">
+                                {{each PDFList as item i}}
+                                <option value="{{item.Id}}" value2="{{item.Value}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    $(function () {
+        /*tms.services.GetFormPDF({
+            requestBody: {
+                IsPaged: false,
+                Id: RUrl.queryString("id")
+            },
+            callback:function(data){
+                console.log(data)
+                var str=''
+                $.each(data.FormPDFItems,function (i,val) {
+                    str +='<option>dd</option>';
+                })
+                $('#input_IsMultirecord').html(str)
+            }
+        });*/
+
+    });
+
+    function onSave(id) {
+        var isMustObjs=$('#itemForm').data('bootstrapValidator').validate();
+        if(!isMustObjs.isValid()) return false;
+        tms.services.CreateOrUpdateFormPDF({
+            requestBody:{
+                /*IsUpdate:true,
+                Id: id,
+                OId: $("#input_OID").val(),
+                Name:$("#input_Name").val(),
+                IsMultirecord: $("#input_IsMultirecord").val()=='1',
+                IsReferData:$("#input_IsReferData").find('input[value=1]').val()=='1',
+                DisplayName:$("#input_DisplayName").val(),
+                ControlsTypeId:$("#input_ControlsTypeId").val(),
+                FontSize: $("#input_FontSize").val(),
+                FontColor: $("#input_FontColor").val(),
+                IsBold: $("#input_IsBold").prop('checked'),
+                IsAllowAdd: $("#input_IsAllowAdd").prop('checked'),
+                IsHiddenName: $("#input_IsHiddenName").prop('checked'),
+                MaxCount: $("#input_MaxCount").val(),
+                CRFVersionId: bp1.CurrentDraftId,
+                IsBase: false,
+                StudyId:bp1.CurrentProjectId*/
+                Id: RUrl.queryString("id"),
+                OId: formdata.data["input_OID"],
+                PDFId: formdata.data["input_PDFId"],
+                IsBase: false,
+                StudyId: bp1.CurrentProjectId,
+                CRFVersionId: bp1.CurrentDraftId,
+                FormId: RUrl.queryString("gid")
+            },
+            callback:function(data){
+                $tableItemGroup.bootstrapTable('refresh');
+                tms.alert('保存成功',function () {
+                    $('#formEdit').modal('hide');
+                })
+            }
+
+        })
+    }
+</script>

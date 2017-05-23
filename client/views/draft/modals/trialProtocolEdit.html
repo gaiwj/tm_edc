@@ -1,0 +1,88 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="trialProtocolEdit"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w450">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">新建试验方案</h4>
+            </div>
+            <div class="modal-body">
+                <form id="itemForm">
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_CRFName_te">CRF版本</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Name" class="form-control" id="input_CRFName_te">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_Name_te">方案版本</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Version" class="form-control" id="input_Name_te">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_Description_te">描述</label>
+                        <div class="col-md-8">
+                           <textarea class="form-control" id="input_Description_te"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#trialProtocolEdit").on("hidden.bs.modal", function() {
+            $('#itemForm')[0].reset();
+            $('#itemForm').data('bootstrapValidator').resetForm();
+            $('#itemForm').find('.form-group').removeClass('has-success');
+            $(this).attr({'data-type':''});
+            $('#trialProtocolEdit').find('.modal-title').html('新建试验方案');
+        });
+        $("#trialProtocolEdit").on("show.bs.modal", function() {
+            $(this).removeClass('edit');
+            var tp=$(this).attr('data-type');
+            if(tp=='edit'){
+                $(this).addClass('edit');
+                var id=$(this).attr('data-id');
+                $('#trialProtocolEdit').find('.modal-title').html('编辑试验方案');
+                $(this).find('.btn-add').unbind('click').bind('click',function () {
+                    addItem(id);
+                });
+                return;
+            }
+            $(this).find('.btn-add').unbind('click').bind('click',function () {
+                addItem();
+            })
+        });
+    })
+    function addItem(id) {
+        var id=id||"";
+        var isMustObjs=$('#itemForm').data('bootstrapValidator').validate();
+        if(!isMustObjs.isValid()) return false;
+        tms.services.createOrUpdateTrialProtocol({
+            requestBody:{
+                Id:id,
+                Name:$('#input_Name_te').val(),
+                Description:$('#input_Description_te').val(),
+                CRFName: $('#input_CRFName_te').val(),
+                Code:$('#input_Code').val(),
+                CRFVersionId: bp1.CurrentDraftId,
+                StudyId: bp1.CurrentProjectId
+
+            },
+            callback:function (data) {
+                updataMenu();
+                tms.alert('保存成功',function () {
+                    $('#trialProtocolEdit').modal('hide');
+                })
+            }
+
+        })
+    }
+</script>

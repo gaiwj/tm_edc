@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+<!--头部结束-->
+<div id="wrapper">
+    <link rel="import" href="../base/nav_draft_temp.html?__inline">
+    <!--右侧主体开始-->
+    <div id="main">
+        <div class="container-fluid">
+            <div style="height: 42px;line-height: 42px;">
+                <div class="pull-left label-icon"><i class="icons8-queclass"></i>自动计算</div>
+                <div class="pull-right"><button type="button" class="btn btn-add" data-toggle="modal" data-target="#derivationEdit">新增</button></div>
+            </div>
+            <div class="searchbar mb5">
+                <div class="row">
+                    <div class="col-md-2">
+                        <span>启用状态</span>
+                        <select class="select2" id="search-IsEnable">
+                            <option value="">全部</option>
+                            <option value="1">已启用</option>
+                            <option value="0">已停用</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>类别</span>
+                        <select class="select2" id="search-CountTypeId">
+                            <option value="">...</option>
+                            {{ each countTypeOptions as item }}
+                            <option value="{{item.Id}}">{{item.Name}}</option>
+                            {{ /each }}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>名称</span>
+                        <input class="form-control" type="text" id="search-Name" />
+                    </div>
+                    <div class="col-md-2">
+                        <span>OID</span>
+                        <input class="form-control" type="text" id="search-OId" />
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-search pull-left mt40" onclick="searchItem()">查询</button>
+                    </div>
+                </div>
+            </div>
+            <table id="table"></table>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+<!-- 添加当前模板js -->
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../../assets/js/pages/draft/derivation.js"></script>
+<link rel="import" href="modals/derivationEdit.html?__inline">
+</body>
+
+</html>

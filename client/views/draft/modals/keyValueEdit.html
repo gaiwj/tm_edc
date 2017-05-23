@@ -1,0 +1,88 @@
+<div class="modal fade" id="keyValueEdit" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">编辑键值对</h4>
+            </div>
+            <div class="modal-body">
+                <form id="sumForm03">
+                    <div class="form-group">
+                        <label class="col-md-3">编码字典OID</label>
+                        <div class="col-md-8">
+                            <input id="oid03" type="text" class="form-control" disabled="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">值</label>
+                        <div class="col-md-8">
+                            <input id="value03" type="text" class="form-control" disabled="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">显示值</label>
+                        <div class="col-md-8">
+                            <input id="name03" type="text" class="form-control" disabled="true">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="col-md-3">Rank</label>
+                        <div class="col-md-8">
+                            <input id="rank03" type="text" class="form-control" name='rank03'>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="save03" type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var oid = $('#oid03');
+	var value = $('#value03');
+	var Name = $('#name03');
+	var rank = $('#rank03');
+
+    $(function () {
+        $('#keyValueEdit').on('show.bs.modal',function () {
+            $('#keyValueEdit').addClass("edit");
+			oid.val(currentRow.oid);
+			value.val(currentRow.value);
+			Name.val(currentRow.Name);
+			rank.val(currentRow.rank);
+        });
+
+        $('#keyValueEdit').on('hide.bs.modal',function () {
+            // 重置表单
+            $('#sumForm03').data('bootstrapValidator').resetForm();
+            $('#sumForm03')[0].reset();
+        });
+        
+        $('#save03').click(function(){
+            if($('#sumForm03').data('bootstrapValidator').validate().isValid()){
+                tms.services.createOrUpdateDictionaryItems({
+                    requestBody:{
+                        Id: currentRow.id,
+                        Value: value.val(),
+                        Name: Name.val(),
+                        Rank: rank.val(),
+                        IsBase: true,
+                        IsLab: false,
+                        DictionaryId: currentRow.gid,
+                        CRFVersionId: bp1.CurrentDraftId
+                    },
+                    callback:function(data){
+                        loadDictionaryItems(currentRow.gid,currentRow.typeName);
+                        $('.modal').modal('hide');
+                        tms.alert('操作成功');
+                        //currentRow = {};
+                    }
+                })
+            }
+        })
+    });
+</script>

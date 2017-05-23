@@ -1,0 +1,78 @@
+<div class="modal fade" id="enumEdit" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">编辑枚举</h4>
+            </div>
+            <div class="modal-body">
+                <form id="enumSumForm">
+                    <div class="form-group">
+                        <label class="col-md-3">编码字典OID</label>
+                        <div class="col-md-8">
+                            <input id="enumOid" type="text" class="form-control" disabled="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">值</label>
+                        <div class="col-md-8">
+                            <input id="enumValue" type="text" class="form-control" disabled="true">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="col-md-3">Rank</label>
+                        <div class="col-md-8">
+                            <input id="enumRank" type="text" class="form-control" name='enumRank'>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="enumSave" type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var enumOid = $('#enumOid');
+    var enumValue = $('#enumValue');
+    var enumRank = $('#enumRank');
+
+    $(function () {
+        $('#enumEdit').on('show.bs.modal',function () {
+            $('#enumEdit').addClass("edit");
+            enumOid.val(currentRow.oid);
+            enumValue.val(currentRow.enumValue);
+            enumRank.val(currentRow.enumRank);
+        });
+
+        $('#enumEdit').on('hide.bs.modal',function () {
+            // 重置表单
+            $('#enumSumForm').data('bootstrapValidator').resetForm();
+            $('#enumSumForm')[0].reset();
+        });
+        
+        $('#enumSave').click(function(){
+            if($('#enumSumForm').data('bootstrapValidator').validate().isValid()){
+                tms.services.createOrUpdateDictionaryItems({
+                    requestBody:{
+                        Id: currentRow.enumId,
+                        Value: enumValue.val(),
+                        Rank: enumRank.val(),
+                        IsBase: true,
+                        IsLab: false,
+                        DictionaryId: currentRow.gid,
+                        CRFVersionId: bp1.CurrentDraftId
+                    },
+                    callback:function(data){
+                        loadDictionaryItems(currentRow.gid,currentRow.typeName);
+                        $('.modal').modal('hide');
+                        tms.alert('操作成功');
+                    }
+                })
+            }
+        })
+    });
+</script>

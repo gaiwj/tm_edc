@@ -1,0 +1,156 @@
+<div class="modal fade" id="singleSiteData" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="sumForm-04">
+                    <div class="form-group">
+                        <label class="col-md-4">ODM元数据文件</label>
+                        <div class="col-md-8">
+                            <select id="refOID-04" class="form-control select2">
+                                {{each getDropDownRefOID as item i}}
+                                <option value="{{item.Id}}">{{item.OID}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">系列文件</label>
+                        <div class="col-md-8">
+                            <select id="toID-04" class="form-control select2">
+                                <option value="">...</option>
+                                {{each getDropDownOID as item i}}
+                                <option value="{{item.Id}}">{{item.OID}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">eCRF版本</label>
+                        <div class="col-md-8">
+                            <select id="crfVersionId-04" name="crfVersion" class="form-control select2">
+                                <option value="">...</option>
+                                {{each getDropDownCRFVersion as item i}}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">已导出的研究项目</label>
+                        <div class="col-md-8">
+                            <select id="studyId-04" class="form-control select2">
+                                {{each Projects as item i}}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">研究中心</label>
+                        <div class="col-md-8">
+                            <select id="siteId-04" class="form-control select2"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">数据截止时间</label>
+                        <div class="col-md-8">
+                            <div class='input-group'>
+                                <input type='text' id='endTime-04' class="form-control dataTimepick"/>
+                                <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="export-04" type="button" class="btn btn-add">导出</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+        $('#singleSiteData').on('hide.bs.modal',function () {
+            // 重置表单
+            $("#refOID-04 option:first").prop("selected", 'selected').trigger('change');
+            $("#toID-04 option:first").prop("selected", 'selected').trigger('change');
+            $("#crfVersionId-04 option:first").prop("selected", 'selected').trigger('change');
+            $("#studyId-04 option:first").prop("selected", 'selected').trigger('change');
+            $("#siteId-04 option:first").prop("selected", 'selected').trigger('change');
+            $('#endTime-04').val('');
+            $('#sumForm-04').data('bootstrapValidator').resetForm();
+        });
+
+        $('#studyId-04').change(function(){
+            // 加载研究中心
+            loadProjectOne($("#studyId-04").val());
+        }).change();
+
+        // 导出
+        $('#export-04').click(function(){
+            var RefOID = $('#refOID-04').val();
+            var EndTime = $('#endTime-04').val();
+            var StudyId = $("#studyId-04").val();
+            var ExportId = currentRow.Id;
+            var SiteId = $("#SiteId-04").val();
+
+            if($('#sumForm-04').data('bootstrapValidator').validate().isValid()){
+                var query = {
+                    RefOID: RefOID,
+                    EndTime: EndTime,
+                    StudyId: StudyId,
+                    SiteId: SiteId,
+                    ExportId: ExportId
+                };
+                exportODMLogTask(query);
+            }
+        })
+    });
+
+    // 导出
+    function exportODMLogTask(query){
+        tms.services.exportODMLogTask({
+            requestBody:query,
+            callback:function(data){
+                $('.modal').modal('hide');
+                tms.alert('导出成功');
+            }
+        })
+    }
+
+    // 研究中心
+    function loadProjectOne(query){
+        console.log(query);
+        $('#siteId-04').empty();
+        var _data = [];
+        tms.services.getDropDownHospital({
+            requestBody:{
+                StudyId:query
+            },
+            callback:function(data){
+                console.log(data);
+                for(var i = 0; i < data.Sites.length; i++){
+                    var item = data.Sites[i];
+                     _data.push({
+                        id: item.Id,
+                        text: item.Name
+                    })
+                }
+                $('#siteId-04').select2({
+                    width:'100%',
+                    minimumResultsForSearch: -1,
+                    data: _data
+                });
+            }
+        })
+    }
+</script>

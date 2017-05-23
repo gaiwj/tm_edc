@@ -1,0 +1,129 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="itemGroupItemMove" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w450">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">排序</h4>
+            </div>
+            <div class="modal-body">
+                <form id="itemFormMove">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_MoveType">位置</label>
+                        <div class="col-md-8">
+                            <div id="input_MoveType">
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="moveRadio" value="3">之前
+                                    </label>
+                                </div>
+                                <div class="radio-inline">
+                                    <label>
+                                        <input type="radio" name="moveRadio"  value="4">之后
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_ToItemId">Item</label>
+                        <div class="col-md-8">
+                            <select id="input_ToItemId" name="DataType"  class="form-control select2"></select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" onclick="">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#itemGroupItemMove').on('hide.bs.modal',function () {
+            $('#itemFormMove')[0].reset();
+        });
+        $('#itemGroupItemMove').on('show.bs.modal',function () {
+            if($('#itemGroupItemMove').attr('data-type')=='group'){
+                tms.services.getFormItems({
+                    requestBody:{
+                        IsPaged : false,
+                        CRFVersionId :bp1.CurrentDraftId,
+                        FormId :_json.FormId
+                    },
+                    callback:function (res) {
+                        var options=[];
+                        options.push('<option value="">...</option>');
+                        if (res["FormItemsItems"].length > 0) {
+                            var _data = res["FormItemsItems"];
+                            for (var i = 0; i < _data.length; i++) {
+                                var item = _data[i];
+                                options.push('<option value="'+item.Id+'">'+item.Name+'</option>');
+                            }
+                        }
+                        $('#input_ToItemId').html(options.join(''))
+                    }
+                })
+                $('#itemGroupItemMove').find('.btn-add').unbind('click').click(function () {
+                    onMoveGroup();
+                })
+            }else{
+                tms.services.getItemGroupItems({
+                    requestBody:{
+                        IsPaged : false,
+                        ItemGroupId : _json.ItemGroupId
+                    },
+                    callback:function (res) {
+                        var options=[];
+                        options.push('<option value="">...</option>');
+                        if (res["ItemGroupItemsItems"].length > 0) {
+                            var _data = res["ItemGroupItemsItems"];
+                            for (var i = 0; i < _data.length; i++) {
+                                var item = _data[i];
+                                options.push('<option value="'+item.Id+'">'+item.ItemName+'</option>');
+                            }
+                        }
+                        $('#input_ToItemId').html(options.join(''))
+                    }
+                })
+                $('#itemGroupItemMove').find('.btn-add').unbind('click').click(function () {
+                    onMove();
+                })
+            }
+        })
+    });
+    function onMove() {
+        tms.services.skipMoveDraftItemGroupItem({
+            requestBody:{
+                ItemGroupId:_json.ItemGroupId,
+                FromItemId:$('#itemGroupItemMove').attr('data-id'),
+                ToItemId: $("#input_ToItemId").val(),
+                MoveType: $("#input_MoveType").find('input:checked').val()
+            },
+            callback:function (res) {
+                $tableItem.bootstrapTable('refresh');
+                tms.alert('移动成功',function () {
+                    $('#itemGroupItemMove').modal('hide');
+                })
+            }
+        });
+    }
+    function onMoveGroup() {
+        tms.services.skipMoveDraftFormItem({
+            requestBody:{
+                FormId:_json.FormId,
+                FromItemId:$('#itemGroupItemMove').attr('data-id'),
+                ToItemId: $("#input_ToItemId").val(),
+                MoveType: $("#input_MoveType").find('input:checked').val()
+            },
+            callback:function (res) {
+                $tableItem.bootstrapTable('refresh');
+                tms.alert('移动成功',function () {
+                    $('#itemGroupItemMove').modal('hide');
+                })
+            }
+        });
+    }
+</script>

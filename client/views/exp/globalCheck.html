@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0;" name="viewport"/>
+    <title>{{title}}</title>
+    <link rel="import" href="../base/_header_css.html?__inline">
+    <link rel="stylesheet" href="../assets/css/pages/crf.css">
+</head>
+
+<body>
+<!--头部开始-->
+<link rel="import" href="../base/header.html?__inline">
+
+<!--主体内容开始-->
+<div id="wrapper">
+    <!--左侧导航开始-->
+    <link rel="import" href="../base/nav_exp_temp.html?__inline">
+    <!--左侧导航结束-->
+
+    <!--右侧主体开始-->
+    <div id="main">
+        <div class="container-fluid">
+            <div class="label-content">
+                <div class="pull-left label-icon"><i class="icons8_unit"></i>实验室</div>
+                <div class="pull-right"><button type="button" class="btn btn-add" onclick="onAdd();">新增</button></div>
+            </div>
+            <div class="searchbar export-bar mb10">
+                <div class="row">
+                    <div class="col-md-2">
+                        <span>检验类别</span>
+                        <select id="input_LabTypeId0" class="select2 form-control">
+                            <option value="">全部</option>
+                            {{each LabTypeOptions as item i}}
+                            <option value="{{item.Id}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>范围类型</span>
+                        <select id="input_RangeTypeId0" class="select2 form-control">
+                            <option value="">全部</option>
+                            {{each RangeTypeOptions as item i}}
+                            <option value="{{item.Id}}">{{item.Name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <span>名称</span>
+                        <input id="input_Name0" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-search pull-left mt40" onclick="onSearch();">查询</button>
+                    </div>
+                </div>
+
+            </div>
+            <table id="table1" style="display:none;">
+                <thead>
+                <tr>
+                    <th data-field="LabTypeName" data-width="100">检验类别</th>
+                    <th data-field="Name">名称</th>
+                    <th data-field="RangeTypeName" data-width="100">范围类型</th>
+                    <th data-field="IsApprove" data-formatter="actionFormatter02" data-width="100">范围已批准</th>
+                    <th data-field="Description" data-width="200">描述</th>
+                    <th data-formatter="actionFormatter01" data-events="operateEvents" data-width="200">操作</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <!--右侧主体结束-->
+</div>
+<!--主体内容结束-->
+
+<!--弹框1-->
+<div class="modal fade" id="modal1" role="dialog">
+    <div class="modal-dialog w450" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">编辑实验室</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form1">
+                    <div class="form-group">
+                        <label class="col-md-3">检验类别</label>
+                        <div class="col-md-8">
+                            <select id="input_LabTypeId1" name="LabTypeId" class="form-control select2" data-bv-notempty data-bv-notempty-message="实验室类别不能为空">
+                                {{each LabTypeOptions as item i}}
+                                <option value="{{item.Id}}" value2="{{item.Value}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">名称</label>
+                        <div class="col-md-8">
+                            <input id="input_Name1" name="Name" type="text" class="form-control" data-bv-notempty data-bv-notempty-message="名称不能为空">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">范围类型</label>
+                        <div class="col-md-8">
+                            <select id="input_RangeTypeId1" name="RangeTypeId" class="form-control select2" data-bv-notempty data-bv-notempty-message="范围类型不能为空">
+                                <option value="">...</option>
+                                {{each RangeTypeOptions as item i}}
+                                <option value="{{item.Id}}" value2="{{item.Value}}">{{item.Name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3">描述</label>
+                        <div class="col-md-8">
+                            <textarea id="input_Description1" name="Description" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3"></label>
+                        <div class="col-md-8">
+                            <label>
+                                <input id="input_IsApprove1" type="checkbox"/>
+                                范围已批准
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add" onclick="onSave1(this);">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="import" href="../base/_footer_js.html?__inline">
+<script src="../assets/js/pages/exp/globalCheck.js"></script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="derivationEdit"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w450">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">新建自动计算</h4>
+            </div>
+            <div class="modal-body">
+                <form id="itemForm-de">
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_OID_de">OID</label>
+                        <div class="col-md-8">
+                            <input type="text" name="OID" class="form-control" id="input_OID_de">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_Name_de">名称</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Name" class="form-control" id="input_Name_de">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_Description_de">描述</label>
+                        <div class="col-md-8">
+                            <textarea class="form-control" name="Des" id="input_Description_de"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_CountTypeId_de">类别</label>
+                        <div class="col-md-8">
+                            <select class="select2" name="Type" id="input_CountTypeId_de">
+                                <option value="">...</option>
+                                {{ each countTypeOptions as item }}
+                                <option value="{{item.Id}}">{{item.Name}}</option>
+                                {{ /each }}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsEnable_de">启用状态</label>
+                        <div class="col-md-8" id="input_IsEnable_de">
+                            <div class="radio-inline">
+                                <label>
+                                    <input type="radio" name="isEnable" value="1" checked>启用
+                                </label>
+                            </div>
+                            <div class="radio-inline">
+                                <label>
+                                    <input type="radio" name="isEnable"  value="0">停用
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#derivationEdit").on("hidden.bs.modal", function() {
+            $('#itemForm-de')[0].reset();
+            $('#itemForm-de').data('bootstrapValidator').resetForm();
+            $('#input_CountTypeId_de').val('').trigger('change');
+            $(this).attr({'data-type':''});
+            $('#derivationEdit').find('.modal-title').html('新建自动计算');
+        });
+        $("#derivationEdit").on("show.bs.modal", function() {
+            $(this).removeClass('edit');
+            var tp=$(this).attr('data-type');
+            if(tp=='edit'){
+                $(this).addClass('edit');
+                var id=$(this).attr('data-id');
+                $('#derivationEdit').find('.modal-title').html('编辑自动计算');
+                $(this).find('.btn-add').unbind('click').bind('click',function () {
+                    addEditDerivation(id);
+                });
+                return;
+            }
+            $(this).find('.btn-add').unbind('click').bind('click',function () {
+                addEditDerivation();
+            })
+        });
+    })
+    function addEditDerivation(id) {
+        var id=id||"";
+        var isMustObjs=$('#itemForm-de').data('bootstrapValidator').validate();
+        if(!isMustObjs.isValid()) return false;
+        tms.services.createOrUpdateDerivation({
+            requestBody:{
+                Id:id,
+                OId:$('#input_OID_de').val(),
+                Name:$('#input_Name_de').val(),
+                CountTypeId: $('#input_CountTypeId_de').val(),
+                Description:$('#input_Description_de').val(),
+                IsEnable: $('#input_IsEnable_de').find('input:checked').val()==1,
+                CRFVersionId: bp1.CurrentDraftId,
+                StudyId: bp1.CurrentProjectId,
+                IsBase: false,
+                IsLab:false
+            },
+            callback:function (data) {
+                $tableDerivation.bootstrapTable('refresh');
+                tms.alert('保存成功',function () {
+                    $('#derivationEdit').modal('hide');
+                })
+            }
+
+        })
+    }
+</script>

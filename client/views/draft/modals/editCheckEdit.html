@@ -1,0 +1,102 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="editCheckEdit"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog w450">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">新建逻辑核查</h4>
+            </div>
+            <div class="modal-body">
+                <form id="itemForm-ece">
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_OID_ece">OID</label>
+                        <div class="col-md-8">
+                            <input type="text" name="OID" class="form-control" id="input_OID_ece">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_Name_ece">名称</label>
+                        <div class="col-md-8">
+                            <input type="text" name="Name" class="form-control" id="input_Name_ece">
+                        </div>
+                    </div>
+                    <div class="form-group has-require">
+                        <label class="control-label col-md-3" for="input_Description_ece">描述</label>
+                        <div class="col-md-8">
+                            <textarea class="form-control" name="Des" id="input_Description_ece"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="input_IsEnable_ece">启用状态</label>
+                        <div class="col-md-8" id="input_IsEnable_ece">
+                            <div class="radio-inline">
+                                <label>
+                                    <input type="radio" name="isEnable" value="1" checked>启用
+                                </label>
+                            </div>
+                            <div class="radio-inline">
+                                <label>
+                                    <input type="radio" name="isEnable"  value="0">停用
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-add">保存</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#editCheckEdit").on("hidden.bs.modal", function() {
+            $('#itemForm-ece')[0].reset();
+            $('#itemForm-ece').data('bootstrapValidator').resetForm();
+            $(this).attr({'data-type':''});
+            $('#editCheckEdit').find('.modal-title').html('新建试验方案');
+        });
+        $("#editCheckEdit").on("show.bs.modal", function() {
+            $(this).removeClass('edit');
+            var tp=$(this).attr('data-type');
+            if(tp=='edit'){
+                $(this).addClass('edit');
+                var id=$(this).attr('data-id');
+                $('#editCheckEdit').find('.modal-title').html('编辑试验方案');
+                $(this).find('.btn-add').unbind('click').bind('click',function () {
+                    addEditCheckItem(id);
+                });
+                return;
+            }
+            $(this).find('.btn-add').unbind('click').bind('click',function () {
+                addEditCheckItem();
+            })
+        });
+    })
+    function addEditCheckItem(id) {
+        var id=id||"";
+        var isMustObjs=$('#itemForm-ece').data('bootstrapValidator').validate();
+        if(!isMustObjs.isValid()) return false;
+        tms.services.createOrUpdateEditCheck({
+            requestBody:{
+                Id:id,
+                OId:$('#input_OID_ece').val(),
+                Name:$('#input_Name_ece').val(),
+                Description:$('#input_Description_ece').val(),
+                IsEnable: $('#input_IsEnable_ece').find('input:checked').val()==1,
+                CRFVersionId: bp1.CurrentDraftId,
+                StudyId: bp1.CurrentProjectId,
+                IsBase: false
+            },
+            callback:function (data) {
+                $tableEditCheck.bootstrapTable('refresh');
+                tms.alert('保存成功',function () {
+                    $('#editCheckEdit').modal('hide');
+                })
+            }
+
+        })
+    }
+</script>
